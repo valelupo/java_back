@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -14,6 +16,10 @@ public class Material {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id; 
     private String descripcion;
+    
+    @ManyToOne
+    @JoinColumn(name = "persona_profesor_id")
+    private Profesor profesor; 
 
     //getters y setters 
     public int getId() {

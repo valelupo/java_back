@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -14,6 +16,10 @@ public class Localidad {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int cod; 
     private String nombre;
+
+    @ManyToOne
+    @JoinColumn(name = "provincia_id")
+    private Provincia miProvincia; 
 
     //setters y getters 
     public int getCod() {

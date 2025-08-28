@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -16,6 +18,10 @@ public abstract class Persona {
     private String nombre;
     private String apellido;
     private String email;
+
+    @ManyToOne
+    @JoinColumn(name = "localidad_id")
+    private Localidad miLocalidad;
 
     //setters y getters 
     public int getId() {
@@ -42,5 +48,12 @@ public abstract class Persona {
     public void setEmail(String email) {
         this.email = email;
     }
+    public Localidad getMiLocalidad() {
+        return miLocalidad;
+    }
+    public void setMiLocalidad(Localidad miLocalidad) {
+        this.miLocalidad = miLocalidad;
+    }
+    
     
 }
