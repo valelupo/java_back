@@ -11,7 +11,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "personas") 
+@Table(name = "persona") 
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Persona {
     @Id

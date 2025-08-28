@@ -10,7 +10,7 @@ import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "reseñas")
+@Table(name = "resenia")
 
 public class Resenia {
     private LocalDateTime fecha;

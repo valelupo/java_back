@@ -10,9 +10,6 @@ public class ReseniaId implements Serializable {
     private int profesorId;
     private int alumnoId; 
 
-
-
-
      @Override
     public boolean equals(Object o) {
         if (this == o) return true;
