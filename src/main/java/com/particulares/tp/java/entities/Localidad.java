@@ -33,5 +33,13 @@ public class Localidad {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+    public Provincia getMiProvincia() {
+        return miProvincia;
+    }
+    public void setMiProvincia(Provincia miProvincia) {
+        this.miProvincia = miProvincia;
+    }
+
+    
     
 }

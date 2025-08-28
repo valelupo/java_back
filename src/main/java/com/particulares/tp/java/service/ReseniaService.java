@@ -10,7 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.particulares.tp.java.entities.Alumno;
+import com.particulares.tp.java.entities.Profesor;
 import com.particulares.tp.java.entities.Resenia;
+import com.particulares.tp.java.repository.AlumnoRepository;
+import com.particulares.tp.java.repository.ProfesorRepository;
 import com.particulares.tp.java.repository.ReseniaRepository;
 
 
@@ -20,15 +24,34 @@ public class ReseniaService {
     @Autowired
     private ReseniaRepository reseniaRepository;
 
-    @Transactional
-    public void crearResenia(String descripcion) throws Exception {
+    @Autowired
+    private ProfesorRepository profesorRepository;
 
-        validar(descripcion);
+    @Autowired
+    private AlumnoRepository alumnoRepository;
+
+    @Transactional
+    public void crearResenia(String descripcion, int idProfesor, int idAlumno) throws Exception {
+
+        validar(descripcion, idAlumno, idProfesor);
+
+        Profesor miProfesor = profesorRepository.findById(idProfesor).get();
+        Alumno miAlumno = alumnoRepository.findById(idAlumno).get();
+
+        if (miProfesor == null) {
+            throw new Exception("El profesor especificado no existe.");
+        }
+
+        if (miAlumno == null) {
+            throw new Exception("El alumno especificado no existe.");
+        }
 
         Resenia resenia = new Resenia();
 
         resenia.setDescripcion(descripcion);
         resenia.setFecha(LocalDateTime.now());
+        resenia.setAlumno(miAlumno);
+        resenia.setProfesor(miProfesor);
 
         reseniaRepository.save(resenia);
     }
@@ -40,16 +63,28 @@ public class ReseniaService {
     }
 
     @Transactional
-    public void modificarResenia(String descripcion, int id) throws Exception {
+    public void modificarResenia(String descripcion, int idProfesor, int idAlumno, int id) throws Exception {
         
-        validar(descripcion);
+        validar(descripcion, idAlumno, idProfesor);
 
-        Optional<Resenia> respuesta = reseniaRepository.findById(id);
+        Optional<Resenia> reseniaOpt = reseniaRepository.findById(id);
+        Optional<Profesor> profesorOpt = profesorRepository.findById(idProfesor);
+        Optional<Alumno> alumnoOpt = alumnoRepository.findById(idAlumno);
 
-        if (respuesta.isPresent()) {
-            Resenia resenia = respuesta.get();
+        if (profesorOpt.isEmpty()) {
+            throw new Exception("El profesor especificado no existe.");
+        }
+        if (alumnoOpt.isEmpty()) {
+            throw new Exception("El alumno especificado no existe.");
+        }
+
+        if (reseniaOpt.isPresent()) {
+            Resenia resenia = reseniaOpt.get();
 
             resenia.setDescripcion(descripcion);
+            resenia.setFecha(LocalDateTime.now()); // la fecha se actualiza al modificar
+            resenia.setAlumno(alumnoOpt.get());
+            resenia.setProfesor(profesorOpt.get());
 
             reseniaRepository.save(resenia);
         } else {
@@ -58,7 +93,7 @@ public class ReseniaService {
     }
 
     @Transactional
-    public void eliminar(int id) throws Exception{
+    public void eliminarResenia(int id) throws Exception{
         Optional<Resenia> reseniaOpt = reseniaRepository.findById(id);
         if (reseniaOpt.isPresent()) {
             reseniaRepository.delete(reseniaOpt.get());
@@ -74,9 +109,15 @@ public class ReseniaService {
     }
 
 
-    private void validar(String descripcion) throws Exception {
+    private void validar(String descripcion, int idAlumno, int idProfesor) throws Exception {
         if (descripcion.isEmpty() || descripcion == null) {
             throw new Exception("la descripcion no puede ser nulo o estar vacío");
+        }
+        if (idAlumno <= 0) {
+            throw new Exception("El idAlumno debe ser un numero positivo");
+        }
+        if (idProfesor <= 0) {
+            throw new Exception("El idProfesor debe ser un numero positivo");
         }
     }
     

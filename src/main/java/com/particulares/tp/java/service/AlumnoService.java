@@ -76,7 +76,7 @@ public class AlumnoService {
     }
 
     @Transactional
-    public void eliminar(int id) throws Exception{
+    public void eliminarAlumno(int id) throws Exception{
         Optional<Alumno> alumnoOpt = alumnoRepository.findById(id);
         if (alumnoOpt.isPresent()) {
             alumnoRepository.delete(alumnoOpt.get());
@@ -106,7 +106,7 @@ public class AlumnoService {
         //     throw new Exception("El email no tiene un formato válido");
         // }
         if(idLocalidad <= 0) {
-            throw new Exception("El idAutor debe ser un numero positivo");
+            throw new Exception("El idLocalidad debe ser un numero positivo");
         }
 
     }

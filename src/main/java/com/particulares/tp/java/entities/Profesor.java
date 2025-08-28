@@ -14,7 +14,7 @@ public class Profesor extends Persona{
     private String telefono;
     private String formaTrabajo;
     private String infoAcademica;
-    private int credencial;
+    private int credencial; // o es matricula?
 
     //relacion ternaria 
     @ManyToMany 
