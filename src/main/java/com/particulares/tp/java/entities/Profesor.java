@@ -2,10 +2,14 @@ package com.particulares.tp.java.entities;
 
 import java.util.List;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Table;
 
+@Entity
+@Table(name = "profesor")
 public class Profesor extends Persona{
     private String telefono;
     private String formaTrabajo;
