@@ -12,7 +12,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "niveles") 
+@Table(name = "nivel") 
 public class Nivel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

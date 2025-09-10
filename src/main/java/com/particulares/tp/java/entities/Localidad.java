@@ -9,8 +9,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "localidades")
-
+@Table(name = "localidad")
 public class Localidad {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,5 +33,13 @@ public class Localidad {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+    public Provincia getMiProvincia() {
+        return miProvincia;
+    }
+    public void setMiProvincia(Provincia miProvincia) {
+        this.miProvincia = miProvincia;
+    }
+
+    
     
 }

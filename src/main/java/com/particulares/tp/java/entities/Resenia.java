@@ -10,7 +10,7 @@ import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "reseñas")
+@Table(name = "resenia")
 
 public class Resenia {
     private LocalDateTime fecha;
@@ -42,6 +42,30 @@ public class Resenia {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public ReseniaId getId() {
+        return id;
+    }
+
+    public void setId(ReseniaId id) {
+        this.id = id;
+    }
+
+    public Profesor getProfesor() {
+        return profesor;
+    }
+
+    public void setProfesor(Profesor profesor) {
+        this.profesor = profesor;
+    }
+
+    public Alumno getAlumno() {
+        return alumno;
+    }
+
+    public void setAlumno(Alumno alumno) {
+        this.alumno = alumno;
     }
 
 

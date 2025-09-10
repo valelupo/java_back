@@ -9,7 +9,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "materiales")
+@Table(name = "material")
 
 public class Material {
     @Id
@@ -33,6 +33,12 @@ public class Material {
     }
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+    public Profesor getProfesor() {
+        return profesor;
+    }
+    public void setProfesor(Profesor profesor) {
+        this.profesor = profesor;
     }
     
 }
