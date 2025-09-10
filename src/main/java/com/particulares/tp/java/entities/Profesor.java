@@ -3,9 +3,7 @@ package com.particulares.tp.java.entities;
 import java.util.List;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -14,9 +12,12 @@ public class Profesor extends Persona{
     private String telefono;
     private String formaTrabajo;
     private String infoAcademica;
-    private int credencial; // o es matricula?
+    private int matricula; // o es matricula?
 
-    //relacion ternaria 
+    @OneToMany(mappedBy = "profesor") //se usa mappedBy para indicar que la relacion se mapea a traves de otra entidad 
+    private List<DictadoClase> dictados;
+
+/*    //relacion ternaria 
     @ManyToMany 
     @JoinTable(
         name = "dictado_clase",
@@ -32,10 +33,20 @@ public class Profesor extends Persona{
         inverseJoinColumns = @JoinColumn(name = "materia_id") 
     )
     private List<Materia> materias;
+*/ 
 
     //getters y setters 
     public String getTelefono() {
         return telefono;
+    }
+    public int getMatricula() {
+        return matricula;
+    }
+    public void setMatricula(int matricula) {
+        this.matricula = matricula;
+    }
+    public void setDictados(List<DictadoClase> dictados) {
+        this.dictados = dictados;
     }
     public void setTelefono(String telefono) {
         this.telefono = telefono;
@@ -52,23 +63,9 @@ public class Profesor extends Persona{
     public void setInfoAcademica(String infoAcademica) {
         this.infoAcademica = infoAcademica;
     }
-    public int getCredencial() {
-        return credencial;
-    }
-    public void setCredencial(int credencial) {
-        this.credencial = credencial;
-    }
-    public List<Materia> getMaterias() {
-        return materias;
-    }
-    public void setMaterias(List<Materia> materias) {
-        this.materias = materias;
-    }
-    public List<Nivel> getNiveles() {
-        return niveles;
-    }
-    public void setNiveles(List<Nivel> niveles) {
-        this.niveles = niveles;
+    
+    public List<DictadoClase> getDictados() {
+        return dictados;
     } 
     
 

@@ -6,9 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -20,7 +18,10 @@ public class Materia {
     private int id; 
     private String nombre;
 
-    //relacion ternaria 
+    @OneToMany(mappedBy = "materia")
+    private List<DictadoClase> dictados;
+
+/*     //relacion ternaria 
     @ManyToMany 
     @JoinTable(
         name = "dictado_clase",
@@ -36,6 +37,7 @@ public class Materia {
         inverseJoinColumns = @JoinColumn(name = "profesor_id") 
     )
     private List<Profesor> profesores;
+*/ 
 
     //setters y getters 
     public int getId() {
@@ -52,6 +54,10 @@ public class Materia {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public List<DictadoClase> getDictados() {
+        return dictados;
     } 
 
 

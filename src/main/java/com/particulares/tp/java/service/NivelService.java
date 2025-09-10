@@ -9,7 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.particulares.tp.java.entities.DictadoClase;
+import com.particulares.tp.java.entities.DictadoClaseId;
 import com.particulares.tp.java.entities.Nivel;
+import com.particulares.tp.java.repository.DictadoClaseRepository;
 import com.particulares.tp.java.repository.NivelRepository;
 
 
@@ -17,6 +20,8 @@ import com.particulares.tp.java.repository.NivelRepository;
 public class NivelService {
     @Autowired
     private NivelRepository nivelRepository;
+    @Autowired
+    private DictadoClaseRepository dictadoClaseRepository;
 
     @Transactional
     public void crearNivel(String descripcion) throws Exception {
@@ -68,6 +73,23 @@ public class NivelService {
     @Transactional(readOnly = true)
     public Nivel  getOne(int nro){
         return nivelRepository.getReferenceById(nro);
+    }
+
+    public void agregarDictado(int nro, DictadoClaseId idDC) 
+    throws Exception{
+        Nivel nivel = nivelRepository.findById(nro).get();
+        DictadoClase dictadoClase = dictadoClaseRepository.findById(idDC).get();
+
+        if (nivel == null) {
+            throw new Exception("El nivel especificado no existe.");
+        }
+        if (dictadoClase == null) {
+            throw new Exception("El dictadoClase especificado no existe.");
+        }
+
+        nivel.getDictados().add(dictadoClase);
+
+        nivelRepository.save(nivel);
     }
 
 

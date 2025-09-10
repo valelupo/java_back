@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.particulares.tp.java.entities.Alumno;
 import com.particulares.tp.java.entities.Profesor;
 import com.particulares.tp.java.entities.Resenia;
+import com.particulares.tp.java.entities.ReseniaId;
 import com.particulares.tp.java.repository.AlumnoRepository;
 import com.particulares.tp.java.repository.ProfesorRepository;
 import com.particulares.tp.java.repository.ReseniaRepository;
@@ -63,11 +64,11 @@ public class ReseniaService {
     }
 
     @Transactional
-    public void modificarResenia(String descripcion, int idProfesor, int idAlumno, int id) throws Exception {
+    public void modificarResenia(String descripcion, int idProfesor, int idAlumno, ReseniaId idResenia) throws Exception {
         
         validar(descripcion, idAlumno, idProfesor);
 
-        Optional<Resenia> reseniaOpt = reseniaRepository.findById(id);
+        Optional<Resenia> reseniaOpt = reseniaRepository.findById(idResenia);
         Optional<Profesor> profesorOpt = profesorRepository.findById(idProfesor);
         Optional<Alumno> alumnoOpt = alumnoRepository.findById(idAlumno);
 
@@ -93,8 +94,8 @@ public class ReseniaService {
     }
 
     @Transactional
-    public void eliminarResenia(int id) throws Exception{
-        Optional<Resenia> reseniaOpt = reseniaRepository.findById(id);
+    public void eliminarResenia(ReseniaId idResenia) throws Exception{
+        Optional<Resenia> reseniaOpt = reseniaRepository.findById(idResenia);
         if (reseniaOpt.isPresent()) {
             reseniaRepository.delete(reseniaOpt.get());
         } else {
@@ -104,8 +105,8 @@ public class ReseniaService {
     }
 
     @Transactional(readOnly = true)
-    public Resenia  getOne(int id){
-        return reseniaRepository.getReferenceById(id);
+    public Resenia  getOne(ReseniaId idResenia){
+        return reseniaRepository.getReferenceById(idResenia);
     }
 
 
