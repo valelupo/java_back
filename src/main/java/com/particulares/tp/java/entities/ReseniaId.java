@@ -13,13 +13,13 @@ public class ReseniaId implements Serializable {
 
 
 
-     @Override
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof ReseniaId)) return false;
         ReseniaId that = (ReseniaId) o;
         return profesorId == that.profesorId &&
-               alumnoId == that.alumnoId;
+            alumnoId == that.alumnoId;
     }
 
     @Override
