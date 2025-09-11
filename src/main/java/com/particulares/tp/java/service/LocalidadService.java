@@ -88,6 +88,11 @@ public class LocalidadService {
         return localidadRepository.getReferenceById(cod);
     }
 
+    @Transactional(readOnly = true)
+    public List<Localidad> buscarPorProvincia(int idProv){
+        return localidadRepository.buscarPorProvincia(idProv);
+    }
+
 
     private void validar(String nombre, int idProvincia) throws Exception {
         if (nombre.isEmpty() || nombre == null) {

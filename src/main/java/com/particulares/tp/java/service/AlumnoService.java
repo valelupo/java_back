@@ -6,11 +6,13 @@ import java.util.Optional;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.particulares.tp.java.entities.Alumno;
 import com.particulares.tp.java.entities.Localidad;
+import com.particulares.tp.java.enums.Rol;
 import com.particulares.tp.java.repository.AlumnoRepository;
 import com.particulares.tp.java.repository.LocalidadRepository;
 
@@ -24,9 +26,9 @@ public class AlumnoService {
     private LocalidadRepository localidadRepository;
 
     @Transactional
-    public void crearAlumno(String nombre, String apellido, String email, int idLocalidad) throws Exception {
+    public void crearAlumno(String nombre, String apellido, String email, int idLocalidad, String clave, String clave2) throws Exception {
 
-        validar(nombre, apellido, email, idLocalidad);
+        validar(nombre, apellido, email, idLocalidad, clave, clave2);
 
         Localidad miLocalidad = localidadRepository.findById(idLocalidad).get();
 
@@ -40,6 +42,8 @@ public class AlumnoService {
         alumno.setApellido(apellido);
         alumno.setEmail(email);
         alumno.setMiLocalidad(miLocalidad);
+        alumno.setClave(new BCryptPasswordEncoder().encode(clave)); // para guardar la clve encriptada
+        alumno.setRol(Rol.ALUMNO);
 
         alumnoRepository.save(alumno);
     }
@@ -50,9 +54,9 @@ public class AlumnoService {
     }
 
     @Transactional
-    public void modificarAlumno(String nombre, String apellido, String email, int idLocalidad, int id) throws Exception {
+    public void modificarAlumno(String nombre, String apellido, String email, int idLocalidad, String clave, String clave2, int id) throws Exception {
         
-        validar(nombre, apellido, email, idLocalidad);
+        validar(nombre, apellido, email, idLocalidad, clave, clave2);
 
         Optional<Localidad> localidadOpt = localidadRepository.findById(idLocalidad);
         Optional<Alumno> alumnoOpt = alumnoRepository.findById(id);
@@ -68,6 +72,8 @@ public class AlumnoService {
             alumno.setApellido(apellido);
             alumno.setEmail(email);
             alumno.setMiLocalidad(localidadOpt.get());
+            alumno.setClave(new BCryptPasswordEncoder().encode(clave));
+            alumno.setRol(Rol.ALUMNO);
 
             alumnoRepository.save(alumno);
         } else {
@@ -92,7 +98,7 @@ public class AlumnoService {
     }
 
 
-    private void validar(String nombre, String apellido, String email, int idLocalidad) throws Exception {
+    private void validar(String nombre, String apellido, String email, int idLocalidad, String clave, String clave2) throws Exception {
         if (nombre.isEmpty() || nombre == null) {
             throw new Exception("el nombre no puede ser nulo o estar vacío");
         }
@@ -107,6 +113,12 @@ public class AlumnoService {
         // }
         if(idLocalidad <= 0) {
             throw new Exception("El idLocalidad debe ser un numero positivo");
+        }
+        if (clave.isEmpty() || clave == null || clave.length() <= 5) {
+            throw new Exception("La contraseña no puede estar vacía, y debe tener más de 5 dígitos");
+        }
+        if (!clave.equals(clave2)) {
+            throw new Exception("Las contraseñas ingresadas deben ser iguales");
         }
 
     }

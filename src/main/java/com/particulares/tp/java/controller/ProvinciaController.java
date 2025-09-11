@@ -40,7 +40,7 @@ public class ProvinciaController {
 
         modelo.addAttribute("provincias", provinciaServicio.listarProvincias()); 
 
-        return "provincia_list.html";
+        return "provincia/lista.html";
     }
 
     //getOne

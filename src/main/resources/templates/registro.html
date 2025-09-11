@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Registro de usuario</title>
+    <script>
+        function mostrarCamposProfesor(valor) {
+            const seccion = document.getElementById("campos-profesor");
+            seccion.style.display = valor === "PROFESOR" ? "block" : "none";
+        }
+    </script>
+</head>
+<body>
+    <h2>Registro</h2>
+
+    <div th:if="${error}">
+        <p style="color:red" th:text="${error}"></p>
+    </div>
+    <div th:if="${exito}">
+        <p style="color:green" th:text="${exito}"></p>
+    </div>
+
+    <form th:action="@{/registro}" method="post">
+        <label>Nombre:</label>
+        <input type="text" name="nombre" th:value="${nombre}" required />
+
+        <label>Apellido:</label>
+        <input type="text" name="apellido" th:value="${apellido}" required />
+
+        <label>Email:</label>
+        <input type="email" name="email" th:value="${email}" required />
+
+        <label>Localidad:</label>
+        <input type="number" name="idLocalidad" required />
+
+        <label>Clave:</label>
+        <input type="password" name="clave" required />
+
+        <label>Repetir clave:</label>
+        <input type="password" name="clave2" required />
+
+        <label>Rol:</label>
+        <select name="rol" onchange="mostrarCamposProfesor(this.value)" required>
+            <option value="">-- Seleccionar --</option>
+            <option value="ALUMNO" th:selected="${rol == 'ALUMNO'}">Alumno</option>
+            <option value="PROFESOR" th:selected="${rol == 'PROFESOR'}">Profesor</option>
+        </select>
+
+        <label>Provincia:</label>
+        <select id="provincia" name="idProvincia" onchange="cargarLocalidades(this.value)">
+            <option value="">Seleccionar Provincia</option>
+            <option th:each="prov : ${provincias}" th:value="${prov.id}" th:text="${prov.nombre}">
+        </select>
+
+        <label>Localidad:</label>
+        <select id="localidad" name="idLocalidad">
+            <option value="">Seleccionar provincia primero</option>
+        </select>
+
+        <script>
+        function cargarLocalidades(idProvincia) {
+            fetch('/localidad/listaProv?provinciaId=' + idProvincia)
+                .then(response => response.json())
+                .then(data => {
+                    const localidadSelect = document.getElementById('localidad');
+                    localidadSelect.innerHTML = '';
+
+                    if (data.length === 0) {
+                        const option = document.createElement('option');
+                        option.text = 'No hay localidades disponibles';
+                        option.disabled = true;
+                        localidadSelect.appendChild(option);
+                        return;
+                    }
+
+                    data.forEach(loc => {
+                        const option = document.createElement('option');
+                        option.value = loc.id;
+                        option.text = loc.nombre;
+                        localidadSelect.appendChild(option);
+                    });
+                });
+        }
+        </script>
+
+
+        <div id="campos-profesor" style="display:none;">
+            <h3>Datos del profesor</h3>
+
+            <label>Teléfono:</label>
+            <input type="text" name="telefono" th:value="${telefono}" />
+
+            <label>Forma de trabajo:</label>
+            <input type="text" name="formaTrabajo" th:value="${formaTrabajo}" />
+
+            <label>Información académica:</label>
+            <textarea name="infoAcademica" th:text="${infoAcademica}"></textarea>
+
+            <label>Matricula:</label>
+            <input name="matricula" th:value="${matricula}"></input>
+        </div>
+
+        <button type="submit">Registrarse</button>
+    </form>
+    <a href="/login" class="btn">¿Ya tienes cuenta? Inicia sesión aquí</a>
+    <script>
+        // Mostrar campos si ya se había seleccionado "PROFESOR"
+        const rolActual =  '';
+        if (rolActual === 'PROFESOR') {
+            mostrarCamposProfesor('PROFESOR');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Casa de Electricidad</title>
+    <!-- <link rel="stylesheet" href="css/styles.css"> -->
+</head>
+<body>
+    
+
+    <header>
+        <nav>
+            <h1>GETEACHER</h1>
+        </nav>
+    </header>
+
+    <main>
+        <section class="welcome">
+            <h2>Bienvenido a Geteacher</h2>
+            <p>Un sitio donde podras encontrar a tu profesor ideal.</p>
+            <div class="buttons">
+                <a th:if="${session.usuariosession == null}" href="/registrar" class="btn">Registrarse</a>
+                <a th:if="${session.usuariosession == null}" href="/login" class="btn">Iniciar sesión</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Geteacher. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>

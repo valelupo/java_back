@@ -6,10 +6,12 @@ import java.util.Optional;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.particulares.tp.java.entities.Profesor;
+import com.particulares.tp.java.enums.Rol;
 import com.particulares.tp.java.entities.DictadoClase;
 import com.particulares.tp.java.entities.DictadoClaseId;
 import com.particulares.tp.java.entities.Localidad;
@@ -30,10 +32,10 @@ public class ProfesorService {
     private DictadoClaseRepository dictadoClaseRepository;
 
     @Transactional
-    public void crearProfesor(String nombre, String apellido, String email, int idLocalidad, String telefono, String formaTrabajo, String infoAcademica, Integer matricula) 
-    throws Exception {
+    public void crearProfesor(String nombre, String apellido, String email, int idLocalidad, String clave, String clave2,
+                              String telefono, String formaTrabajo, String infoAcademica, Integer matricula) throws Exception {
 
-        validar(nombre, apellido, email, idLocalidad, telefono, formaTrabajo, infoAcademica, matricula);
+        validar(nombre, apellido, email, idLocalidad, clave, clave2, telefono, formaTrabajo, infoAcademica, matricula);
 
         Localidad miLocalidad = localidadRepository.findById(idLocalidad).get();
 
@@ -47,6 +49,8 @@ public class ProfesorService {
         profesor.setApellido(apellido);
         profesor.setEmail(email);
         profesor.setMiLocalidad(miLocalidad);
+        profesor.setClave(new BCryptPasswordEncoder().encode(clave)); 
+        profesor.setRol(Rol.PROFESOR);
         profesor.setTelefono(telefono);
         profesor.setFormaTrabajo(formaTrabajo);
         profesor.setInfoAcademica(infoAcademica);
@@ -61,10 +65,10 @@ public class ProfesorService {
     }
 
     @Transactional
-    public void modificarProfesor(String nombre, String apellido, String email, int idLocalidad, String telefono, String formaTrabajo, String infoAcademica, Integer matricula, int id) 
-    throws Exception {
+    public void modificarProfesor(String nombre, String apellido, String email, int idLocalidad, String clave, String clave2,
+                                  String telefono, String formaTrabajo, String infoAcademica, Integer matricula, int id) throws Exception {
         
-        validar(nombre, apellido, email, idLocalidad, telefono, formaTrabajo, infoAcademica, matricula);
+        validar(nombre, apellido, email, idLocalidad, clave, clave2, telefono, formaTrabajo, infoAcademica, matricula);
 
         Optional<Localidad> localidadOpt = localidadRepository.findById(idLocalidad);
         Optional<Profesor> profesorOpt = profesorRepository.findById(id);
@@ -80,6 +84,8 @@ public class ProfesorService {
             profesor.setApellido(apellido);
             profesor.setEmail(email);
             profesor.setMiLocalidad(localidadOpt.get());
+            profesor.setClave(new BCryptPasswordEncoder().encode(clave)); 
+            profesor.setRol(Rol.PROFESOR);
             profesor.setTelefono(telefono);
             profesor.setFormaTrabajo(formaTrabajo);
             profesor.setInfoAcademica(infoAcademica);
@@ -125,8 +131,8 @@ public class ProfesorService {
     }
 
 
-    private void validar(String nombre, String apellido, String email, int idLocalidad, String telefono, String formaTrabajo, String infoAcademica, Integer matricula) 
-    throws Exception {
+    private void validar(String nombre, String apellido, String email, int idLocalidad, String clave, String clave2,
+                         String telefono, String formaTrabajo, String infoAcademica, Integer matricula) throws Exception {
         if (nombre.isEmpty() || nombre == null) {
             throw new Exception("el nombre no puede ser nulo o estar vacío");
         }
@@ -141,6 +147,12 @@ public class ProfesorService {
         // }
         if(idLocalidad <= 0) {
             throw new Exception("El idLocalidad debe ser un numero positivo");
+        }
+        if (clave.isEmpty() || clave == null || clave.length() <= 5) {
+            throw new Exception("La contraseña no puede estar vacía, y debe tener más de 5 dígitos");
+        }
+        if (!clave.equals(clave2)) {
+            throw new Exception("Las contraseñas ingresadas deben ser iguales");
         }
         if (telefono.isEmpty() || telefono == null) {
             throw new Exception("el telefono no puede ser nulo o estar vacío");

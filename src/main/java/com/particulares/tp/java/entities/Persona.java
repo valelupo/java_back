@@ -1,6 +1,10 @@
 package com.particulares.tp.java.entities;
 
+import com.particulares.tp.java.enums.Rol;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -20,6 +24,10 @@ public abstract class Persona {
     private String nombre;
     private String apellido;
     private String email;
+    private String clave;
+
+    @Enumerated(EnumType.STRING)
+    private Rol rol;
 
     @ManyToOne
     @JoinColumn(name = "localidad_id")
@@ -56,6 +64,19 @@ public abstract class Persona {
     public void setMiLocalidad(Localidad miLocalidad) {
         this.miLocalidad = miLocalidad;
     }
+    public String getClave() {
+        return clave;
+    }
+    public void setClave(String clave) {
+        this.clave = clave;
+    }
+    public Rol getRol() {
+        return rol;
+    }
+    public void setRol(Rol rol) {
+        this.rol = rol;
+    }
+    
     
     
 }
