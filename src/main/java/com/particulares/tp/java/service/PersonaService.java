@@ -11,13 +11,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
+// import org.springframework.web.context.request.RequestContextHolder;
+// import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.particulares.tp.java.entities.Persona;
 import com.particulares.tp.java.repository.PersonaRepository;
 
-import jakarta.servlet.http.HttpSession;
+//import jakarta.servlet.http.HttpSession;
+import jakarta.transaction.Transactional;
 
 @Service
 public class PersonaService implements UserDetailsService {
@@ -25,6 +26,7 @@ public class PersonaService implements UserDetailsService {
     private PersonaRepository personaRepository;
 
     @Override
+    @Transactional
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
        
         Persona persona = personaRepository.buscarPorEmail(email);
@@ -33,29 +35,21 @@ public class PersonaService implements UserDetailsService {
             throw new UsernameNotFoundException("Usuario no encontrado");
         }
 
+        if (persona.getRol() == null) {
+            throw new UsernameNotFoundException("El usuario no tiene rol asignado");
+        }
+
+
         List<GrantedAuthority> permisos = new ArrayList<>();
         GrantedAuthority p = new SimpleGrantedAuthority("ROLE_"+ persona.getRol().toString());
         
         permisos.add(p);
 
-        ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-        HttpSession session = attr.getRequest().getSession(true);
-        session.setAttribute("personaSession", persona);
+        // ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+        // HttpSession session = attr.getRequest().getSession(true);
+        // session.setAttribute("personaSession", persona);
         
         return new User(persona.getEmail(), persona.getClave() ,permisos);
-        
-        // Otra forma de hacerlo:
-        // Persona persona1 = personaRepository.buscarPorEmail(email);
-
-        // if (persona1 == null) {
-        //     throw new UsernameNotFoundException("No se encontró ninguna persona con el email: " + email);
-        // }
-
-        // return User.builder()
-        //     .username(persona1.getEmail())
-        //     .password(persona1.getClave()) // asegurate de que esté encriptado
-        //     .roles(persona1.getRol().toString()) // "ALUMNO" o "PROFESOR"
-        //     .build();
 
     }
 

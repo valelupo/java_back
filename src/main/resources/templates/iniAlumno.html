@@ -3,25 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GETEACHER</title>
+    <title>Inicio Alumno</title>
     <!-- <link rel="stylesheet" href="css/styles.css"> -->
 </head>
 <body>
-    
+   
+
     <header>
         <nav>
             <h1>GETEACHER</h1>
+            <div class="nav-buttons">
+                <a href="/logout" class="btn logout">Cerrar sesión</a>
+            </div>
         </nav>
     </header>
 
     <main>
         <section class="welcome">
-            <h2>Bienvenido a Geteacher</h2>
-            <p>Un sitio donde podras encontrar a tu profesor ideal.</p>
-            <div class="buttons">
-                <a th:if="${session.usuariosession == null}" href="/registrar" class="btn">Registrarse</a>
-                <a th:if="${session.usuariosession == null}" href="/login" class="btn">Iniciar sesión</a>
-            </div>
+            <h2>Bienvenido a tu panel</h2>
+            <p>Busca a tu profe ideal.</p>
         </section>
     </main>
 

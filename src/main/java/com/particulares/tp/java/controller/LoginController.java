@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
 import com.particulares.tp.java.service.AlumnoService;
 import com.particulares.tp.java.service.ProfesorService;
+import com.particulares.tp.java.service.ProvinciaService;
 
-//import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpSession;
 
 
 @Controller
@@ -23,13 +23,17 @@ public class LoginController {
     @Autowired
     private ProfesorService profesorService;
 
+    @Autowired
+    private ProvinciaService provinciaService;
+
     @GetMapping("/")  
     public String index() {
         return "index.html";   
     }
 
     @GetMapping("/registrar") 
-    public String registrar() {
+    public String registrar(ModelMap modelo) {
+        modelo.put("provincias", provinciaService.listarProvincias());
         return "registro.html";   
     }
 
@@ -44,7 +48,7 @@ public class LoginController {
                             @RequestParam (required = false) String telefono,
                             @RequestParam (required = false) String formaTrabajo,
                             @RequestParam (required = false) String infoAcademica,
-                            @RequestParam (required = false) int matricula, ModelMap modelo) {
+                            @RequestParam (required = false) Integer matricula, ModelMap modelo) {
         try {
             if (rol.equals("ALUMNO")) {
                 alumnoService.crearAlumno(nombre, apellido, email, idLocalidad, clave, clave2);
@@ -63,28 +67,21 @@ public class LoginController {
     }
 
     @GetMapping("/login")
-    public String login() {
-        return "login.html";
+    public String login(@RequestParam(required = false) String error, ModelMap modelo ) {
+        if (error != null) {
+               modelo.put("error", "Email o Clave inválidos!");        
+        }
+           return "login.html";
     }
 
-    // @GetMapping("/login")
-    // public String login(@RequestParam(required = false) String error, ModelMap modelo ) {
-    //        if (error != null) {
-    //            modelo.put("error", "Usuario o Contraseña inválidos!");        
-    //     }
-    //        return "login.html";
-    //    }
-
-    // @GetMapping("/inicio")
-    // public String inicio(HttpSession session){
-    //     Usuario logueado = (Usuario) session.getAttribute("usuariosession");
-    //     if (logueado.getRol().toString().equals("ADMIN")) {
-    //         return "redirect:/admin/dashboard";
-    //     }
-    //     return "inicio.html";
-    // }
-
- 
+    @GetMapping("/inicio")
+    public String inicio(HttpSession session){
+        //Persona logueado = (Persona) session.getAttribute("personasession");
+        // if (logueado.getRol().toString().equals("PELUQUERO")) {
+        //     return "redirect:/peluquero/inicio";
+        // }
+        return "iniAlumno.html";
+    }
 
     // @GetMapping("/inicio")
     // public String dashboard(Model model, Principal principal) {
