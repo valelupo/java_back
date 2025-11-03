@@ -10,6 +10,7 @@ import com.particulares.tp.java.entities.Localidad;
 
 @Repository
 public interface LocalidadRepository extends JpaRepository<Localidad, Integer>{
+    
     @Query("SELECT l FROM Localidad l WHERE l.miProvincia.id = ?1")
     List<Localidad> buscarPorProvincia(int idProv);
 } 

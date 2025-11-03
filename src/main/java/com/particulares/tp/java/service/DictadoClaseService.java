@@ -37,6 +37,12 @@ public class DictadoClaseService {
 
         validar(idProfesor, idMateria, nroNivel);
 
+        DictadoClase existente = dictadoClaseRepository.findByMateriaProfesorNivel(idProfesor, idMateria, nroNivel);
+
+        if (existente != null) {
+            throw new Exception("Ya tienes un dictado con la mteria y nivel seleccionado");
+        }
+
         Profesor miProfesor = profesorRepository.findById(idProfesor).get();
         Materia miMateria = materiaRepository.findById(idMateria).get();
         Nivel miNivel = nivelRepository.findById(nroNivel).get();
