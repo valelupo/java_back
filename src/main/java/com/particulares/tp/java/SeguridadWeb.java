@@ -25,7 +25,8 @@ public class SeguridadWeb {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/login","/registrar", "/registro", "/css/**", "/js/**", "/").permitAll()
                 //esto es a lo que le doy permiso de acceder sin estar logueado
-                .anyRequest().authenticated()
+                .anyRequest().authenticated() 
+                // esto es lo que ncesito permiso para acceder 
             )
             .formLogin(form -> form
                 .loginPage("/login")
@@ -34,8 +35,8 @@ public class SeguridadWeb {
             )
             .logout(logout -> logout
                 .logoutUrl("/logout")
-                .logoutSuccessUrl("/")
-                .permitAll()
+                .logoutSuccessUrl("/") //redirige al inicio 
+                .permitAll() 
             );
 
         return http.build();
