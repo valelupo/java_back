@@ -1,7 +1,9 @@
 package com.particulares.tp.java.entities;
 
-import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
@@ -10,8 +12,10 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "dictado_clase")
 public class DictadoClase {
-    @EmbeddedId
-    private DictadoClaseId id;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     @ManyToOne
     @MapsId("profesorId")
@@ -23,6 +27,7 @@ public class DictadoClase {
     @JoinColumn(name = "nivel_id")
     private Nivel nivel;
 
+
     @ManyToOne
     @MapsId("materiaId")
     @JoinColumn(name = "materia_id")
@@ -30,11 +35,12 @@ public class DictadoClase {
 
 
     // Getters y setters
-    public DictadoClaseId getId() {
+    
+    public Integer getId() {
         return id;
     }
 
-    public void setId(DictadoClaseId id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

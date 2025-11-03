@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.particulares.tp.java.entities.Materia;
 import com.particulares.tp.java.entities.DictadoClase;
-import com.particulares.tp.java.entities.DictadoClaseId;
 import com.particulares.tp.java.repository.MateriaRepository;
 import com.particulares.tp.java.repository.DictadoClaseRepository;
 
@@ -75,7 +74,7 @@ public class MateriaService {
         return materiaRepository.getReferenceById(id);
     }
 
-    public void agregarDictado(int id, DictadoClaseId idDC) 
+    public void agregarDictado(int id, Integer idDC) 
     throws Exception{
         Materia materia = materiaRepository.findById(id).get();
         DictadoClase dictadoClase = dictadoClaseRepository.findById(idDC).get();

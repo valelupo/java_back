@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.particulares.tp.java.entities.DictadoClase;
-import com.particulares.tp.java.entities.DictadoClaseId;
 import com.particulares.tp.java.entities.Nivel;
 import com.particulares.tp.java.repository.DictadoClaseRepository;
 import com.particulares.tp.java.repository.NivelRepository;
@@ -75,7 +74,7 @@ public class NivelService {
         return nivelRepository.getReferenceById(nro);
     }
 
-    public void agregarDictado(int nro, DictadoClaseId idDC) 
+    public void agregarDictado(int nro, Integer idDC) 
     throws Exception{
         Nivel nivel = nivelRepository.findById(nro).get();
         DictadoClase dictadoClase = dictadoClaseRepository.findById(idDC).get();

@@ -3,8 +3,10 @@ package com.particulares.tp.java.entities;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
@@ -16,8 +18,9 @@ public class Resenia {
     private LocalDateTime fecha;
     private String descripcion;
 
-    @EmbeddedId
-    private ReseniaId id; 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id; 
 
     @ManyToOne(cascade = CascadeType.ALL)
     @MapsId("profesorId")
@@ -28,6 +31,15 @@ public class Resenia {
     private Alumno alumno;
 
     //getters y setters 
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+    
     public LocalDateTime getFecha() {
         return fecha;
     }
@@ -42,14 +54,6 @@ public class Resenia {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
-    }
-
-    public ReseniaId getId() {
-        return id;
-    }
-
-    public void setId(ReseniaId id) {
-        this.id = id;
     }
 
     public Profesor getProfesor() {

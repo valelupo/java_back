@@ -11,7 +11,6 @@ import com.particulares.tp.java.entities.Materia;
 import com.particulares.tp.java.entities.Nivel;
 import com.particulares.tp.java.entities.Profesor;
 import com.particulares.tp.java.entities.DictadoClase;
-import com.particulares.tp.java.entities.DictadoClaseId;
 import com.particulares.tp.java.repository.NivelRepository;
 import com.particulares.tp.java.repository.MateriaRepository;
 import com.particulares.tp.java.repository.ProfesorRepository;
@@ -37,6 +36,12 @@ public class DictadoClaseService {
     throws Exception {
 
         validar(idProfesor, idMateria, nroNivel);
+
+        DictadoClase existente = dictadoClaseRepository.findByMateriaProfesorNivel(idProfesor, idMateria, nroNivel);
+
+        if (existente != null) {
+            throw new Exception("Ya tienes un dictado con la mteria y nivel seleccionado");
+        }
 
         Profesor miProfesor = profesorRepository.findById(idProfesor).get();
         Materia miMateria = materiaRepository.findById(idMateria).get();
@@ -70,42 +75,9 @@ public class DictadoClaseService {
         return dictadoClaseRepository.findAll();
     }
 
-    @Transactional
-    public void modificarDictados(int idProfesor, int idMateria, int nroNivel, DictadoClaseId idDC) 
-    throws Exception {
-        
-        validar(idProfesor, idMateria, nroNivel);
-
-        Optional<DictadoClase> dictadoClaseOpt = dictadoClaseRepository.findById(idDC);
-        Optional<Profesor> profesorOpt = profesorRepository.findById(idProfesor);
-        Optional<Materia> materiaOpt = materiaRepository.findById(idMateria);
-        Optional<Nivel> nivelOpt = nivelRepository.findById(nroNivel);
-
-        if (profesorOpt.isEmpty()) {
-            throw new Exception("El profesor especificado no existe.");
-        }
-        if (materiaOpt.isEmpty()) {
-            throw new Exception("La materia especificada no existe.");
-        }
-        if (nivelOpt.isEmpty()) {
-            throw new Exception("El nivel especificado no existe.");
-        }
-
-        if (dictadoClaseOpt.isPresent()) {
-            DictadoClase dictadoClase = dictadoClaseOpt.get();
-
-            dictadoClase.setMateria(materiaOpt.get());
-            dictadoClase.setProfesor(profesorOpt.get());
-            dictadoClase.setNivel(nivelOpt.get());
-
-            dictadoClaseRepository.save(dictadoClase);
-        } else {
-            throw new Exception("No se encontró un dictadoClase con el ID especificado");
-        }
-    }
 
     @Transactional
-    public void eliminarDictado(DictadoClaseId idDC) 
+    public void eliminarDictado(Integer idDC) 
     throws Exception{
         Optional<DictadoClase> dictadoClaseOpt = dictadoClaseRepository.findById(idDC);
         if (dictadoClaseOpt.isPresent()) {
@@ -117,7 +89,7 @@ public class DictadoClaseService {
     }
 
     @Transactional(readOnly = true)
-    public DictadoClase  getOne(DictadoClaseId idDC){
+    public DictadoClase  getOne(Integer idDC){
         return dictadoClaseRepository.getReferenceById(idDC);
     }
 

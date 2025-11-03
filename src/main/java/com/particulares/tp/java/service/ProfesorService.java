@@ -14,7 +14,6 @@ import com.particulares.tp.java.entities.Profesor;
 import com.particulares.tp.java.enums.FormaTrabajo;
 import com.particulares.tp.java.enums.Rol;
 import com.particulares.tp.java.entities.DictadoClase;
-import com.particulares.tp.java.entities.DictadoClaseId;
 import com.particulares.tp.java.entities.Localidad;
 import com.particulares.tp.java.repository.ProfesorRepository;
 import com.particulares.tp.java.repository.LocalidadRepository;
@@ -118,7 +117,7 @@ public class ProfesorService {
         return profesorRepository.getReferenceById(id);
     }
 
-    public void agregarDictado(int id, DictadoClaseId idDC) 
+    public void agregarDictado(int id, Integer idDC) 
     throws Exception{
         Profesor profesor = profesorRepository.findById(id).get();
         DictadoClase dictadoClase = dictadoClaseRepository.findById(idDC).get();

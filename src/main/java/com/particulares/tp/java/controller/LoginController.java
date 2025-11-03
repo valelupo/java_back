@@ -66,6 +66,8 @@ public class LoginController {
         return "index.html";
     }
 
+    //modelo: guardo los datos para mandarlos despues a la vista desde el controlador 
+
     @GetMapping("/login")
     public String login(@RequestParam(required = false) String error, ModelMap modelo ) {
         if (error != null) {
