@@ -29,9 +29,6 @@
         <label>Email:</label>
         <input type="email" name="email" th:value="${email}" required />
 
-        <label>Localidad:</label>
-        <input type="number" name="idLocalidad" required />
-
         <label>Clave:</label>
         <input type="password" name="clave" required />
 
@@ -48,11 +45,11 @@
         <label>Provincia:</label>
         <select id="provincia" name="idProvincia" onchange="cargarLocalidades(this.value)">
             <option value="">Seleccionar Provincia</option>
-            <option th:each="prov : ${provincias}" th:value="${prov.id}" th:text="${prov.nombre}">
+            <option th:each="prov : ${provincias}" th:value="${prov.id}" th:text="${prov.nombre}"></option>
         </select>
 
         <label>Localidad:</label>
-        <select id="localidad" name="idLocalidad">
+        <select id="localidad" name="idLocalidad" required>
             <option value="">Seleccionar provincia primero</option>
         </select>
 
@@ -78,6 +75,9 @@
                         option.text = loc.nombre;
                         localidadSelect.appendChild(option);
                     });
+                })
+                .catch(error => {
+                    console.error('Error al cargar localidades:', error);
                 });
         }
         </script>

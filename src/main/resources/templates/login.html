@@ -7,12 +7,12 @@
 <body>
     <div class="login-container">
         <h2>Iniciar sesión</h2>
-        <form th:action="@{/login}" method="post">
+        <form th:action="@{/logincheck}" method="post">
             <label for="email">Email:</label>
             <input type="text" id="email" name="email" required />
 
             <label for="clave">Clave:</label>
-            <input type="clave" id="clave" name="clave" required />
+            <input type="password" id="clave" name="clave" required />
 
             <button type="submit">Ingresar</button>
         </form>
