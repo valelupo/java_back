@@ -1,10 +1,14 @@
 package com.particulares.tp.java.entities;
 
+import jakarta.persistence.Basic;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
@@ -16,6 +20,10 @@ public class Material {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id; 
     private String descripcion;
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    @Column(columnDefinition = "LONGBLOB")
+    private byte[] archivo;
     
     @ManyToOne
     @JoinColumn(name = "persona_profesor_id")
@@ -39,6 +47,12 @@ public class Material {
     }
     public void setProfesor(Profesor profesor) {
         this.profesor = profesor;
+    }
+    public byte[] getArchivo() {
+        return archivo;
+    }
+    public void setArchivo(byte[] archivo) {
+        this.archivo = archivo;
     }
     
 }

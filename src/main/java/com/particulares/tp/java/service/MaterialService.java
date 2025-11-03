@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.particulares.tp.java.entities.Material;
 import com.particulares.tp.java.entities.Profesor;
@@ -24,9 +25,9 @@ public class MaterialService {
     private ProfesorRepository profesorRepository;
 
     @Transactional
-    public void crearmaterial(String descripcion, int idProfesor) throws Exception {
+    public void crearmaterial(String[] descripciones, int idProfesor,  MultipartFile[] archivos) throws Exception {
 
-        validar(descripcion, idProfesor);
+        //validar(descripcion, idProfesor);
 
         Profesor miProfesor = profesorRepository.findById(idProfesor).get();
 
@@ -34,12 +35,21 @@ public class MaterialService {
             throw new Exception("El profesor especificado no existe.");
         }
 
-        Material material = new Material();
+        for (int i = 0; i < archivos.length; i++) {
+            MultipartFile archivo = archivos[i];
+            String descripcion = descripciones[i];
 
-        material.setDescripcion(descripcion);
-        material.setProfesor(miProfesor);
+            if (!archivo.isEmpty()) {
+                Material material = new Material();
 
-        materialRepository.save(material);
+                material.setDescripcion(descripcion);
+                material.setProfesor(miProfesor);
+                material.setArchivo(archivo.getBytes());
+
+                materialRepository.save(material);
+            }
+        }
+  
     }
 
     @Transactional(readOnly = true)
@@ -49,9 +59,9 @@ public class MaterialService {
     }
 
     @Transactional
-    public void modificarMaterial(String descripcion, int idProfesor, int id) throws Exception {
+    public void modificarMaterial(String descripcion, int idProfesor, int id, MultipartFile archivo) throws Exception {
         
-        validar(descripcion, idProfesor);
+        //validar(descripcion, idProfesor);
 
         Optional<Material> materialOpt = materialRepository.findById(id);
         Optional<Profesor> profesorOpt = profesorRepository.findById(idProfesor);
@@ -65,6 +75,7 @@ public class MaterialService {
 
             material.setDescripcion(descripcion);
             material.setProfesor(profesorOpt.get());
+            material.setArchivo(archivo.getBytes());
 
             materialRepository.save(material);
         } else {

@@ -2,7 +2,11 @@ package com.particulares.tp.java.entities;
 
 import java.util.List;
 
+import com.particulares.tp.java.enums.FormaTrabajo;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -10,9 +14,10 @@ import jakarta.persistence.Table;
 @Table(name = "profesor")
 public class Profesor extends Persona{
     private String telefono;
-    private String formaTrabajo;
+    @Enumerated(EnumType.STRING)
+    private FormaTrabajo formaTrabajo;
     private String infoAcademica;
-    private int matricula; // o es matricula?
+    private double precioXHs;
 
     @OneToMany(mappedBy = "profesor") //se usa mappedBy para indicar que la relacion se mapea a traves de otra entidad 
     private List<DictadoClase> dictados;
@@ -39,23 +44,11 @@ public class Profesor extends Persona{
     public String getTelefono() {
         return telefono;
     }
-    public int getMatricula() {
-        return matricula;
-    }
-    public void setMatricula(int matricula) {
-        this.matricula = matricula;
-    }
     public void setDictados(List<DictadoClase> dictados) {
         this.dictados = dictados;
     }
     public void setTelefono(String telefono) {
         this.telefono = telefono;
-    }
-    public String getFormaTrabajo() {
-        return formaTrabajo;
-    }
-    public void setFormaTrabajo(String formaTrabajo) {
-        this.formaTrabajo = formaTrabajo;
     }
     public String getInfoAcademica() {
         return infoAcademica;
@@ -66,6 +59,18 @@ public class Profesor extends Persona{
     
     public List<DictadoClase> getDictados() {
         return dictados;
+    }
+    public double getPrecioXHs() {
+        return precioXHs;
+    }
+    public void setPrecioXHs(double precioXHs) {
+        this.precioXHs = precioXHs;
+    }
+    public FormaTrabajo getFormaTrabajo() {
+        return formaTrabajo;
+    }
+    public void setFormaTrabajo(FormaTrabajo formaTrabajo) {
+        this.formaTrabajo = formaTrabajo;
     } 
     
 

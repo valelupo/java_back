@@ -48,12 +48,12 @@ public class LoginController {
                             @RequestParam (required = false) String telefono,
                             @RequestParam (required = false) String formaTrabajo,
                             @RequestParam (required = false) String infoAcademica,
-                            @RequestParam (required = false) Integer matricula, ModelMap modelo) {
+                            @RequestParam (required = false) double precioXHs, ModelMap modelo) {
         try {
             if (rol.equals("ALUMNO")) {
                 alumnoService.crearAlumno(nombre, apellido, email, idLocalidad, clave, clave2);
             }else if (rol.equals("PROFESOR")){
-                profesorService.crearProfesor(nombre, apellido, email, idLocalidad, clave, clave2, telefono, formaTrabajo, infoAcademica, matricula);
+                profesorService.crearProfesor(nombre, apellido, email, idLocalidad, clave, clave2, telefono, formaTrabajo, infoAcademica, precioXHs);
             }
             modelo.put("exito", "Usuario registrado correctamente!");
         } catch (Exception e) {

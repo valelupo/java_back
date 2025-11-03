@@ -12,13 +12,6 @@
 <body>
     <h2>Registro</h2>
 
-    <div th:if="${error}">
-        <p style="color:red" th:text="${error}"></p>
-    </div>
-    <div th:if="${exito}">
-        <p style="color:green" th:text="${exito}"></p>
-    </div>
-
     <form th:action="@{/registro}" method="post">
         <label>Nombre:</label>
         <input type="text" name="nombre" th:value="${nombre}" required />
@@ -37,7 +30,7 @@
 
         <label>Rol:</label>
         <select name="rol" onchange="mostrarCamposProfesor(this.value)" required>
-            <option value="">-- Seleccionar --</option>
+            <option value="">Seleccionar</option>
             <option value="ALUMNO" th:selected="${rol == 'ALUMNO'}">Alumno</option>
             <option value="PROFESOR" th:selected="${rol == 'PROFESOR'}">Profesor</option>
         </select>
@@ -90,13 +83,21 @@
             <input type="text" name="telefono" th:value="${telefono}" />
 
             <label>Forma de trabajo:</label>
-            <input type="text" name="formaTrabajo" th:value="${formaTrabajo}" />
+            <select id="formaTrabajo" name="formaTrabajo">
+                <option value="">Seleccionar</option>
+                <option th:each="formaTrabajo : ${T(com.particulares.tp.java.enums.FormaTrabajo).values()}" 
+                        th:value="${formaTrabajo}" 
+                        th:text="${formaTrabajo}"> 
+                    VALOR_ENUM 
+                </option>
+            </select>
 
             <label>Información académica:</label>
             <textarea name="infoAcademica" th:text="${infoAcademica}"></textarea>
 
-            <label>Matricula:</label>
-            <input name="matricula" th:value="${matricula}"></input>
+            <label>Precio Por Hs:</label>
+            <input name="precioXHs" th:value="${precioXHs}"></input>
+
         </div>
 
         <button type="submit">Registrarse</button>

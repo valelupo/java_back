@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.particulares.tp.java.entities.Profesor;
+import com.particulares.tp.java.enums.FormaTrabajo;
 import com.particulares.tp.java.enums.Rol;
 import com.particulares.tp.java.entities.DictadoClase;
 import com.particulares.tp.java.entities.DictadoClaseId;
@@ -33,11 +34,13 @@ public class ProfesorService {
 
     @Transactional
     public void crearProfesor(String nombre, String apellido, String email, int idLocalidad, String clave, String clave2,
-                              String telefono, String formaTrabajo, String infoAcademica, Integer matricula) throws Exception {
+                              String telefono, String formaTrabajo, String infoAcademica, double precioXHs) throws Exception {
 
-        validar(nombre, apellido, email, idLocalidad, clave, clave2, telefono, formaTrabajo, infoAcademica, matricula);
+        validar(nombre, apellido, email, idLocalidad, clave, clave2, telefono, formaTrabajo, infoAcademica, precioXHs);
 
         Localidad miLocalidad = localidadRepository.findById(idLocalidad).get();
+        //Conversión del String al Enum
+        FormaTrabajo estadoFT = FormaTrabajo.valueOf(formaTrabajo);
 
         if (miLocalidad == null) {
             throw new Exception("La localidad especificada no existe.");
@@ -52,9 +55,9 @@ public class ProfesorService {
         profesor.setClave(new BCryptPasswordEncoder().encode(clave)); 
         profesor.setRol(Rol.PROFESOR);
         profesor.setTelefono(telefono);
-        profesor.setFormaTrabajo(formaTrabajo);
+        profesor.setFormaTrabajo(estadoFT);
         profesor.setInfoAcademica(infoAcademica);
-        profesor.setMatricula(matricula);
+        profesor.setPrecioXHs(precioXHs);
 
         profesorRepository.save(profesor);
     }
@@ -66,12 +69,14 @@ public class ProfesorService {
 
     @Transactional
     public void modificarProfesor(String nombre, String apellido, String email, int idLocalidad, String clave, String clave2,
-                                  String telefono, String formaTrabajo, String infoAcademica, Integer matricula, int id) throws Exception {
+                                  String telefono, String formaTrabajo, String infoAcademica, double precioXHs, int id) throws Exception {
         
-        validar(nombre, apellido, email, idLocalidad, clave, clave2, telefono, formaTrabajo, infoAcademica, matricula);
+        validar(nombre, apellido, email, idLocalidad, clave, clave2, telefono, formaTrabajo, infoAcademica, precioXHs);
 
         Optional<Localidad> localidadOpt = localidadRepository.findById(idLocalidad);
         Optional<Profesor> profesorOpt = profesorRepository.findById(id);
+        //Conversión del String al Enum
+        FormaTrabajo estadoFT = FormaTrabajo.valueOf(formaTrabajo);
 
         if (localidadOpt.isEmpty()) {
             throw new Exception("La localidad especificada no existe.");
@@ -87,9 +92,9 @@ public class ProfesorService {
             profesor.setClave(new BCryptPasswordEncoder().encode(clave)); 
             profesor.setRol(Rol.PROFESOR);
             profesor.setTelefono(telefono);
-            profesor.setFormaTrabajo(formaTrabajo);
+            profesor.setFormaTrabajo(estadoFT);
             profesor.setInfoAcademica(infoAcademica);
-            profesor.setMatricula(matricula);
+            profesor.setPrecioXHs(precioXHs);
 
             profesorRepository.save(profesor);
         } else {
@@ -132,7 +137,7 @@ public class ProfesorService {
 
 
     private void validar(String nombre, String apellido, String email, int idLocalidad, String clave, String clave2,
-                         String telefono, String formaTrabajo, String infoAcademica, Integer matricula) throws Exception {
+                         String telefono, String formaTrabajo, String infoAcademica, double precioXHs) throws Exception {
         if (nombre.isEmpty() || nombre == null) {
             throw new Exception("el nombre no puede ser nulo o estar vacío");
         }
@@ -163,8 +168,8 @@ public class ProfesorService {
         if (infoAcademica.isEmpty() || infoAcademica == null) {
             throw new Exception("la infoAcademica no puede ser nulo o estar vacío");
         }
-        if (matricula == null || matricula == 0) {
-            throw new Exception("el matricula no puede ser nula o 0");
+        if (precioXHs <= 0) {
+            throw new Exception("el precioXHs debe ser un numero positivo");
         }
     }
     
