@@ -6,7 +6,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
 
 @Entity
@@ -18,18 +17,15 @@ public class DictadoClase {
     private Integer id;
 
     @ManyToOne
-    @MapsId("profesorId")
     @JoinColumn(name = "profesor_id")
     private Profesor profesor;
 
     @ManyToOne
-    @MapsId("nivelId")
     @JoinColumn(name = "nivel_id")
     private Nivel nivel;
 
 
     @ManyToOne
-    @MapsId("materiaId")
     @JoinColumn(name = "materia_id")
     private Materia materia;
 

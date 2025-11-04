@@ -8,7 +8,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
 
 @Entity
@@ -23,11 +22,9 @@ public class Resenia {
     private Integer id; 
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @MapsId("profesorId")
     private Profesor profesor;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @MapsId("alumnoId")
     private Alumno alumno;
 
     //getters y setters 

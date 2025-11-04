@@ -11,13 +11,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-// import org.springframework.web.context.request.RequestContextHolder;
-// import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.particulares.tp.java.entities.Persona;
 import com.particulares.tp.java.repository.PersonaRepository;
 
-//import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -44,10 +41,6 @@ public class PersonaService implements UserDetailsService {
         GrantedAuthority p = new SimpleGrantedAuthority("ROLE_"+ persona.getRol().toString());
         
         permisos.add(p);
-
-        // ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-        // HttpSession session = attr.getRequest().getSession(true);
-        // session.setAttribute("personaSession", persona);
         
         return new User(persona.getEmail(), persona.getClave() ,permisos);
 

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.particulares.tp.java.entities.Persona;
 import com.particulares.tp.java.service.AlumnoService;
 import com.particulares.tp.java.service.ProfesorService;
 import com.particulares.tp.java.service.ProvinciaService;
@@ -57,11 +58,12 @@ public class LoginController {
             }
             modelo.put("exito", "Usuario registrado correctamente!");
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             modelo.put("error", e.getMessage());
             modelo.put("nombre", nombre);
             modelo.put("apellido", apellido);
             modelo.put("email", email);
-            return "registro.html";
+            return "redirect:/registrar";
         }
         return "index.html";
     }
@@ -73,16 +75,16 @@ public class LoginController {
         if (error != null) {
                modelo.put("error", "Email o Clave inválidos!");        
         }
-           return "login.html";
+        return "login.html";
     }
 
     @GetMapping("/inicio")
     public String inicio(HttpSession session){
-        //Persona logueado = (Persona) session.getAttribute("personasession");
-        // if (logueado.getRol().toString().equals("PELUQUERO")) {
-        //     return "redirect:/peluquero/inicio";
-        // }
-        return "iniAlumno.html";
+        Persona logueado = (Persona) session.getAttribute("personaSession");
+        if (logueado.getRol().toString().equals("PROFESOR")) {
+            return "profesor/home";
+        }
+        return "alumno/home";
     }
 
     // @GetMapping("/inicio")

@@ -35,7 +35,8 @@ public class SeguridadWeb {
                         .loginProcessingUrl("/logincheck")
                         .usernameParameter("email")
                         .passwordParameter("clave")
-                        .defaultSuccessUrl("/inicio", true)
+                        .successHandler(successHandler())
+                        // .defaultSuccessUrl("/inicio", true)
                         .permitAll())    
                 .logout((logout) -> logout
                         .logoutUrl("/logout")
@@ -51,7 +52,7 @@ public class SeguridadWeb {
             String email = authentication.getName();
             Persona persona = personaRepository.buscarPorEmail(email);
             request.getSession().setAttribute("personaSession", persona);
-            response.sendRedirect("/"); 
+            response.sendRedirect("/inicio"); 
         };
     }
 
