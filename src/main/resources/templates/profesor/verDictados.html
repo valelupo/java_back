@@ -11,10 +11,12 @@
   <h1>Mis Dictados</h1>
 
   <div>
-    <a href="/dictados/nuevo">Crear nuevo dictado</a>
+    <a href="/dictadoClase/registrar">Crear nuevo dictado</a>
   </div>
 
-  <table>
+  <p th:if="${mensaje}" th:text="${mensaje}" class="alert alert-info"></p>
+
+  <table th:if="${dictados}">
     <thead>
       <tr>
         <th>Materia</th>
@@ -28,12 +30,17 @@
         <td th:text="${dictado.nivel.descripcion}"></td>
         <td>
           <form th:action="@{/dictados/eliminar/{id}(id=${dictado.id})}" method="post">
-            <button type="submit" class="btn btn-danger">Eliminar</button>
+            <button type="submit">Eliminar</button>
           </form>
         </td>
       </tr>
     </tbody>
   </table>
+    <section>
+        <div>
+            <a th:href="@{/inicio}">Volver</a>
+        </div>
+    </section>
 
 </body>
 </html>

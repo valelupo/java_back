@@ -18,6 +18,8 @@ import com.particulares.tp.java.service.DictadoClaseService;
 import com.particulares.tp.java.service.MateriaService;
 import com.particulares.tp.java.service.NivelService;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/dictadoClase")
 public class DictadoClaseController {
@@ -50,10 +52,15 @@ public class DictadoClaseController {
     }
 
     @GetMapping("/lista") //dictados 
-    public String listar(ModelMap modelo, @AuthenticationPrincipal Profesor profesor) {
+    public String listar(ModelMap modelo, HttpSession session) {
 
+        Profesor profesor = (Profesor) session.getAttribute("personaSession");
         List<DictadoClase> dictados = dictadoClaseService.obtenerDictadosPorProfesor(profesor.getId());
-        modelo.addAttribute("dictados", dictados); 
+        if (dictados.isEmpty()) {
+            modelo.addAttribute("mensaje", "No hay dictados asignados actualmente.");
+        } else {
+            modelo.addAttribute("dictados", dictados);
+        }
 
         return "profesor/verDictados";
     }
