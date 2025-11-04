@@ -79,7 +79,7 @@
             });
         }
 
-        function enviarmateriales() {
+        function enviarMateriales() {
             const archivo = document.getElementById("archivo").files[0];
             const descripcion = document.getElementById("descripcion").value;
 
@@ -107,7 +107,7 @@
             .then(response => {
                 if (response.ok) {
                     alert("Materiales cargados correctamente.");
-                    window.location.href = "/profesor/home";
+                    window.location.href = "/inicio";
                 } else {
                     alert("Error al cargar materiales.");
                 }
@@ -135,7 +135,7 @@
 
         <section>
             <div>
-                <a href="/src/main/resources/templates/profesor/home.html">Volver</a>
+                <a th:href="@{/inicio}">Volver</a>
             </div>
         </section>
     </div>

@@ -34,7 +34,7 @@ public class MaterialController {
                                     HttpSession session,
                                     ModelMap model) {
         try {
-            Profesor profesor = (Profesor) session.getAttribute("profesor"); // ver de hacer con el Auth
+            Profesor profesor = (Profesor) session.getAttribute("personaSession"); // ver de hacer con el Auth
             materialService.crearmaterial(descripciones, profesor.getId(), archivos);
 
             model.put("exito", "Documentos cargados correctamente.");
