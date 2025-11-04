@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Nuevo Dictado</title>
+</head>
+<body>
+  <h1>Registrar nuevo dictado</h1>
+
+  <form action="/dictadoClase/crear" method="post">
+
+    <label for="materia">Materia:</label>
+    <select name="materiaId" id="materia" required>
+      <option value="" disabled selected>Seleccionar materia</option>
+      <option th:each="materia : ${materias}" th:value="${materia.id}" th:text="${materia.nombre}"></option>
+    </select>
+
+    <br><br>
+
+    <label for="niveles">Niveles:</label>
+    <div th:each="nivel : ${niveles}">
+      <input type="checkbox" name="nivelesIds" th:value="${nivel.id}">
+      <span th:text="${nivel.descripcion}"></span>
+    </div>
+
+    <br>
+    <button type="submit">Registrar</button>
+  </form>
+
+  <br>
+  <a href="/lista">Volver al listado</a>
+</body>
+</html>

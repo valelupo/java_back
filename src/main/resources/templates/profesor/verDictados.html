@@ -6,3 +6,34 @@
     <title>DICTADOS</title>
     <!-- <link rel="stylesheet" href="css/styles.css"> -->
 </head>
+
+<body>
+  <h1>Mis Dictados</h1>
+
+  <div>
+    <a href="/dictados/nuevo">Crear nuevo dictado</a>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Materia</th>
+        <th>Nivel</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="dictado : ${dictados}">
+        <td th:text="${dictado.materia.nombre}"></td>
+        <td th:text="${dictado.nivel.descripcion}"></td>
+        <td>
+          <form th:action="@{/dictados/eliminar/{id}(id=${dictado.id})}" method="post">
+            <button type="submit" class="btn btn-danger">Eliminar</button>
+          </form>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</body>
+</html>
