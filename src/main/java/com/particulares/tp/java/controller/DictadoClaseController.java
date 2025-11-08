@@ -34,14 +34,20 @@ public class DictadoClaseController {
     private NivelService nivelService;
     
     @GetMapping("/registrar") 
-    public String registrar() {
+    public String registrar(ModelMap modelo) {
+            modelo.addAttribute("materias", materiaService.listarMaterias());
+            modelo.addAttribute("niveles", nivelService.listarNiveles());
         return "profesor/crearDictado";
     }
 
     @PostMapping("/crear") // localhost:8080/dictadoClase/crear
-    public String crear(@RequestParam int idProfesor, int idMateria, List<Integer> nrosNiveles, ModelMap modelo){
+    public String crear(HttpSession session, 
+                        @RequestParam int idMateria, 
+                        @RequestParam(name = "nrosNiveles", required = false) List<Integer> nrosNiveles, 
+                        ModelMap modelo){
         try {
-            dictadoClaseService.crearDictadoClase(idProfesor, idMateria, nrosNiveles);   
+            Profesor profesor = (Profesor) session.getAttribute("personaSession");
+            dictadoClaseService.crearDictadoClase(profesor.getId(), idMateria, nrosNiveles);   
             modelo.put("exito", "El dictado fue cargado correctamente");
         
         } catch (Exception ex) {
@@ -66,20 +72,19 @@ public class DictadoClaseController {
     }
 
     @PostMapping("/eliminar")
-    public String eliminar(@PathVariable int idDC, ModelMap modelo) {
+    public String eliminar(@RequestParam int idDC, ModelMap modelo, HttpSession session) {
         try {
-            dictadoClaseService.eliminarDictado(idDC);           
+            dictadoClaseService.eliminarDictado(idDC); 
+            modelo.put("exito", "El dictado fue eliminado correctamente.");          
         } catch (Exception ex) {
             modelo.put("error", ex.getMessage());
         }
-        return "profesor/verDictados";
-    }
 
-    @GetMapping("/dictados/nuevo")
-    public String nuevoDictado(ModelMap model) {
-        model.addAttribute("materias", materiaService.listarMaterias());
-        model.addAttribute("niveles", nivelService.listarNiveles());
-        return "nuevo_dictado";
+        Profesor profesor = (Profesor) session.getAttribute("personaSession");
+        List<DictadoClase> dictados = dictadoClaseService.obtenerDictadosPorProfesor(profesor.getId());
+        modelo.addAttribute("dictados", dictados);
+        
+        return "profesor/verDictados";
     }
 
 

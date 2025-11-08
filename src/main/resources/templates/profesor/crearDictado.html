@@ -7,10 +7,19 @@
 <body>
   <h1>Registrar nuevo dictado</h1>
 
+  <!-- Mostrar mensajes -->
+  <div th:if="${exito}" >
+    <p th:text="${exito}"></p>
+  </div>
+
+  <div th:if="${error}" >
+    <p th:text="${error}"></p>
+  </div>
+
   <form action="/dictadoClase/crear" method="post">
 
-    <label for="materia">Materia:</label>
-    <select name="materiaId" id="materia" required>
+    <label for="materias">Materia:</label>
+    <select name="idMateria" id="materia" required>
       <option value="" disabled selected>Seleccionar materia</option>
       <option th:each="materia : ${materias}" th:value="${materia.id}" th:text="${materia.nombre}"></option>
     </select>
@@ -19,7 +28,7 @@
 
     <label for="niveles">Niveles:</label>
     <div th:each="nivel : ${niveles}">
-      <input type="checkbox" name="nivelesIds" th:value="${nivel.id}">
+      <input type="checkbox" name="nrosNiveles" th:value="${nivel.nro}">
       <span th:text="${nivel.descripcion}"></span>
     </div>
 
