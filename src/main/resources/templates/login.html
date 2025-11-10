@@ -2,30 +2,42 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Login</title>
+    <link rel="icon" type="image/png" th:href="@{/img/favicon.png}" />
     <link rel="stylesheet" th:href="@{/css/general.css}" />
+    <link rel="stylesheet" th:href="@{/css/login.css}" />
 </head>
 <body>
-    <div class="login-container">
-        <h2>Iniciar sesión</h2>
-        <form th:action="@{/logincheck}" method="post">
-            <label for="email">Email:</label>
-            <input type="text" id="email" name="email" required />
-
-            <label for="clave">Clave:</label>
-            <input type="password" id="clave" name="clave" required />
-
-            <button type="submit">Ingresar</button>
-        </form>
-        <div th:replace="fragments/mensajes :: fragment"></div>
-
-        <a href="/registrar" class="btn">¿No tienes cuenta? Regístrate aquí</a>
-
-        <!-- <div th:if="${param.error}">
-            <p class="error">Usuario o contraseña incorrectos</p>
+    <div th:replace="fragments/headerGral :: fragment"></div>
+    <div class="login-wrapper">
+        <div class="login-image">
+            <img src="/img/login.jpg" alt="Ilustración de login" />
         </div>
-        <div th:if="${param.logout}">
-            <p class="success">Sesión cerrada correctamente</p>
-        </div> -->
+
+        <div class="login-form">
+            <form th:action="@{/logincheck}" method="post">
+                <h2 class="form-title">Iniciar sesión</h2>
+                <label for="email">Email:</label>
+                <input type="text" id="email" name="email" required />
+
+                <label for="clave">Clave:</label>
+                <input type="password" id="clave" name="clave" required />
+
+                <button type="submit" class="btn">Ingresar</button>
+            
+                <div th:replace="fragments/mensajes :: fragment"></div>
+
+                <a href="/registrar">¿No tienes cuenta? Regístrate aquí</a>
+            </form>
+
+            <!-- <div th:if="${param.error}">
+                <p class="error">Usuario o contraseña incorrectos</p>
+            </div>
+            <div th:if="${param.logout}">
+                <p class="success">Sesión cerrada correctamente</p>
+            </div> -->
+        </div>
+
     </div>
+    <div th:replace="fragments/footer :: fragment"></div>
 </body>
 </html>

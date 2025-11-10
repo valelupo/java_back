@@ -4,16 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GETEACHER</title>
+    <link rel="icon" type="image/png" th:href="@{/img/favicon.png}" />
     <link rel="stylesheet" th:href="@{/css/general.css}" />
 </head>
 <body>
     
-    <header>
-        <nav class="navbar">
-            <!-- <img src="/img/logo.png" alt="Logo Geteacher" class="logo"> -->
-            <h1>GETEACHER</h1>
-        </nav>
-    </header>
+    <div th:replace="fragments/headerGral :: fragment"></div>
 
     <main>
         <div th:replace="fragments/mensajes :: fragment"></div>
@@ -29,8 +25,6 @@
         </section>
     </main>
 
-    <footer>
-        <p>&copy; 2025 Geteacher. Todos los derechos reservados.</p>
-    </footer>
+    <div th:replace="fragments/footer :: fragment"></div>
 </body>
 </html>

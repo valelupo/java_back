@@ -1,0 +1,51 @@
+/* Wrapper dividido */
+.login-wrapper {
+    display: flex;
+    height: 100vh;
+}
+
+/* Imagen a la derecha */
+.login-image {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #c0bfbf;
+}
+
+.login-image img {
+    max-width: 100%;
+    height: 100%;
+}
+
+/* Formulario */
+.login-form {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #c0bfbf;
+}
+
+.login-form form {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Estilo para enlaces dentro de la caja del formulario */
+.login-form a {
+    text-align: center;
+    color: #815743;
+    text-decoration: none;
+}
+
+.login-form a:hover {
+    text-decoration: underline;
+}
