@@ -44,6 +44,10 @@ public class Materia {
         return id;
     }
 
+    public void setDictados(List<DictadoClase> dictados) {
+        this.dictados = dictados;
+    }
+
     public void setId(int id) {
         this.id = id;
     }

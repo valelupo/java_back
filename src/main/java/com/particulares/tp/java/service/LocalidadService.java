@@ -1,14 +1,9 @@
 package com.particulares.tp.java.service;
-
-
 import java.util.List;
 import java.util.Optional;
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.particulares.tp.java.entities.Localidad;
 import com.particulares.tp.java.entities.Provincia;
 import com.particulares.tp.java.repository.LocalidadRepository;
@@ -24,83 +19,99 @@ public class LocalidadService {
     private ProvinciaRepository provinciaRepository;
 
     @Transactional
-    public void crearLocalidad(String nombre, int idProvincia) throws Exception {
+    public Localidad crearLocalidad(String nombre, Integer codPostal, Integer idProvincia)throws Exception {
+        validar(nombre,codPostal,idProvincia);
 
-        validar(nombre, idProvincia);
+        Provincia provincia = provinciaRepository.findById(idProvincia).get();
 
-        Provincia miProvincia = provinciaRepository.findById(idProvincia).get();
-
-        if (miProvincia == null) {
-            throw new Exception("La provincia especificada no existe.");
+        Localidad existente = localidadRepository.findByNombreOrCodigoPostal(nombre, codPostal);
+        if (existente != null) {
+            throw new Exception("Ya existe una localidad con ese nombre o código postal.");
         }
 
         Localidad localidad = new Localidad();
-
         localidad.setNombre(nombre);
-        localidad.setMiProvincia(miProvincia);
+        localidad.setCodPostal(codPostal);
+        localidad.setMiProvincia(provincia);
 
-        localidadRepository.save(localidad);
+        return localidadRepository.save(localidad);
     }
 
     @Transactional(readOnly = true)
     public List<Localidad> listarLocalidades() {
-
         return localidadRepository.findAll();
     }
 
-    @Transactional
-    public void modificarLocalidad(String nombre,int idProvincia, int cod) throws Exception {
-        
-        validar(nombre, idProvincia);
-
-        Optional<Provincia> provOpt = provinciaRepository.findById(idProvincia);
-        Optional<Localidad> locOpt = localidadRepository.findById(cod);
-
-         if (provOpt.isEmpty()) {
-            throw new Exception("La provincia especificada no existe.");
-        }
-
-        if (locOpt.isPresent()) {
-            Localidad localidad = locOpt.get();
-
-            localidad.setNombre(nombre);
-            localidad.setMiProvincia(provOpt.get());
-
-            localidadRepository.save(localidad);
-        } else {
-            throw new Exception("No se encontró una localidad con el numero especificado");
-        }
-    }
-
-    @Transactional
-    public void eliminarLocalidad(int cod) throws Exception{
-        Optional<Localidad> localidadOpt = localidadRepository.findById(cod);
-        if (localidadOpt.isPresent()) {
-            localidadRepository.delete(localidadOpt.get());
-        } else {
-            throw new Exception("La localidad con el numero especificado no existe");
-        }
-
-    }
-
     @Transactional(readOnly = true)
-    public Localidad getOne(int cod){
-        return localidadRepository.getReferenceById(cod);
+    public List<Localidad> listarLocalidadesPorProvincia(String provincia) {
+        return localidadRepository.buscarPorProvinciaNombre(provincia);
     }
 
     @Transactional(readOnly = true)
     public List<Localidad> buscarPorProvincia(int idProv){
-        return localidadRepository.buscarPorProvincia(idProv);
+        return localidadRepository.buscarPorProvinciaId(idProv);
     }
 
 
-    private void validar(String nombre, int idProvincia) throws Exception {
-        if (nombre.isEmpty() || nombre == null) {
-            throw new Exception("el nombre no puede ser nulo o estar vacío");
+    @Transactional
+    public void modificarLocalidad(Integer idLocalidad, String nombre, Integer codPostal, Integer idProvincia)
+        throws Exception {
+
+        validar(nombre,codPostal,idProvincia);
+        Optional<Localidad> localidadOpt = localidadRepository.findById(idLocalidad);
+        Optional<Provincia> provinciaOpt = provinciaRepository.findById(idProvincia);
+
+
+        Provincia provincia = new Provincia();
+
+        if (provinciaOpt.isPresent()) {
+            provincia = provinciaOpt.get();
         }
-        if(idProvincia <= 0) {
-            throw new Exception("El idProvincia debe ser un numero positivo");
+
+
+        if (localidadOpt.isPresent()) {
+            Localidad localidad = localidadOpt.get();
+
+            localidad.setNombre(nombre);
+            localidad.setCodPostal(codPostal);
+            localidad.setMiProvincia(provincia);
+
+            localidadRepository.save(localidad);
+        }
+
+    }
+
+    @Transactional
+    public void eliminarLocalidad(Integer idLocalidad) throws Exception{
+        Optional<Localidad> localidadOpt = localidadRepository.findById(idLocalidad);
+        if (localidadOpt.isPresent()) {
+            localidadRepository.delete(localidadOpt.get());
+        } else {
+            throw new Exception("La localidad con el ID especificado no existe");
+        }
+
+    }
+
+    @Transactional(readOnly = true)
+    public Localidad  getOne(Integer idLocalidad){
+        return localidadRepository.getReferenceById (idLocalidad);
+    }
+
+    private void validar(String nombre, Integer codPostal, Integer idProvincia)
+            throws Exception {
+        
+        if (nombre.isEmpty() || nombre == null) {
+            throw new Exception("El nombre no puede ser nulo o estar vacio");
+        }
+
+        if(idProvincia == null) {
+            throw new Exception("El idProvincia no puede ser nulo o estar vacio");
+        }
+
+        if (codPostal == null) {
+            throw new Exception("El codPostal no puede ser nulo o estar vacio");
         }
     }
     
 }
+

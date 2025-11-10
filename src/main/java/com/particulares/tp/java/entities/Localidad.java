@@ -15,6 +15,7 @@ public class Localidad {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id; 
     private String nombre;
+    private int codPostal;
 
     @ManyToOne
     @JoinColumn(name = "provincia_id")
@@ -32,6 +33,12 @@ public class Localidad {
     }
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+    public int getCodPostal() {
+        return codPostal;
+    }
+    public void setCodPostal(int codPostal) {
+        this.codPostal = codPostal;
     }
     public Provincia getMiProvincia() {
         return miProvincia;

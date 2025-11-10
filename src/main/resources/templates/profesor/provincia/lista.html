@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Provincias</title>
+</head>
+<body>
+    <div>
+        <h1>Provincias</h1>
+
+        
+        <!-- Formulario de búsqueda -->
+        <div>
+            <form th:action="@{/provincia/lista}" method="GET">
+                
+            </form>
+        </div>
+        
+        <table th:if="${provincias != null and not #lists.isEmpty(provincias)}">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>nombre</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="provincia : ${provincias}">
+                    <td th:text="${provincia.id}"></td>
+                    <td th:text="${provincia.nombre}"></td>                
+                </tr>
+            </tbody>
+        </table>
+        
+        <div>
+            <a th:href="@{/home}">Volver al Inicio</a>
+        </div>
+    </div>
+</body>
+</html>

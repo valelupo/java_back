@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Provincia</title>
+</head>
+<body>
+    <div>
+            <h2>Registrar Nueva Provincia</h2>
+
+            <div th:if="${exito}">        
+                <p th:text="${exito}">
+                    La provincia fue registrada exitosamente 
+                </p>
+            </div>
+
+            <div th:if="${error}">
+                <p th:text="${error}"></p>
+            </div>
+
+        <form th:action="@{/provincia/crear}" method="POST" enctype="multipart/form-data">
+            
+            <div>
+                <h5>Nombre:</h5> 
+                <input type="text" name="nombre" placeholder="nombre">
+            </div>
+
+            <div>
+                <button type="submit">Registrar provincia</button>
+            </div>
+
+        </form>
+
+        <section>
+            <a th:href="@{/inicio}">Volver</a>
+        </section>
+    </div>
+
+    
+</body>
+</html>
