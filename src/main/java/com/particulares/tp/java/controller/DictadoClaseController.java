@@ -3,7 +3,6 @@ package com.particulares.tp.java.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.particulares.tp.java.entities.DictadoClase;
 import com.particulares.tp.java.entities.Profesor;
@@ -71,21 +71,19 @@ public class DictadoClaseController {
         return "profesor/verDictados";
     }
 
-    @PostMapping("/eliminar")
-    public String eliminar(@RequestParam int idDC, ModelMap modelo, HttpSession session) {
+    @PostMapping("/eliminar/{idDC}")
+    public String eliminar(@PathVariable int idDC, RedirectAttributes redirectAttributes) {
         try {
-            dictadoClaseService.eliminarDictado(idDC); 
-            modelo.put("exito", "El dictado fue eliminado correctamente.");          
+            dictadoClaseService.eliminarDictado(idDC);
+            redirectAttributes.addFlashAttribute("exito", "Dictado eliminado correctamente.");
         } catch (Exception ex) {
-            modelo.put("error", ex.getMessage());
+            redirectAttributes.addFlashAttribute("error", ex.getMessage());
         }
 
-        Profesor profesor = (Profesor) session.getAttribute("personaSession");
-        List<DictadoClase> dictados = dictadoClaseService.obtenerDictadosPorProfesor(profesor.getId());
-        modelo.addAttribute("dictados", dictados);
-        
-        return "profesor/verDictados";
+        // Redirigís a la lista para que se actualice
+        return "redirect:/dictadoClase/lista";
     }
+
 
 
 }

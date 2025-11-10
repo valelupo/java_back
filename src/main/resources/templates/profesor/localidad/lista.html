@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Localidades</title>
+</head>
+<body>
+
+    <div>
+        <h1>Localidades</h1>
+        
+        <!-- Formulario de búsqueda -->
+        <div>
+            <form th:action="@{/localidad/listar}" method="GET">
+                <label for="provincia">Filtrar por provincia:</label>
+                <div>
+                    <input type="text" id="provincia" name="provincia" th:value="${provinciaSeleccionada}" 
+                        placeholder="Buscar por provincia">
+                    <button type="submit">filtrar por provincia</button>
+                </div>
+            </form>
+        </div>
+        
+        <div th:if="${advertencia}" th:text="${advertencia}"></div>
+        
+        <table th:if="${localidades != null and not #lists.isEmpty(localidades)}">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Localidad</th>
+                    <th>Codigo Postal</th>
+                    <th>Provincia</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="localidad : ${localidades}">
+                    <td th:text="${localidad.id}"></td>
+                    <td th:text="${localidad.nombre}"></td>
+                    <td th:text="${localidad.codPostal}"></td>
+                    <td th:text="${localidad.miProvincia.getNombre()}"></td>                
+                </tr>
+            </tbody>
+        </table>
+        
+        <div>
+            <a th:href="@{/inicio}">Volver al Inicio</a>
+        </div>
+    </div>
+</body>
+</html>
