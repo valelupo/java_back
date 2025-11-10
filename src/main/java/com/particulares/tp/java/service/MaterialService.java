@@ -54,8 +54,12 @@ public class MaterialService {
 
     @Transactional(readOnly = true)
     public List<Material> listarMateriales() {
-
         return materialRepository.findAll();
+    }
+
+    @Transactional(readOnly = true)
+    public List<Material> listarMaterialesPorProfesor(int idProfesor) {
+        return materialRepository.findByProfesorId(idProfesor);
     }
 
     @Transactional
