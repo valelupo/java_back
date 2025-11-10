@@ -1,6 +1,9 @@
 package com.particulares.tp.java.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,7 +12,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.particulares.tp.java.entities.DictadoClase;
+import com.particulares.tp.java.entities.Profesor;
 import com.particulares.tp.java.service.DictadoClaseService;
+import com.particulares.tp.java.service.MateriaService;
+import com.particulares.tp.java.service.NivelService;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/dictadoClase")
@@ -17,16 +26,28 @@ public class DictadoClaseController {
 
     @Autowired
     private DictadoClaseService dictadoClaseService;
+
+    @Autowired
+    private MateriaService materiaService;
+
+    @Autowired
+    private NivelService nivelService;
     
     @GetMapping("/registrar") 
-    public String registrar() {
+    public String registrar(ModelMap modelo) {
+            modelo.addAttribute("materias", materiaService.listarMaterias());
+            modelo.addAttribute("niveles", nivelService.listarNiveles());
         return "profesor/crearDictado";
     }
 
     @PostMapping("/crear") // localhost:8080/dictadoClase/crear
-    public String crear(@RequestParam int idProfesor, int idMateria, int nroNivel, ModelMap modelo){
+    public String crear(HttpSession session, 
+                        @RequestParam int idMateria, 
+                        @RequestParam(name = "nrosNiveles", required = false) List<Integer> nrosNiveles, 
+                        ModelMap modelo){
         try {
-            dictadoClaseService.crearDictadoClase(idProfesor, idMateria, nroNivel);   
+            Profesor profesor = (Profesor) session.getAttribute("personaSession");
+            dictadoClaseService.crearDictadoClase(profesor.getId(), idMateria, nrosNiveles);   
             modelo.put("exito", "El dictado fue cargado correctamente");
         
         } catch (Exception ex) {
@@ -36,21 +57,35 @@ public class DictadoClaseController {
         return "profesor/crearDictado";
     }
 
-    @GetMapping("/lista")
-    public String listar(ModelMap modelo) {
+    @GetMapping("/lista") //dictados 
+    public String listar(ModelMap modelo, HttpSession session) {
 
-        modelo.addAttribute("dictados", dictadoClaseService.listarDictadoClases()); 
+        Profesor profesor = (Profesor) session.getAttribute("personaSession");
+        List<DictadoClase> dictados = dictadoClaseService.obtenerDictadosPorProfesor(profesor.getId());
+        if (dictados.isEmpty()) {
+            modelo.addAttribute("mensaje", "No hay dictados asignados actualmente.");
+        } else {
+            modelo.addAttribute("dictados", dictados);
+        }
 
         return "profesor/verDictados";
     }
 
     @PostMapping("/eliminar")
-    public String eliminar(@PathVariable int idDC, ModelMap modelo) {
+    public String eliminar(@RequestParam int idDC, ModelMap modelo, HttpSession session) {
         try {
-            dictadoClaseService.eliminarDictado(idDC);           
+            dictadoClaseService.eliminarDictado(idDC); 
+            modelo.put("exito", "El dictado fue eliminado correctamente.");          
         } catch (Exception ex) {
             modelo.put("error", ex.getMessage());
         }
+
+        Profesor profesor = (Profesor) session.getAttribute("personaSession");
+        List<DictadoClase> dictados = dictadoClaseService.obtenerDictadosPorProfesor(profesor.getId());
+        modelo.addAttribute("dictados", dictados);
+        
         return "profesor/verDictados";
     }
+
+
 }
