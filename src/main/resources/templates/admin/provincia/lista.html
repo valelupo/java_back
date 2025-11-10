@@ -9,6 +9,12 @@
     <div>
         <h1>Provincias</h1>
 
+        <div th:if="${exito}"  th:text="${exito}"></div>
+        <div th:if="${error}"  th:text="${error}"></div>
+        
+        <div>
+            <a th:href="@{/provincia/registrar}">Crear nueva provincia</a>
+        </div>
         
         <!-- Formulario de búsqueda -->
         <div>
@@ -26,14 +32,19 @@
             </thead>
             <tbody>
                 <tr th:each="provincia : ${provincias}">
-                    <td th:text="${provincia.id}"></td>
-                    <td th:text="${provincia.nombre}"></td>                
+                <td th:text="${provincia.id}"></td>
+                <td th:text="${provincia.nombre}"></td>
+                <td>
+                    <form th:action="@{'/provincia/eliminar/' + ${provincia.id}}" method="post" style="display:inline;">
+                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                    </form>
+                </td>
                 </tr>
             </tbody>
         </table>
         
         <div>
-            <a th:href="@{/home}">Volver al Inicio</a>
+            <a th:href="@{/inicio}">Volver al Inicio</a>
         </div>
     </div>
 </body>

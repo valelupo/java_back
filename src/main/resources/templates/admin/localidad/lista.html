@@ -9,6 +9,13 @@
 
     <div>
         <h1>Localidades</h1>
+
+        <div th:if="${exito}"  th:text="${exito}"></div>
+        <div th:if="${error}"  th:text="${error}"></div>
+
+        <div>
+            <a th:href="@{/localidad/registrar}">Crear nueva localidad</a>
+        </div>
         
         <!-- Formulario de búsqueda -->
         <div>
@@ -38,7 +45,12 @@
                     <td th:text="${localidad.id}"></td>
                     <td th:text="${localidad.nombre}"></td>
                     <td th:text="${localidad.codPostal}"></td>
-                    <td th:text="${localidad.miProvincia.getNombre()}"></td>                
+                    <td th:text="${localidad.miProvincia.getNombre()}"></td> 
+                    <td>
+                        <form th:action="@{'/localidad/eliminar/' + ${localidad.id}}" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                        </form>
+                    </td>               
                 </tr>
             </tbody>
         </table>
