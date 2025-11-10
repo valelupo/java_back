@@ -12,10 +12,10 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "resenia")
-
 public class Resenia {
     private LocalDateTime fecha;
     private String descripcion;
+    private int puntaje;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -69,6 +69,14 @@ public class Resenia {
         this.alumno = alumno;
     }
 
+    public int getPuntaje() {
+        return puntaje;
+    }
 
+    public void setPuntaje(int puntaje) {
+        this.puntaje = puntaje;
+    }
+
+    
     
 }

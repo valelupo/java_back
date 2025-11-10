@@ -13,9 +13,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.particulares.tp.java.entities.Profesor;
 import com.particulares.tp.java.enums.FormaTrabajo;
 import com.particulares.tp.java.enums.Rol;
+import com.particulares.tp.java.dto.ProfesorConPuntajeDTO;
 import com.particulares.tp.java.entities.DictadoClase;
 import com.particulares.tp.java.entities.Localidad;
 import com.particulares.tp.java.repository.ProfesorRepository;
+import com.particulares.tp.java.repository.ReseniaRepository;
 import com.particulares.tp.java.repository.LocalidadRepository;
 import com.particulares.tp.java.repository.DictadoClaseRepository;
 
@@ -31,9 +33,12 @@ public class ProfesorService {
     @Autowired
     private DictadoClaseRepository dictadoClaseRepository;
 
+    @Autowired
+    private ReseniaRepository reseniaRepository;
+
     @Transactional
     public void crearProfesor(String nombre, String apellido, String email, int idLocalidad, String clave, String clave2,
-                              String telefono, String formaTrabajo, String infoAcademica, double precioXHs) throws Exception {
+                              String telefono, String formaTrabajo, String infoAcademica, Double precioXHs) throws Exception {
 
         validar(nombre, apellido, email, idLocalidad, clave, clave2, telefono, formaTrabajo, infoAcademica, precioXHs);
 
@@ -66,9 +71,19 @@ public class ProfesorService {
         return profesorRepository.findAll();
     }
 
+    @Transactional(readOnly = true)
+    public List<ProfesorConPuntajeDTO> listarProfesoresPorPuntaje() {
+        return profesorRepository.profesoresConPuntaje();
+    }
+
+    @Transactional(readOnly = true)
+    public List<ProfesorConPuntajeDTO> listarProfesoresPorPuntajeOrdenados() {
+        return profesorRepository.profesoresConPuntajeOrdenados();
+    }
+
     @Transactional
     public void modificarProfesor(String nombre, String apellido, String email, int idLocalidad, String clave, String clave2,
-                                  String telefono, String formaTrabajo, String infoAcademica, double precioXHs, int id) throws Exception {
+                                  String telefono, String formaTrabajo, String infoAcademica, Double precioXHs, int id) throws Exception {
         
         validar(nombre, apellido, email, idLocalidad, clave, clave2, telefono, formaTrabajo, infoAcademica, precioXHs);
 

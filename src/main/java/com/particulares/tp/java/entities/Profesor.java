@@ -17,7 +17,7 @@ public class Profesor extends Persona{
     @Enumerated(EnumType.STRING)
     private FormaTrabajo formaTrabajo;
     private String infoAcademica;
-    private double precioXHs;
+    private Double precioXHs;
 
     @OneToMany(mappedBy = "profesor") //se usa mappedBy para indicar que la relacion se mapea a traves de otra entidad 
     private List<DictadoClase> dictados;

@@ -23,6 +23,38 @@
             <h2>Bienvenido a tu panel</h2>
             <p>Busca a tu profe ideal.</p>
         </section>
+
+         <!-- Botón para ordenar -->
+        <form method="get" action="/inicio">
+            <button type="submit" name="orden" value="puntaje">Ordenar por puntaje</button>
+        </form>
+
+        <!-- Lista de profesores -->
+        <h2>Profesores disponibles</h2>
+
+        <table class="tabla-profesores">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Precio por hora</th>
+                    <th>Modalidad</th>
+                    <th>Valoración</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="prof : ${profesores}">
+                    <td th:text="${prof.nombre} + ' ' + ${prof.apellido}"></td>
+                    <td th:text="${prof.precioXHs}"></td>
+                    <td th:text="${prof.formaTrabajo}"></td>
+                    <td th:text="${prof.promedio > 0 ? #numbers.formatDecimal(prof.promedio, 1, 1) : 'Sin reseñas aún'}"></td>
+                    <td>
+                        <a th:href="@{'/profesor/ver/' + ${prof.id}}" class="btn-ver">Ver</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
     </main>
 
     <footer>
