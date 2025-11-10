@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Login</title>
-    <!--<link rel="stylesheet" th:href="@{/css/styles.css}" />-->
+    <link rel="stylesheet" th:href="@{/css/general.css}" />
 </head>
 <body>
     <div class="login-container">
@@ -16,14 +16,16 @@
 
             <button type="submit">Ingresar</button>
         </form>
+        <div th:replace="fragments/mensajes :: fragment"></div>
+
         <a href="/registrar" class="btn">¿No tienes cuenta? Regístrate aquí</a>
 
-        <div th:if="${param.error}">
+        <!-- <div th:if="${param.error}">
             <p class="error">Usuario o contraseña incorrectos</p>
         </div>
         <div th:if="${param.logout}">
             <p class="success">Sesión cerrada correctamente</p>
-        </div>
+        </div> -->
     </div>
 </body>
 </html>
