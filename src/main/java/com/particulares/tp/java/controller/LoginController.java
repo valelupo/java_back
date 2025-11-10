@@ -86,6 +86,9 @@ public class LoginController {
         if (logueado.getRol().toString().equals("PROFESOR")) {
             return "profesor/home";
         }
+        else if (logueado.getRol().toString().equals("ADMIN")){
+            return "admin/home";
+        }
 
         //para no cargar ambas listas en memoria
         if ("puntaje".equals(orden)) {

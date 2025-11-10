@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel del Administrador</title>
+</head>
+<body>
+
+    <nav>
+        <ul>
+            <li><a href="/perfil">Mi Perfil</a></li>
+            <li><a th:href="@{/localidad/listar}">Administrar localidades</a></li>
+            <li><a th:href="@{/provincia/listar}">Administrar provincias</a></li>
+            <li><a href="/logout">Cerrar sesión</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <h1>Bienvenido al panel, Profesor</h1>
+        <p>Desde aquí podrás gestionar tu perfil, subir materiales, ver reseñas y configurar las materias que dictás.</p>
+
+</body>
+</html>

@@ -1,14 +1,11 @@
 package com.particulares.tp.java.service;
-
-
 import java.util.List;
-
-
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.particulares.tp.java.entities.Provincia;
+import com.particulares.tp.java.repository.PersonaRepository;
 import com.particulares.tp.java.repository.ProvinciaRepository;
 
 
@@ -16,6 +13,9 @@ import com.particulares.tp.java.repository.ProvinciaRepository;
 public class ProvinciaService {
     @Autowired
     private ProvinciaRepository provinciaRepository;
+
+    @Autowired
+    private PersonaRepository personaRepository;
 
     @Transactional
     public void crearProvincia(String nombre) throws Exception {
@@ -37,34 +37,29 @@ public class ProvinciaService {
         return provinciaRepository.findAll();
     }
 
-    // @Transactional
-    // public void modificarProvincia(String nombre, int id) throws Exception {
-        
-    //     validar(nombre);
+    @Transactional
+    public void eliminarProvincia(int id) throws Exception{
+        Optional<Provincia> provinciaOpt = provinciaRepository.findById(id);
 
-    //     Optional<Provincia> provOpt = provinciaRepository.findById(id);
+        if (provinciaOpt.isPresent()) {
 
-    //     if (provOpt.isPresent()) {
-    //         Provincia provincia = provOpt.get();
+            List <Provincia> provinciasPersonas = personaRepository.buscarProvincias();
+            Provincia prov = provinciaOpt.get();
 
-    //         provincia.setNombre(nombre);
+            if (!provinciasPersonas.isEmpty()){
+                for (Provincia p : provinciasPersonas) {
+                    if(p.getId()==prov.getId()){
+                        throw new Exception("Existen profesores o alumnos que pertenecen a esta provincia");}
+                }
+            }
+            provinciaRepository.delete(prov);
+            
+            
+        } else {
+            throw new Exception("La provincia con el id especificado no existe");
+        }
 
-    //         provinciaRepository.save(provincia);
-    //     } else {
-    //         throw new Exception("No se encontró una provincia con el id especificado");
-    //     }
-    // }
-
-    // @Transactional
-    // public void eliminarProvincia(int id) throws Exception{
-    //     Optional<Provincia> provinciaOpt = provinciaRepository.findById(id);
-    //     if (provinciaOpt.isPresent()) {
-    //         provinciaRepository.delete(provinciaOpt.get());
-    //     } else {
-    //         throw new Exception("La provincia con el id especificado no existe");
-    //     }
-
-    // }
+    }
 
     @Transactional(readOnly = true)
     public Provincia getOne(int id){

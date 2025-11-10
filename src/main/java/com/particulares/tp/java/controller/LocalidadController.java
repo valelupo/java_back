@@ -5,10 +5,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.particulares.tp.java.entities.Localidad;
 import com.particulares.tp.java.service.LocalidadService;
 import com.particulares.tp.java.service.ProvinciaService;
@@ -34,7 +36,7 @@ public class LocalidadController {
     public String registrar(ModelMap model) {
 
         model.addAttribute("provincias", provinciaService.listarProvincias());
-        return "localidad/form";
+        return "admin/localidad/form";
     }
     
     @PostMapping("/registro")
@@ -55,7 +57,7 @@ public class LocalidadController {
         }
 
         model.addAttribute("provincias", provinciaService.listarProvincias());
-        return "localidad/form";
+        return "admin/localidad/form";
     }
 
     @GetMapping("/listar")
@@ -74,15 +76,19 @@ public class LocalidadController {
         } catch (Exception e) {
             model.addAttribute("error", "Error al cargar agentes: " + e.getMessage());
         }
-        return "localidad/lista";
+        return "admin/localidad/lista";
     }
+
+    @PostMapping("/eliminar/{id}")
+    public String eliminar(@PathVariable int id, RedirectAttributes redirectAttributes) {
+        try {
+            localidadService.eliminarLocalidad(id);
+            redirectAttributes.addFlashAttribute("exito", "Localidad eliminada correctamente.");
+        } catch (Exception ex) {
+            redirectAttributes.addFlashAttribute("error", ex.getMessage());
+        }
+        return "redirect:/localidad/listar";
+    } 
 }
 
-    // @GetMapping("/lista/{id}")
-    // public String listar(@PathVariable int id, ModelMap modelo) {
-
-    //     modelo.addAttribute("localidadesProv", localidadService.buscarPorProvincia(id)); 
-
-    //     return "localidad/listaProv.html";
-    // }
 
