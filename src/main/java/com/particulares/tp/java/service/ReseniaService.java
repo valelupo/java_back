@@ -31,9 +31,9 @@ public class ReseniaService {
     private AlumnoRepository alumnoRepository;
 
     @Transactional
-    public void crearResenia(String descripcion, int idProfesor, int idAlumno) throws Exception {
+    public void crearResenia(String descripcion, int idProfesor, int idAlumno, int puntaje) throws Exception {
 
-        validar(descripcion, idAlumno, idProfesor);
+        validar(descripcion, idAlumno, idProfesor, puntaje);
 
         Profesor miProfesor = profesorRepository.findById(idProfesor).get();
         Alumno miAlumno = alumnoRepository.findById(idAlumno).get();
@@ -52,20 +52,26 @@ public class ReseniaService {
         resenia.setFecha(LocalDateTime.now());
         resenia.setAlumno(miAlumno);
         resenia.setProfesor(miProfesor);
+        resenia.setPuntaje(puntaje);
 
         reseniaRepository.save(resenia);
     }
 
     @Transactional(readOnly = true)
-    public List<Resenia> listarNiveles() {
-
+    public List<Resenia> listarResenias() {
         return reseniaRepository.findAll();
     }
 
+    @Transactional(readOnly = true)
+    public Double promedioReseniasPorProfesor(int idProfesor) {
+        Double promedio = reseniaRepository.findPromedioByProfesorId(idProfesor);
+        return promedio != null ? promedio : 0.0;
+    }
+
     @Transactional
-    public void modificarResenia(String descripcion, int idProfesor, int idAlumno, Integer idResenia) throws Exception {
+    public void modificarResenia(String descripcion, int idProfesor, int idAlumno, Integer idResenia, int puntaje) throws Exception {
         
-        validar(descripcion, idAlumno, idProfesor);
+        validar(descripcion, idAlumno, idProfesor, puntaje);
 
         Optional<Resenia> reseniaOpt = reseniaRepository.findById(idResenia);
         Optional<Profesor> profesorOpt = profesorRepository.findById(idProfesor);
@@ -85,6 +91,7 @@ public class ReseniaService {
             resenia.setFecha(LocalDateTime.now()); // la fecha se actualiza al modificar
             resenia.setAlumno(alumnoOpt.get());
             resenia.setProfesor(profesorOpt.get());
+            resenia.setPuntaje(puntaje);
 
             reseniaRepository.save(resenia);
         } else {
@@ -109,7 +116,7 @@ public class ReseniaService {
     }
 
 
-    private void validar(String descripcion, int idAlumno, int idProfesor) throws Exception {
+    private void validar(String descripcion, int idAlumno, int idProfesor, int puntaje) throws Exception {
         if (descripcion.isEmpty() || descripcion == null) {
             throw new Exception("la descripcion no puede ser nulo o estar vacío");
         }
@@ -118,6 +125,9 @@ public class ReseniaService {
         }
         if (idProfesor <= 0) {
             throw new Exception("El idProfesor debe ser un numero positivo");
+        }
+        if (puntaje < 1 || puntaje > 5) {
+            throw new Exception("El puntaje debe estar entre 1 y 5");
         }
     }
     

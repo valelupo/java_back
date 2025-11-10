@@ -1,11 +1,73 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Perfil del Profesor</title>
+    <link rel="stylesheet" href="/css/estilos.css">
 </head>
 <body>
-    <h1>profe</h1>
+    <div class="perfil-container">
+        <h2 th:text="${profesor.nombre} + ' ' + ${profesor.apellido}"></h2>
+
+        <!--Datos personales-->
+        <section class="datos-personales">
+            <p><strong>Localidad:</strong> <span th:text="${profesor.miLocalidad.nombre}"></span></p>
+            <p><strong>Provincia:</strong> <span th:text="${profesor.miLocalidad.miProvincia.nombre}"></span></p>
+            <p><strong>Forma de trabajo:</strong> <span th:text="${profesor.formaTrabajo}"></span></p>
+            <p><strong>Precio por hora:</strong> <span th:text="${profesor.precioXHs} + ' ARS'"></span></p>
+            <p><strong>Información académica:</strong> <span th:text="${profesor.infoAcademica}"></span></p>
+        </section>
+
+        <!--Materias y niveles-->
+        <section class="materias-dictadas">
+            <h3>Materias que dicta</h3>
+            <ul>
+                <li th:each="dictado : ${dictados}">
+                    <span th:text="${dictado.materia.nombre}"></span> -
+                    <span th:text="${dictado.nivel.descripcion}"></span>
+                </li>
+            </ul>
+        </section>
+
+        <!--Valoracion-->
+        <section class="valoracion">
+            <h3>Valoración promedio</h3>
+            <div class="estrellas">
+                <span th:each="i : ${#numbers.sequence(1, 5)}">
+                    <i th:class="${i <= promedio ? 'estrella llena' : 'estrella vacia'}"></i>
+                </span>
+                <span th:text="'(' + ${#numbers.formatDecimal(promedio, 1, 1)} + ')'"></span>
+            </div>
+        </section>
+
+        <!--Dejar reseña-->
+        <section class="nueva-resenia">
+            <h3>Dejar una reseña</h3>
+            <form th:action="@{/resenia/registrar}" method="post">
+                <input type="hidden" name="idProfesor" th:value="${profesor.id}" />
+                <label for="puntaje">Puntaje:</label>
+                <select name="puntaje" id="puntaje">
+                    <option th:each="i : ${#numbers.sequence(1, 5)}" th:value="${i}" th:text="${i}"></option>
+                </select>
+                <label for="descripcion">Descripcion:</label>
+                <textarea name="descripcion" id="descripcion" rows="4" cols="50"></textarea>
+                <button type="submit">Enviar reseña</button>
+            </form>
+        </section>
+    </div>
+
+    <section>
+        <div>
+            <a th:href="@{/inicio}">Volver</a>
+        </div>
+    </section>
+
+    <!-- css para estrellas -->
+    <!-- .estrella {
+        font-size: 20px;
+        color: #ccc;
+    }
+    .estrella.llena {
+        color: gold;
+    } -->
 </body>
 </html>

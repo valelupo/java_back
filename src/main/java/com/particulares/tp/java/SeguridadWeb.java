@@ -3,7 +3,7 @@ package com.particulares.tp.java;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+// import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import com.particulares.tp.java.entities.Persona;
 import com.particulares.tp.java.repository.PersonaRepository;
@@ -15,7 +15,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration
-@EnableWebMvc
+// @EnableWebMvc
 public class SeguridadWeb {
 
     @Autowired
@@ -25,8 +25,8 @@ public class SeguridadWeb {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((authorize) -> authorize                       
-                        .requestMatchers("/css/**", "/js/**", "/img/**", "/").permitAll()
-                        .requestMatchers("/login", "/registro", "/registrar").permitAll() 
+                        .requestMatchers("/css/**", "/js/**", "/img/**").permitAll()
+                        .requestMatchers("/", "/login", "/registro", "/registrar").permitAll() 
                         .requestMatchers("/localidad/listaProv").permitAll()
                         .anyRequest().authenticated()  
                 )
