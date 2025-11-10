@@ -49,7 +49,7 @@ public class LoginController {
                             @RequestParam (required = false) String telefono,
                             @RequestParam (required = false) String formaTrabajo,
                             @RequestParam (required = false) String infoAcademica,
-                            @RequestParam (required = false) double precioXHs, ModelMap modelo) {
+                            @RequestParam (required = false) Double precioXHs, ModelMap modelo) {
         try {
             if (rol.equals("ALUMNO")) {
                 alumnoService.crearAlumno(nombre, apellido, email, idLocalidad, clave, clave2);
@@ -79,11 +79,22 @@ public class LoginController {
     }
 
     @GetMapping("/inicio")
-    public String inicio(HttpSession session){
+    public String inicio(@RequestParam(required = false) String orden,
+                        HttpSession session, ModelMap modelo){
         Persona logueado = (Persona) session.getAttribute("personaSession");
+
         if (logueado.getRol().toString().equals("PROFESOR")) {
             return "profesor/home";
         }
+
+        //para no cargar ambas listas en memoria
+        if ("puntaje".equals(orden)) {
+            modelo.put("profesores", profesorService.listarProfesoresPorPuntajeOrdenados());
+        }else{
+            modelo.put("profesores", profesorService.listarProfesoresPorPuntaje());
+            // modelo.put("profesores", profesorService.listarProfesores());
+        }
+
         return "alumno/home";
     }
 
