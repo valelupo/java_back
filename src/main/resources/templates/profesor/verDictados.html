@@ -4,10 +4,58 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DICTADOS</title>
-    <!-- <link rel="stylesheet" href="css/styles.css"> -->
+    <link rel="stylesheet" th:href="@{/css/general.css}" />
+    <link rel="stylesheet" th:href="@{/css/dictados.css}">
 </head>
 
 <body>
+  <header th:replace="fragments/header :: fragment"></header>
+
+  <main class="welcome">
+    <h2>Mis Dictados</h2>
+
+    <div th:if="${exito}" class="alert-exito" th:text="${exito}"></div>
+    <div th:if="${error}" class="alert-error" th:text="${error}"></div>
+
+    <div class="buttons">
+      <a href="/dictadoClase/registrar" class="btn">Crear nuevo dictado</a>
+    </div>
+
+    <p th:if="${mensaje}" th:text="${mensaje}"></p>
+
+    <div class="tabla-container" th:if="${dictados}">
+      <table>
+        <thead>
+          <tr>
+            <th>Materia</th>
+            <th>Nivel</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="dictado : ${dictados}">
+            <td th:text="${dictado.materia.nombre}"></td>
+            <td th:text="${dictado.nivel.descripcion}"></td>
+            <td>
+              <form th:action="@{'/dictadoClase/eliminar/' + ${dictado.id}}" method="post">
+                <button type="submit" class="btn-eliminar">Eliminar</button>
+              </form>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="buttons">
+      <a th:href="@{/inicio}" class="btn">Volver</a>
+    </div>
+  </main>
+
+  <footer th:replace="fragments/footer :: footer"></footer>
+</body>
+</html>
+
+<!-- <body>
   <h1>Mis Dictados</h1>
 
   <div th:if="${exito}"  th:text="${exito}"></div>
@@ -47,4 +95,4 @@
     </section>
 
 </body>
-</html>
+</html> -->
