@@ -188,3 +188,20 @@ textarea {
 .form-container a:hover {
     text-decoration: underline;
 }
+
+/* estilos para que con el boton se pueda volver a la pagina ppal*/
+
+.navbar a {
+  text-decoration: none;   /* sin subrayado */
+  color: inherit;           /* usa el color del contenedor */
+  display: flex;
+  align-items: center;
+}
+
+.navbar a:visited {
+  color: inherit;           /* evita el color lila de enlaces visitados */
+}
+
+.navbar a:hover {
+  opacity: 0.8;             /* efecto sutil al pasar el mouse */
+}

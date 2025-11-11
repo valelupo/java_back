@@ -1,13 +1,52 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
   <meta charset="UTF-8">
   <title>Nuevo Dictado</title>
+  <link rel="stylesheet" th:href="@{/css/general.css}" />
+  <link rel="stylesheet" th:href="@{/css/dictados.css}">
 </head>
+
 <body>
+
+  <header th:replace="fragments/header :: fragment"></header>
+
+  <main class="form-container">
+    <form action="/dictadoClase/crear" method="post">
+      <h2 class="form-title">Registrar nuevo dictado</h2>
+
+      <div th:if="${exito}" class="alert-exito" th:text="${exito}"></div>
+      <div th:if="${error}" class="alert-error" th:text="${error}"></div>
+
+      <label for="materia">Materia:</label>
+      <select name="idMateria" id="materia" required>
+        <option value="" disabled selected>Seleccionar materia</option>
+        <option th:each="materia : ${materias}" th:value="${materia.id}" th:text="${materia.nombre}"></option>
+      </select>
+
+      <label for="niveles">Niveles:</label>
+      <div th:each="nivel : ${niveles}">
+        <input type="checkbox" name="nrosNiveles" th:value="${nivel.nro}">
+        <span th:text="${nivel.descripcion}"></span>
+      </div>
+
+      <button type="submit">Registrar</button>
+
+      <a href="/dictadoClase/lista">Volver al listado</a>
+    </form>
+  </main>
+
+  <footer th:replace="fragments/footer :: footer"></footer>
+</body>
+</html>
+
+<!-- <body>
+  <header th:replace="fragments/header :: fragment"></header>
+
   <h1>Registrar nuevo dictado</h1>
 
-  <!-- Mostrar mensajes -->
+
   <div th:if="${exito}" >
     <p th:text="${exito}"></p>
   </div>
@@ -39,4 +78,4 @@
   <br>
   <a href="/dictadoClase/lista">Volver al listado</a>
 </body>
-</html>
+</html> -->
