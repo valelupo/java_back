@@ -49,23 +49,6 @@ main h2 {
     margin: 40px 0 20px;
 }
 
-/* Botón de orden */
-form button[name="orden"] {
-    background-color: #815743;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 6px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    display: block;
-    margin: 0 auto 30px;
-}
-
-form button[name="orden"]:hover {
-    background-color: #614132;
-}
 
 form {
     text-align: right;
@@ -75,73 +58,36 @@ form {
     display: flex;
     justify-content: flex-end;
     width: 90%;
-    max-width: 1000px;
+    max-width: 1200px;
     margin: 0 auto;
 }
 
 .card-img-top {
-    object-fit: fill;
-    height: 200px;
+    height: 180px;
+    object-fit: cover;
+    border-bottom: 1px solid #ddd;
 }
 .card:hover {
     transform: scale(1.02);
     transition: transform 0.3s ease;
 }
-/* 
-/* Grid de tarjetas 
-.profesor-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 30px;
-    padding: 40px 5%;
+
+.container{
+    max-width: 1200px;
+    margin: 0 auto 15px;
+
 }
 
-/* Tarjeta individual 
-.card-profesor {
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 20px;
-    transition: transform 0.3s ease;
+.card {
+    padding: 12px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    font-size: 0.95rem;
+}
+.card-title {
+    font-size: 1.1rem;
+}
+.card-text {
+    font-size: 0.9rem;
 }
 
-.card-profesor:hover {
-    transform: translateY(-5px);
-}*/
-
-/* Encabezado de la tarjeta 
-.card-header h3 {
-    font-size: 1.4rem;
-    color: #004080;
-    margin-bottom: 10px;
-}
-
-/* Cuerpo de la tarjeta 
-.card-body p {
-    margin: 8px 0;
-    font-size: 1rem;
-    color: #333;
-}
-
-/* Footer con botón 
-.card-footer {
-    margin-top: 15px;
-    text-align: right;
-}
-
-.btn-ver {
-    background-color: #004080;
-    color: white;
-    padding: 8px 16px;
-    border-radius: 6px;
-    text-decoration: none;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-}
-
-.btn-ver:hover {
-    background-color: #002f5f;
-} */
