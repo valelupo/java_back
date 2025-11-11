@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.particulares.tp.java.entities.Profesor;
 import com.particulares.tp.java.enums.FormaTrabajo;
@@ -38,7 +39,7 @@ public class ProfesorService {
 
     @Transactional
     public void crearProfesor(String nombre, String apellido, String email, int idLocalidad, String clave, String clave2,
-                              String telefono, String formaTrabajo, String infoAcademica, Double precioXHs) throws Exception {
+                              String telefono, String formaTrabajo, String infoAcademica, Double precioXHs, MultipartFile imagen) throws Exception {
 
         validar(nombre, apellido, email, idLocalidad, clave, clave2, telefono, formaTrabajo, infoAcademica, precioXHs);
 
@@ -62,6 +63,7 @@ public class ProfesorService {
         profesor.setFormaTrabajo(estadoFT);
         profesor.setInfoAcademica(infoAcademica);
         profesor.setPrecioXHs(precioXHs);
+        profesor.setImagen(imagen.getBytes());
 
         profesorRepository.save(profesor);
     }
@@ -83,7 +85,7 @@ public class ProfesorService {
 
     @Transactional
     public void modificarProfesor(String nombre, String apellido, String email, int idLocalidad, String clave, String clave2,
-                                  String telefono, String formaTrabajo, String infoAcademica, Double precioXHs, int id) throws Exception {
+                                  String telefono, String formaTrabajo, String infoAcademica, Double precioXHs, int id, MultipartFile imagen) throws Exception {
         
         validar(nombre, apellido, email, idLocalidad, clave, clave2, telefono, formaTrabajo, infoAcademica, precioXHs);
 
@@ -109,6 +111,7 @@ public class ProfesorService {
             profesor.setFormaTrabajo(estadoFT);
             profesor.setInfoAcademica(infoAcademica);
             profesor.setPrecioXHs(precioXHs);
+            profesor.setImagen(imagen.getBytes());
 
             profesorRepository.save(profesor);
         } else {

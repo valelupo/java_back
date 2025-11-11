@@ -41,7 +41,7 @@
     </script>
 </head>
 <body>
-    <div th:replace="fragments/headerGral :: fragment"></div>
+    <div th:replace="~{fragments/headerGral :: fragment}"></div>
 
     <div class="registro-wrapper">
         <div class="form-container ">
@@ -106,7 +106,7 @@
 
                 </div>
 
-                <div th:replace="fragments/mensajes :: fragment"></div>
+                <div th:replace="~{fragments/mensajes :: fragment}"></div>
 
                 <button type="submit">Registrarse</button>
                 <a href="/login">¿Ya tienes cuenta? Inicia sesión aquí</a>
@@ -122,6 +122,6 @@
         }
     </script>
 
-    <div th:replace="fragments/footer :: fragment"></div>
+    <div th:replace="~{fragments/footer :: fragment}"></div>
 </body>
 </html>

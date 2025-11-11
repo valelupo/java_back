@@ -7,7 +7,7 @@
     <link rel="stylesheet" th:href="@{/css/login.css}" />
 </head>
 <body>
-    <div th:replace="fragments/headerGral :: fragment"></div>
+    <div th:replace="~{fragments/headerGral :: fragment}"></div>
     <div class="login-wrapper">
         <div class="login-image">
             <img src="/img/login.jpg" alt="Ilustración de login" />
@@ -24,7 +24,7 @@
 
                 <button type="submit" class="btn">Ingresar</button>
             
-                <div th:replace="fragments/mensajes :: fragment"></div>
+                <div th:replace="~{fragments/mensajes :: fragment}"></div>
 
                 <a href="/registrar">¿No tienes cuenta? Regístrate aquí</a>
             </form>
@@ -38,6 +38,6 @@
         </div>
 
     </div>
-    <div th:replace="fragments/footer :: fragment"></div>
+    <div th:replace="~{fragments/footer :: fragment}"></div>
 </body>
 </html>

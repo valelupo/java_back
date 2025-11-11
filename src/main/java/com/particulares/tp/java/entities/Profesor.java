@@ -4,9 +4,13 @@ import java.util.List;
 
 import com.particulares.tp.java.enums.FormaTrabajo;
 
+import jakarta.persistence.Basic;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.Lob;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -18,6 +22,11 @@ public class Profesor extends Persona{
     private FormaTrabajo formaTrabajo;
     private String infoAcademica;
     private Double precioXHs;
+
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    @Column(columnDefinition = "LONGBLOB")
+    private byte[] imagen;
 
     @OneToMany(mappedBy = "profesor") //se usa mappedBy para indicar que la relacion se mapea a traves de otra entidad 
     private List<DictadoClase> dictados;
@@ -63,7 +72,7 @@ public class Profesor extends Persona{
     public double getPrecioXHs() {
         return precioXHs;
     }
-    public void setPrecioXHs(double precioXHs) {
+    public void setPrecioXHs(Double precioXHs) {
         this.precioXHs = precioXHs;
     }
     public FormaTrabajo getFormaTrabajo() {
@@ -71,6 +80,12 @@ public class Profesor extends Persona{
     }
     public void setFormaTrabajo(FormaTrabajo formaTrabajo) {
         this.formaTrabajo = formaTrabajo;
+    }
+    public byte[] getImagen() {
+        return imagen;
+    }
+    public void setImagen(byte[] imagen) {
+        this.imagen = imagen;
     } 
     
 

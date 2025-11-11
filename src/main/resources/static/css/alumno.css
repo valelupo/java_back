@@ -79,37 +79,61 @@ form {
     margin: 0 auto;
 }
 
-/* Tabla de profesores */
-.tabla-profesores {
-    width: 90%;
-    max-width: 1000px;
-    margin: 0 auto 60px;
-    border-collapse: collapse;
+.card-img-top {
+    object-fit: fill;
+    height: 200px;
+}
+.card:hover {
+    transform: scale(1.02);
+    transition: transform 0.3s ease;
+}
+/* 
+/* Grid de tarjetas 
+.profesor-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    padding: 40px 5%;
+}
+
+/* Tarjeta individual 
+.card-profesor {
     background-color: #fff;
+    border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    border-radius: 8px;
-    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+    transition: transform 0.3s ease;
 }
 
-.tabla-profesores th,
-.tabla-profesores td {
-    padding: 15px;
-    text-align: center;
-    border-bottom: 1px solid #ddd;
+.card-profesor:hover {
+    transform: translateY(-5px);
+}*/
+
+/* Encabezado de la tarjeta 
+.card-header h3 {
+    font-size: 1.4rem;
+    color: #004080;
+    margin-bottom: 10px;
 }
 
-.tabla-profesores thead {
-    background-color: #004080;
-    color: white;
+/* Cuerpo de la tarjeta 
+.card-body p {
+    margin: 8px 0;
+    font-size: 1rem;
+    color: #333;
 }
 
-.tabla-profesores tbody tr:hover {
-    background-color: #f2f2f2;
+/* Footer con botón 
+.card-footer {
+    margin-top: 15px;
+    text-align: right;
 }
 
-/* Botón "Ver" */
 .btn-ver {
-    background-color: #815743;
+    background-color: #004080;
     color: white;
     padding: 8px 16px;
     border-radius: 6px;
@@ -119,5 +143,5 @@ form {
 }
 
 .btn-ver:hover {
-    background-color: #614132;
-}
+    background-color: #002f5f;
+} */

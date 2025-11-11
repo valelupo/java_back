@@ -9,10 +9,10 @@
 </head>
 <body>
     
-    <div th:replace="fragments/headerGral :: fragment"></div>
+    <div th:replace="~{fragments/headerGral :: fragment}"></div>
 
     <main>
-        <div th:replace="fragments/mensajes :: fragment"></div>
+        <div th:replace="~{fragments/mensajes :: fragment}"></div>
         <section class="welcome">
             <img src="/img/fondo.jpg" alt="Ilustración de bienvenida" class="fondo-img">
             <h2>Bienvenido a Geteacher</h2>
@@ -25,6 +25,6 @@
         </section>
     </main>
 
-    <div th:replace="fragments/footer :: fragment"></div>
+    <div th:replace="~{fragments/footer :: fragment}"></div>
 </body>
 </html>

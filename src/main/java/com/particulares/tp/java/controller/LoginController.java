@@ -6,6 +6,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.particulares.tp.java.entities.Persona;
 import com.particulares.tp.java.service.AlumnoService;
@@ -49,12 +50,13 @@ public class LoginController {
                             @RequestParam (required = false) String telefono,
                             @RequestParam (required = false) String formaTrabajo,
                             @RequestParam (required = false) String infoAcademica,
-                            @RequestParam (required = false) Double precioXHs, ModelMap modelo) {
+                            @RequestParam (required = false) Double precioXHs, 
+                            @RequestParam (required = false) MultipartFile imagen, ModelMap modelo) {
         try {
             if (rol.equals("ALUMNO")) {
                 alumnoService.crearAlumno(nombre, apellido, email, idLocalidad, clave, clave2);
             }else if (rol.equals("PROFESOR")){
-                profesorService.crearProfesor(nombre, apellido, email, idLocalidad, clave, clave2, telefono, formaTrabajo, infoAcademica, precioXHs);
+                profesorService.crearProfesor(nombre, apellido, email, idLocalidad, clave, clave2, telefono, formaTrabajo, infoAcademica, precioXHs, imagen);
             }
             modelo.put("exito", "Usuario registrado correctamente!");
         } catch (Exception e) {
@@ -63,7 +65,7 @@ public class LoginController {
             modelo.put("nombre", nombre);
             modelo.put("apellido", apellido);
             modelo.put("email", email);
-            return "redirect:/registrar";
+            return "registro.html";
         }
         return "index.html";
     }
