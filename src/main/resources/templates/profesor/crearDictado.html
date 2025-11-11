@@ -9,15 +9,14 @@
 </head>
 
 <body>
-
-  <header th:replace="fragments/header :: fragment"></header>
+  <div th:replace="~{fragments/headerPersona :: fragment}"></div>
 
   <main class="form-container">
+
+    <div th:replace="~{fragments/mensajes :: fragment}"></div>
+
     <form action="/dictadoClase/crear" method="post">
       <h2 class="form-title">Registrar nuevo dictado</h2>
-
-      <div th:if="${exito}" class="alert-exito" th:text="${exito}"></div>
-      <div th:if="${error}" class="alert-error" th:text="${error}"></div>
 
       <label for="materia">Materia:</label>
       <select name="idMateria" id="materia" required>

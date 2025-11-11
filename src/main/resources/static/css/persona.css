@@ -1,5 +1,5 @@
-/* header alumno */
-.nav-alumno {
+/* header persona */
+.nav-persona {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -8,11 +8,11 @@
     margin: 0 auto;
 }
 
-.nav-alumno .logo {
+.nav-persona .logo {
     height: 45px;
 }
 
-.nav-alumno h1 {
+.nav-persona h1 {
     font-size: 2rem;
     margin: 0 10px;
     flex-grow: 1;

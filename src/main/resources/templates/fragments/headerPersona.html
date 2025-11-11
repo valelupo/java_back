@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+   <header th:fragment="fragment">
+        <nav class="nav-persona">
+            <a th:href="@{/inicio}" class="navbar-brand">
+                <img src="/img/favicon.png" alt="Logo Geteacher" class="logo">
+                <h1>GETEACHER</h1>
+            </a>
+            <div class="nav-buttons">
+                <a href="/logout" class="btn logout">Cerrar sesión</a>
+                <a th:href="@{'/persona/perfil'}">Perfil</a>
+            </div>
+        </nav>
+    </header>
+</body>
+</html>
