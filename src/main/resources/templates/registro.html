@@ -46,7 +46,7 @@
     <div class="registro-wrapper">
 
         <div class="form-container ">
-            <form th:action="@{/registro}" method="post">
+            <form th:action="@{/registro}" method="post" enctype="multipart/form-data">
                 <h2 class="form-title">Registro</h2>
 
                 <label>Nombre:</label>
@@ -105,6 +105,8 @@
                     <label>Precio Por Hs:</label>
                     <input name="precioXHs" th:value="${precioXHs}"></input>
 
+                    <label>Foto de Perfil (opcional):</label>
+                    <input type="file" name="imagen" id="archivo" accept=".jpg,.jpeg,.png"/>
                 </div>
 
                 <div th:replace="~{fragments/mensajes :: fragment}"></div>
