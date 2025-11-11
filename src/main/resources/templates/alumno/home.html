@@ -4,34 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio Alumno</title>
-    <!-- <link rel="stylesheet" href="css/styles.css"> -->
+    <link rel="icon" type="image/png" th:href="@{/img/favicon.png}" />
+    <link rel="stylesheet" th:href="@{/css/general.css}" />
+    <link rel="stylesheet" th:href="@{/css/alumno.css}" />
 </head>
 <body>
-   
-
-    <header>
-        <nav>
-            <h1>GETEACHER</h1>
-            <div class="nav-buttons">
-                <a href="/logout" class="btn logout">Cerrar sesión</a>
-            </div>
-        </nav>
-    </header>
-
+    <div th:replace="fragments/headerAlumno :: fragment"></div>
     <main>
-        <section class="welcome">
+        <div th:replace="fragments/mensajes :: fragment"></div>
+        <!-- <section class="welcome">
             <h2>Bienvenido a tu panel</h2>
             <p>Busca a tu profe ideal.</p>
-        </section>
+        </section> -->
+
+        <h2>Busca a tu profe ideal</h2>
 
          <!-- Botón para ordenar -->
-        <form method="get" action="/inicio">
-            <button type="submit" name="orden" value="puntaje">Ordenar por puntaje</button>
-        </form>
+        <div class="ordenar-container">
+            <form method="get" action="/inicio">
+                <button type="submit" name="orden" value="puntaje">Ordenar por puntaje</button>
+            </form>
+        </div>
 
         <!-- Lista de profesores -->
-        <h2>Profesores disponibles</h2>
-
         <table class="tabla-profesores">
             <thead>
                 <tr>
@@ -57,8 +52,6 @@
 
     </main>
 
-    <footer>
-        <p>&copy; 2025 Geteacher. Todos los derechos reservados.</p>
-    </footer>
+    <div th:replace="fragments/footer :: fragment"></div>
 </body>
 </html>
