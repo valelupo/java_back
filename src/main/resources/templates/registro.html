@@ -2,51 +2,15 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Registro de usuario</title>
+    <link rel="icon" type="image/png" th:href="@{/img/favicon.png}" />
+    <link rel="stylesheet" th:href="@{/css/general.css}" />
+    <link rel="stylesheet" th:href="@{/css/registro.css}" />
     <script>
         function mostrarCamposProfesor(valor) {
             const seccion = document.getElementById("campos-profesor");
             seccion.style.display = valor === "PROFESOR" ? "block" : "none";
         }
-    </script>
-</head>
-<body>
-    <h2>Registro</h2>
-
-    <form th:action="@{/registro}" method="post">
-        <label>Nombre:</label>
-        <input type="text" name="nombre" th:value="${nombre}" required />
-
-        <label>Apellido:</label>
-        <input type="text" name="apellido" th:value="${apellido}" required />
-
-        <label>Email:</label>
-        <input type="email" name="email" th:value="${email}" required />
-
-        <label>Clave:</label>
-        <input type="password" name="clave" required />
-
-        <label>Repetir clave:</label>
-        <input type="password" name="clave2" required />
-
-        <label>Rol:</label>
-        <select name="rol" onchange="mostrarCamposProfesor(this.value)" required>
-            <option value="">Seleccionar</option>
-            <option value="ALUMNO" th:selected="${rol == 'ALUMNO'}">Alumno</option>
-            <option value="PROFESOR" th:selected="${rol == 'PROFESOR'}">Profesor</option>
-        </select>
-
-        <label>Provincia:</label>
-        <select id="provincia" name="idProvincia" onchange="cargarLocalidades(this.value)">
-            <option value="">Seleccionar Provincia</option>
-            <option th:each="prov : ${provincias}" th:value="${prov.id}" th:text="${prov.nombre}"></option>
-        </select>
-
-        <label>Localidad:</label>
-        <select id="localidad" name="idLocalidad" required>
-            <option value="">Seleccionar provincia primero</option>
-        </select>
-
-        <script>
+        
         function cargarLocalidades(idProvincia) {
             fetch('/localidad/listaProv?idProvincia=' + idProvincia)
                 .then(response => response.json())
@@ -72,37 +36,84 @@
                 .catch(error => {
                     console.error('Error al cargar localidades:', error);
                 });
-        }
-        </script>
+            }
+            
+    </script>
+</head>
+<body>
+    <div th:replace="fragments/headerGral :: fragment"></div>
+
+    <div class="registro-wrapper">
+        <div class="form-container ">
+            <form th:action="@{/registro}" method="post">
+                <h2 class="form-title">Registro</h2>
+
+                <label>Nombre:</label>
+                <input type="text" name="nombre" th:value="${nombre}" required />
+
+                <label>Apellido:</label>
+                <input type="text" name="apellido" th:value="${apellido}" required />
+
+                <label>Email:</label>
+                <input type="email" name="email" th:value="${email}" required />
+
+                <label>Clave:</label>
+                <input type="password" name="clave" required />
+
+                <label>Repetir clave:</label>
+                <input type="password" name="clave2" required />
+
+                <label>Rol:</label>
+                <select name="rol" onchange="mostrarCamposProfesor(this.value)" required>
+                    <option value="">Seleccionar</option>
+                    <option value="ALUMNO" th:selected="${rol == 'ALUMNO'}">Alumno</option>
+                    <option value="PROFESOR" th:selected="${rol == 'PROFESOR'}">Profesor</option>
+                </select>
+
+                <label>Provincia:</label>
+                <select id="provincia" name="idProvincia" onchange="cargarLocalidades(this.value)">
+                    <option value="">Seleccionar Provincia</option>
+                    <option th:each="prov : ${provincias}" th:value="${prov.id}" th:text="${prov.nombre}"></option>
+                </select>
+
+                <label>Localidad:</label>
+                <select id="localidad" name="idLocalidad" required>
+                    <option value="">Seleccionar provincia primero</option>
+                </select>
 
 
-        <div id="campos-profesor" style="display:none;">
-            <h3>Datos del profesor</h3>
+                <div id="campos-profesor" style="display:none;">
+                    <h3>Datos del profesor</h3>
 
-            <label>Teléfono:</label>
-            <input type="text" name="telefono" th:value="${telefono}" />
+                    <label>Teléfono:</label>
+                    <input type="text" name="telefono" th:value="${telefono}" />
 
-            <label>Forma de trabajo:</label>
-            <select id="formaTrabajo" name="formaTrabajo">
-                <option value="">Seleccionar</option>
-                <option th:each="formaTrabajo : ${T(com.particulares.tp.java.enums.FormaTrabajo).values()}" 
-                        th:value="${formaTrabajo}" 
-                        th:text="${formaTrabajo}"> 
-                    VALOR_ENUM 
-                </option>
-            </select>
+                    <label>Forma de trabajo:</label>
+                    <select id="formaTrabajo" name="formaTrabajo">
+                        <option value="">Seleccionar</option>
+                        <option th:each="formaTrabajo : ${T(com.particulares.tp.java.enums.FormaTrabajo).values()}" 
+                                th:value="${formaTrabajo}" 
+                                th:text="${formaTrabajo}"> 
+                            VALOR_ENUM 
+                        </option>
+                    </select>
 
-            <label>Información académica:</label>
-            <textarea name="infoAcademica" th:text="${infoAcademica}"></textarea>
+                    <label>Información académica:</label>
+                    <textarea name="infoAcademica" th:text="${infoAcademica}"></textarea>
 
-            <label>Precio Por Hs:</label>
-            <input name="precioXHs" th:value="${precioXHs}"></input>
+                    <label>Precio Por Hs:</label>
+                    <input name="precioXHs" th:value="${precioXHs}"></input>
 
+                </div>
+
+                <div th:replace="fragments/mensajes :: fragment"></div>
+
+                <button type="submit">Registrarse</button>
+                <a href="/login">¿Ya tienes cuenta? Inicia sesión aquí</a>
+            </form>
         </div>
+    </div>
 
-        <button type="submit">Registrarse</button>
-    </form>
-    <a href="/login" class="btn">¿Ya tienes cuenta? Inicia sesión aquí</a>
     <script>
         // Mostrar campos si ya se había seleccionado "PROFESOR"
         const rolActual =  '';
@@ -110,5 +121,7 @@
             mostrarCamposProfesor('PROFESOR');
         }
     </script>
+
+    <div th:replace="fragments/footer :: fragment"></div>
 </body>
 </html>

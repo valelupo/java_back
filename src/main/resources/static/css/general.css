@@ -19,7 +19,7 @@ body {
 header {
     background-color: #004080;
     color: white;
-    padding: 10px 0;
+    padding: 8px 0;
     text-align: center;
     position: sticky;
     top: 0;
@@ -92,7 +92,7 @@ header h1 {
 
 /* Estilo para el botón de Submit */
 button[type="submit"] {
-    background-color: #815743;
+    background-color: #815743e3;
     color: #fff;
     padding: 12px;
     border: none;
@@ -133,20 +133,58 @@ footer {
 
 /* Estilo para Títulos en Formularios */
 .form-title {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     text-align: center;
     font-size: 2.2rem;
     color: #004080;
 }
 
 
+label {
+    display: block;
+    font-weight: 600;
+}
+
 /* Estilo para Inputs, Selects y Textareas */
 input,
-select {
+select,
+textarea {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 6px;
     font-size: 1rem;
     width: 100%; 
     box-sizing: border-box; /* Crucial para manejar padding correctamente */
+}
+
+/* Formulario */
+.form-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #c0bfbf;
+}
+
+.form-container form {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 550px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Estilo para enlaces dentro de la caja del formulario */
+.form-container a {
+    text-align: center;
+    color: #815743;
+    text-decoration: none;
+}
+
+.form-container a:hover {
+    text-decoration: underline;
 }

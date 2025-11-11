@@ -1,0 +1,32 @@
+/* Wrapper*/
+.registro-wrapper {
+    display: flex;
+    justify-content: center; 
+    align-items: center;   
+    min-height: 100vh;      
+    flex-grow: 1; 
+    background-color: #c0bfbf;
+    padding: 20px 0;
+}
+
+/* Ajuste de ancho*/
+.form-container {
+    max-width: 950px;
+}
+
+/* Sección Profesor */
+#campos-profesor {
+    display: flex; 
+    flex-direction: column;
+    gap: 10px; 
+    border: 1px dashed #004080; 
+    padding: 15px;
+    border-radius: 6px;
+    margin-top: 10px;
+}
+
+#campos-profesor h3 {
+    color: #004080;
+    font-size: 1.3rem;
+    margin-bottom: 5px;
+}
