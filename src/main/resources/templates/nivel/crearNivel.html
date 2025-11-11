@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Crear Nivel</title>
+    <link rel="stylesheet" th:href="@{/css/general.css}" />
+</head>
+<body>
+
+    <div th:replace="~{fragments/headerPersona :: fragment}"></div>
+
+    <div th:replace="~{fragments/mensajes :: fragment}"></div>
+
+    <main class="form-container">
+        
+        <form th:action="@{/nivel/crear}" method="post">
+            <h2 class="form-title">nuevo nivel</h2>
+
+            <label for="descripcion">descripcion del nivel</label>
+            <input type="text" id="descripcion" name="descripcion" placeholder="Ej: Secundario" required />
+
+            <button type="submit">Registrar</button>
+            
+            <a th:href="@{/dictadoClase/registrar}">Volver</a>
+
+        </form>
+    </main>
+
+    <footer th:replace="fragments/footer :: footer"></footer>
+
+</body>
+</html>

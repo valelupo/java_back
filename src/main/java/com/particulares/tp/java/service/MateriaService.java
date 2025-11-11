@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.particulares.tp.java.entities.Materia;
+import com.particulares.tp.java.entities.Provincia;
 import com.particulares.tp.java.entities.DictadoClase;
 import com.particulares.tp.java.repository.MateriaRepository;
 import com.particulares.tp.java.repository.DictadoClaseRepository;
@@ -60,9 +61,18 @@ public class MateriaService {
     @Transactional
     public void eliminarMateria(int id) 
     throws Exception{
+
         Optional<Materia> materiaOpt = materiaRepository.findById(id);
+
         if (materiaOpt.isPresent()) {
+            // if (!materiaOpt.get().getDictados().isEmpty()){
+            //     throw new Exception("Existen profesores que dictan esta materia");
+            // }
             materiaRepository.delete(materiaOpt.get());
+            for (DictadoClase dc : materiaOpt.get().getDictados()) {
+                dictadoClaseRepository.delete(dc);
+            }
+            
         } else {
             throw new Exception("La materia con el ID especificado no existe");
         }
@@ -96,6 +106,9 @@ public class MateriaService {
     throws Exception {
         if (nombre.isEmpty() || nombre == null) {
             throw new Exception("el nombre no puede ser nulo o estar vacío");
+        }
+        if (materiaRepository.findByNombre(nombre) != null){
+            throw new Exception("ya existe una materia con este nombre");
         }
         
     }

@@ -3,15 +3,17 @@
 <body>
    <header th:fragment="fragment">
         <nav class="nav-persona">
-            <a th:href="@{/inicio}" class="navbar-brand">
+            <a th:href="@{/inicio}" class="brand-link">
                 <img src="/img/favicon.png" alt="Logo Geteacher" class="logo">
                 <h1>GETEACHER</h1>
             </a>
+
             <div class="nav-buttons">
-                <a href="/logout" class="btn logout">Cerrar sesión</a>
-                <a th:href="@{'/persona/perfil'}">Perfil</a>
+                <a th:href="@{/persona/perfil}" class="btn-nav">Perfil</a>
+                <a href="/logout" class="btn-nav">Cerrar sesión</a>
             </div>
         </nav>
     </header>
 </body>
 </html>
+

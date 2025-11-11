@@ -1,147 +1,57 @@
 /* header persona */
+/* --- Header persona (profesor, alumno, admin) --- */
 .nav-persona {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 30px;
-    max-width: 1400px;
-    margin: 0 auto;
+    background-color: var(--color-primario, #1f3c88);
+    padding: 12px 30px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
-.nav-persona .logo {
-    height: 45px;
+/* Logo + nombre Geteacher */
+.brand-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #fff;
+    gap: 10px;
 }
 
-.nav-persona h1 {
-    font-size: 2rem;
-    margin: 0 10px;
-    flex-grow: 1;
-    text-align: left;
-    color: white;
+.brand-link:hover {
+    opacity: 0.85;
 }
 
+.logo {
+    width: 40px;
+    height: 40px;
+}
+
+.brand-link h1 {
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0;
+}
+
+/* Botones del lado derecho */
 .nav-buttons {
     display: flex;
     gap: 15px;
 }
 
-.nav-buttons a {
-    background-color: transparent;
-    color: white;
-    font-weight: bold;
+.btn-nav {
+    color: #fff;
     text-decoration: none;
-    padding: 8px 16px;
-    /* border: 2px solid white;*/
-    border-radius: 6px; 
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.nav-buttons a:hover {
-    background-color: white;
-    color: #004080;
-}
-
-/* Título principal */
-main h2 {
-    text-align: center;
-    font-size: 2rem;
-    color: #004080;
-    margin: 40px 0 20px;
-}
-
-/* Botón de orden */
-form button[name="orden"] {
-    background-color: #815743;
-    color: white;
-    padding: 10px 20px;
-    border: none;
+    font-weight: 500;
+    transition: 0.3s ease;
+    padding: 8px 14px;
     border-radius: 6px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    display: block;
-    margin: 0 auto 30px;
 }
 
-form button[name="orden"]:hover {
-    background-color: #614132;
+.btn-nav:hover {
+    background-color: rgba(255,255,255,0.1);
 }
 
-form {
-    text-align: right;
-}
 
-.ordenar-container {
-    display: flex;
-    justify-content: flex-end;
-    width: 90%;
-    max-width: 1000px;
-    margin: 0 auto;
-}
 
-.card-img-top {
-    object-fit: fill;
-    height: 200px;
-}
-.card:hover {
-    transform: scale(1.02);
-    transition: transform 0.3s ease;
-}
-/* 
-/* Grid de tarjetas 
-.profesor-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 30px;
-    padding: 40px 5%;
-}
 
-/* Tarjeta individual 
-.card-profesor {
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 20px;
-    transition: transform 0.3s ease;
-}
-
-.card-profesor:hover {
-    transform: translateY(-5px);
-}*/
-
-/* Encabezado de la tarjeta 
-.card-header h3 {
-    font-size: 1.4rem;
-    color: #004080;
-    margin-bottom: 10px;
-}
-
-/* Cuerpo de la tarjeta 
-.card-body p {
-    margin: 8px 0;
-    font-size: 1rem;
-    color: #333;
-}
-
-/* Footer con botón 
-.card-footer {
-    margin-top: 15px;
-    text-align: right;
-}
-
-.btn-ver {
-    background-color: #004080;
-    color: white;
-    padding: 8px 16px;
-    border-radius: 6px;
-    text-decoration: none;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-}
-
-.btn-ver:hover {
-    background-color: #002f5f;
-} */
