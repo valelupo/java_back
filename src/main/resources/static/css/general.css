@@ -257,3 +257,48 @@ a:hover {
 .btn-volver:hover {
   background-color: #e0e0e0;
 }
+
+.tabla-container {
+  width: 60%;
+  margin: 0 auto;
+  border-collapse: collapse;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.tabla-container table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tabla-container th,
+.tabla-container td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: left;
+}
+
+.tabla-container th {
+  background-color: #004080;
+  color: white;
+  font-weight: 500;
+}
+
+.tabla-container td {
+  background-color: white;
+}
+
+button.btn-buscar {
+  background: none;
+  border: none;
+  padding: 4px;
+  font-size: 1.4rem;
+  color: #000000;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+button.btn-buscar:hover {
+  color: #002f5f;
+  background: none;
+}

@@ -8,11 +8,10 @@
 </head>
 <body>
 
-    <div th:replace="~{fragments/headerPersona :: fragment}"></div>
+    <div th:replace="~{fragments/headerGral :: fragment}"></div>
 
     <nav>
         <ul>
-            <li><a href="/perfil">Mi Perfil</a></li>
             <li><a th:href="@{/localidad/listar}">Administrar localidades</a></li>
             <li><a th:href="@{/provincia/listar}">Administrar provincias</a></li>
             <li><a th:href="@{/materia/listar}">Administrar materias</a></li>
