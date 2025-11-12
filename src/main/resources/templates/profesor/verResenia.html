@@ -1,46 +1,57 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DICTADOS</title>
-    <link rel="stylesheet" th:href="@{/css/general.css}" />
-    <link rel="stylesheet" th:href="@{/css/dictados.css}"/>
-    <link rel="stylesheet" th:href="@{/css/persona.css}" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reseñas</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" th:href="@{/css/general.css}" />
+  <link rel="stylesheet" th:href="@{/css/dictados.css}" />
+  <link rel="stylesheet" th:href="@{/css/persona.css}" />
 </head>
 
 <body>
-  <div th:replace="~{fragments/headerPersona :: fragment}"></div>
+  <div th:replace="~{fragments/headerProfesor :: fragment}"></div>
 
   <main class="welcome">
     <div th:replace="~{fragments/mensajes :: fragment}"></div>
-    <h2>Mis Resenias</h2>
+
+    <div class="titulo-con-flecha">
+      <a th:href="@{/inicio}" class="btn-volver" title="Volver">
+        <i class="bi bi-arrow-left"></i>
+      </a>
+      <h2>Mis Reseñas</h2>
+    </div>
 
     <p th:if="${mensaje}" th:text="${mensaje}"></p>
 
-    <div class="tabla-container" th:if="${resenias}">
-      <table>
-        <thead>
-          <tr>
-            <th>fecha</th>
-            <th>descripcion</th>
-            <th>puntaje</th>
-            <th>Alumno</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr th:each="resenia : ${resenias}">
-            <td th:text="${resenia.fecha}"></td>
-            <td th:text="${resenia.descripcion}"></td>
-            <td th:text="${resenia.puntaje}"></td>
-            <td th:text="${resenia.alumno.email}"></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="buttons">
-      <a th:href="@{/inicio}" class="btn">Volver</a>
+    <div class="container mt-4" th:if="${resenias}">
+      <div class="row justify-content-center">
+        <div class="col-md-4 mb-4" th:each="resenia : ${resenias}">
+          <div class="card shadow-sm">
+            <div class="card-header">
+              <div class="rating-stars">
+                <span th:each="i : ${#numbers.sequence(1,5)}">
+                  <i class="bi bi-star-fill"
+                    th:classappend="${i <= resenia.puntaje} ? ' text-warning' : ' text-secondary'"></i>
+                </span>
+              </div>
+            </div>
+            <div class="card-body">
+              <figure>
+                <blockquote class="blockquote">
+                  <p th:text="${resenia.descripcion}">Texto de la reseña</p>
+                </blockquote>
+                <figcaption class="blockquote-footer">
+                  <span th:text="${resenia.alumno.email}">Alumno</span>
+                  — <span th:text="${#strings.substring(resenia.fecha, 0, 10)}">Fecha</span>
+                </figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </main>
 

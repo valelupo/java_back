@@ -3,24 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <title>Inicio del Profesor</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-..." crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/general.css}" />
     <link rel="stylesheet" th:href="@{/css/profesor.css}"/>
     <link rel="stylesheet" th:href="@{/css/persona.css}" />
 </head>
 <body>
 
-    <div th:replace="~{fragments/headerPersona :: fragment}"></div>
+    <div th:replace="~{fragments/headerProfesor :: fragment}"></div>
 
     <main class="welcome">
 
         <h2>Bienvenido <span th:text="${profesor.nombre}">Profesor</span> a Geteacher</h2>
         <p>Un lugar que permite dar a conocer tu potencial para enseñar</p>
 
-        <a th:href="@{/persona/perfil}">
+        <a th:href="@{/profesor/perfil}">
             <img th:src="@{'/profesor/imagen/' + ${profesor.id}}" class="fondo-img-profesor" alt="Foto del profesor" 
                                 onerror="this.onerror=null;this.src='/img/default-prof.jpg';">
         </a>
-
+        <div class="rating-stars">
+            <span th:each="i : ${#numbers.sequence(1,5)}">
+                <i class="bi bi-star-fill"
+                th:classappend="${i <= promedio} ? ' text-warning' : ' text-secondary'"></i>
+            </span>
+            <span class="ms-2" th:text="${promedio > 0 ? #numbers.formatDecimal(promedio, 1, 1) : 'Sin reseñas aún'}"></span>
+        </div>
         <div class="reseñas-link">
             <a th:href="@{/resenia/listar}">Ver mis reseñas</a>
         </div>
@@ -33,6 +41,8 @@
     </main>
 
     <div th:replace="~{fragments/footer :: fragment}"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-..." crossorigin="anonymous"></script>
 
 </body>
 </html>

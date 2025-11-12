@@ -10,7 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.particulares.tp.java.entities.Persona;
 import com.particulares.tp.java.service.MateriaService;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/materia")
@@ -20,12 +23,16 @@ public class MateriaController {
     private MateriaService materiaService;
     
     @GetMapping("/registrar") 
-    public String registrar() {
+    public String registrar(ModelMap modelo, HttpSession session) {
+        Persona logueado = (Persona) session.getAttribute("personaSession");
+        modelo.put("persona", logueado);
         return "materia/crearMateria";
     }
 
     @PostMapping("/crear") 
-    public String crear(@RequestParam String nombre, ModelMap modelo){
+    public String crear(@RequestParam String nombre, HttpSession session, ModelMap modelo) {
+        Persona logueado = (Persona) session.getAttribute("personaSession");
+        modelo.put("persona", logueado);
         try {
             materiaService.crearMateria(nombre);  
             modelo.put("exito", "La materia fue cargada correctamente");
@@ -37,8 +44,9 @@ public class MateriaController {
     }
 
     @GetMapping("/listar")
-    public String listar(ModelMap modelo) {
-
+    public String listar(ModelMap modelo, HttpSession session) {
+        Persona logueado = (Persona) session.getAttribute("personaSession");
+        modelo.put("persona", logueado);
         modelo.addAttribute("materias", materiaService.listarMaterias()); 
         return "admin/materia/lista";
     }
