@@ -42,13 +42,19 @@
 }
 
 /* Título principal */
-main h2 {
+h2 {
     text-align: center;
     font-size: 2rem;
     color: #004080;
     margin: 40px 0 20px;
 }
 
+h5 {
+    text-align: left;
+    font-size: 1.4rem;
+    color: #004080;
+    /* margin: px 0 20px; */
+}
 
 form {
     text-align: right;
@@ -75,7 +81,6 @@ form {
 .container{
     max-width: 1200px;
     margin: 0 auto 15px;
-
 }
 
 .card {
@@ -104,13 +109,6 @@ form {
     margin-bottom: 1px;
 }
 
-/* .card-body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-} */
-
 .card-body .btn {
     margin-top: 0px;
     padding: 8px 16px;
@@ -138,9 +136,72 @@ form {
     box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
-
-
 .ver-perfil-btn:hover {
     background-color: #614132;
     text-decoration: none;
+}
+
+.perfil-img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border: 3px solid #004080;
+}
+
+/* estrellas */
+.rating-stars i {
+  font-size: 2rem;
+  margin-right: 2px;
+}
+
+.star-rating {
+  display: flex;
+  gap: 8px;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.star-rating i {
+  color: #ccc;
+  transition: color 0.2s ease;
+}
+
+.star-rating i.selected {
+  color: gold;
+}
+
+.datos-personales {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 150px;
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 20px 100px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  margin-bottom: 30px;
+  flex-wrap: wrap; /* para que se adapte en mobile */
+  max-width: 1000px;
+}
+
+.datos-personales img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 2px solid #ccc;
+}
+
+.datos-personales .datos {
+   flex: 1;
+  min-width: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+}
+
+.datos-personales .datos p {
+  margin-bottom: 8px;
+  font-size: 0.95rem;
 }
