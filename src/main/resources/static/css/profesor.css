@@ -17,10 +17,18 @@
 }
 
 .fondo-img-profesor {
-    width: 120px;
-    height: 120px;
+    width: 140px;
+    height: 140px;
     border-radius: 50%;
     object-fit: cover;
     margin-bottom: 20px;
     box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    cursor: pointer;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+}
+
+.fondo-img-profesor:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
 }

@@ -31,20 +31,6 @@ tr:hover {
   background-color: #f5f5f5;
 }
 
-/* Botón eliminar */
-.btn-eliminar {
-  background-color: #b33a3a;
-  color: #fff;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.btn-eliminar:hover {
-  background-color: #922e2e;
-}
 
 
 /* para agregar una nueva materia */
@@ -71,4 +57,13 @@ tr:hover {
   font-size: 0.95rem;
   color: #333;
   margin: 0;
+}
+
+
+.card {
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: scale(1.02);
 }

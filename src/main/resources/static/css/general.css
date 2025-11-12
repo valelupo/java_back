@@ -85,6 +85,8 @@ header h1 {
     transition: background-color 0.3s ease;
 }
 
+
+
 .btn:hover {
     background-color: #614132;
 }
@@ -92,7 +94,7 @@ header h1 {
 
 /* Estilo para el botón de Submit */
 button[type="submit"] {
-    background-color: #815743e3;
+    background-color: #815743;
     color: #fff;
     padding: 12px;
     border: none;
@@ -104,6 +106,21 @@ button[type="submit"] {
 
 button[type="submit"]:hover {
     background-color: #614132;
+}
+
+/* Botón eliminar */
+button.btn-eliminar {
+  background-color: #922e2e;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button.btn-eliminar:hover {
+  background-color: #621212;
 }
 
 
@@ -215,4 +232,26 @@ a:hover {
 
 .navbar a:hover {
   opacity: 0.8;             /* efecto sutil al pasar el mouse */
+}
+
+/* para el boton de volver atras  */
+.titulo-con-flecha {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 30px;
+}
+
+.btn-volver {
+  font-size: 1.5rem;
+  color: #004080;
+  text-decoration: none;
+  padding: 6px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.btn-volver:hover {
+  background-color: #e0e0e0;
 }

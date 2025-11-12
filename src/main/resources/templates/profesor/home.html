@@ -16,8 +16,10 @@
         <h2>Bienvenido <span th:text="${profesor.nombre}">Profesor</span> a Geteacher</h2>
         <p>Un lugar que permite dar a conocer tu potencial para enseñar</p>
 
-        <img th:src="@{'/profesor/imagen/' + ${profesor.id}}" class="fondo-img-profesor" alt="Foto del profesor" 
-                            onerror="this.onerror=null;this.src='/img/default-prof.jpg';">
+        <a th:href="@{/persona/perfil}">
+            <img th:src="@{'/profesor/imagen/' + ${profesor.id}}" class="fondo-img-profesor" alt="Foto del profesor" 
+                                onerror="this.onerror=null;this.src='/img/default-prof.jpg';">
+        </a>
 
         <div class="reseñas-link">
             <a th:href="@{/resenia/listar}">Ver mis reseñas</a>
@@ -30,48 +32,8 @@
         </div>
     </main>
 
-    <footer>
-        <p>&copy; 2025 Geteacher</p>
-    </footer>
+    <div th:replace="~{fragments/footer :: fragment}"></div>
 
 </body>
 </html>
 
-<!-- <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Panel del Profesor</title>
-    <link rel="stylesheet" th:href="@{/css/general.css}" />
-</head>
-<body>
-
-    <div th:replace="~{fragments/headerPersona :: fragment}"></div>
-
-    <nav>
-        <ul>
-            <li><a href="/perfil">Mi Perfil</a></li>
-            <li><a th:href="@{/material/registrar}">Materiales</a></li>
-            <li><a href="#">Reseñas</a></li>
-            <li><a href="/dictadoClase/lista">Dictados de clases</a></li>
-            <li><a href="/logout">Cerrar sesión</a></li>
-        </ul>
-    </nav>
-
-    <main>
-        <h1>Bienvenido al panel, Profesor</h1>
-        <p>Desde aquí podrás gestionar tu perfil, subir materiales, ver reseñas y configurar las materias que dictás.</p>
-
-        <section>
-            <h2>¿Qué querés hacer hoy?</h2>
-            <ul>
-                <li>📁 <strong>Subir materiales</strong>: compartí contenido útil para tus alumnos.</li>
-                <li>⭐ <strong>Ver reseñas</strong>: conocé la opinión de quienes ya tomaron clases con vos.</li>
-                <li>📚 <strong>administrar dictados de clases</strong>: crea o elimina dictados de materias en diferentes niveles</li>
-                <li>👤 <strong>Editar tu perfil</strong>: actualizá tu información de contacto y académica.</li>
-            </ul>
-        </section>
-    </main>
-
-</body>
-</html> -->

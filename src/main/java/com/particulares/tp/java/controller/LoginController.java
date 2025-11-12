@@ -84,6 +84,7 @@ public class LoginController {
     public String inicio(@RequestParam(required = false) String orden,
                         HttpSession session, ModelMap modelo){
         Persona logueado = (Persona) session.getAttribute("personaSession");
+        modelo.put("persona", logueado);
 
         if (logueado.getRol().toString().equals("PROFESOR")) {
             modelo.put("profesor", logueado);
