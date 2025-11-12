@@ -65,9 +65,6 @@ public class MateriaService {
         Optional<Materia> materiaOpt = materiaRepository.findById(id);
 
         if (materiaOpt.isPresent()) {
-            // if (!materiaOpt.get().getDictados().isEmpty()){
-            //     throw new Exception("Existen profesores que dictan esta materia");
-            // }
             materiaRepository.delete(materiaOpt.get());
             for (DictadoClase dc : materiaOpt.get().getDictados()) {
                 dictadoClaseRepository.delete(dc);

@@ -9,9 +9,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.particulares.tp.java.entities.Persona;
+import com.particulares.tp.java.entities.Profesor;
 import com.particulares.tp.java.service.AlumnoService;
 import com.particulares.tp.java.service.ProfesorService;
 import com.particulares.tp.java.service.ProvinciaService;
+import com.particulares.tp.java.service.ReseniaService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -27,6 +29,9 @@ public class LoginController {
 
     @Autowired
     private ProvinciaService provinciaService;
+
+    @Autowired
+    private ReseniaService reseniaService;
 
     @GetMapping("/")  
     public String index() {
@@ -84,10 +89,15 @@ public class LoginController {
     public String inicio(@RequestParam(required = false) String orden,
                         HttpSession session, ModelMap modelo){
         Persona logueado = (Persona) session.getAttribute("personaSession");
+        session.setAttribute("personaSession", logueado);
+
         modelo.put("persona", logueado);
 
         if (logueado.getRol().toString().equals("PROFESOR")) {
-            modelo.put("profesor", logueado);
+            Profesor profesor = (Profesor) logueado;
+            Double promedio = reseniaService.promedioReseniasPorProfesor(profesor.getId());
+            modelo.put("profesor", profesor);
+            modelo.put("promedio", promedio);
             return "profesor/home";
         }
         else if (logueado.getRol().toString().equals("ADMIN")){

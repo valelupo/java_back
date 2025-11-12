@@ -7,7 +7,7 @@
 </head>
 <body>
 
-    <div th:replace="~{fragments/headerPersona :: fragment}"></div>
+    <div th:replace="~{fragments/headerGral :: fragment}"></div>
 
     <div th:replace="~{fragments/mensajes :: fragment}"></div>
 
@@ -21,7 +21,10 @@
 
             <button type="submit">Registrar</button>
             
-            <a th:href="@{/dictadoClase/registrar}">Volver</a>
+            <a th:if="${persona != null and persona.rol == 'PROFESOR'}" th:href="@{/dictadoClase/registrar}">Volver</a>
+            <a th:if="${persona != null and persona.rol == 'ADMIN'}" th:href="@{/materia/listar}">Volver</a>
+
+
 
         </form>
     </main>

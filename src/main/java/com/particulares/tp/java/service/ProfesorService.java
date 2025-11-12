@@ -18,7 +18,6 @@ import com.particulares.tp.java.dto.ProfesorConPuntajeDTO;
 import com.particulares.tp.java.entities.DictadoClase;
 import com.particulares.tp.java.entities.Localidad;
 import com.particulares.tp.java.repository.ProfesorRepository;
-import com.particulares.tp.java.repository.ReseniaRepository;
 import com.particulares.tp.java.repository.LocalidadRepository;
 import com.particulares.tp.java.repository.DictadoClaseRepository;
 
@@ -33,9 +32,6 @@ public class ProfesorService {
 
     @Autowired
     private DictadoClaseRepository dictadoClaseRepository;
-
-    @Autowired
-    private ReseniaRepository reseniaRepository;
 
     @Transactional
     public void crearProfesor(String nombre, String apellido, String email, int idLocalidad, String clave, String clave2,
@@ -138,10 +134,12 @@ public class ProfesorService {
         Optional<Profesor> profesorOpt = profesorRepository.findById(id);
         if (profesorOpt.isPresent()) {
             profesorRepository.delete(profesorOpt.get());
+            for (DictadoClase dc : profesorOpt.get().getDictados()) {
+                dictadoClaseRepository.delete(dc);
+            }
         } else {
             throw new Exception("El profesor con el ID especificado no existe");
         }
-
     }
 
     @Transactional(readOnly = true)
