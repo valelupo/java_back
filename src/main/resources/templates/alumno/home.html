@@ -40,6 +40,7 @@
                             <p class="card-text">
                                 <strong>Modalidad:</strong> <span th:text="${prof.formaTrabajo}"></span><br>
                                 <strong>Precio por hora:</strong> $<span th:text="${prof.precioXHs}"></span><br>
+                                <span th:text="${prof.localidad.nombre} + ', ' + ${prof.provincia.nombre}"></span><br>
                                 <div class="rating-stars">
                                     <span th:each="i : ${#numbers.sequence(1,5)}">
                                         <i class="bi bi-star-fill"
@@ -47,14 +48,19 @@
                                     </span>
                                     <span class="ms-2" th:text="${prof.promedio > 0 ? #numbers.formatDecimal(prof.promedio, 1, 1) : 'Sin reseñas aún'}"></span>
                                 </div>
+                                <section class="materias-dictadas mt-2">
+                                    <!-- <h6 class="fw-bold">Materias que dicta</h6> -->
+                                    <ul class="list-unstyled">
+                                        <li th:each="dictado : ${prof.dictados}">
+                                            <span th:text="${dictado.materia.nombre}"></span> -
+                                            <span th:text="${dictado.nivel.descripcion}"></span>
+                                        </li>
+                                    </ul>
+                                </section>
                             </p>
                         </div>
-                        <!-- <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Provincia: <span th:text="${prof.miLocalidad.miProvincia.nombre}"></span></li>
-                            <li class="list-group-item">Localidad: <span th:text="${prof.miLocalidad.nombre}"></span></li>
-                        </ul> -->
-                        <div class="card-body text-end">
-                            <a th:href="@{'/profesor/ver/' + ${prof.id}}" class="btn btn-primary">Ver perfil</a>
+                        <div class="boton-ver-container">
+                            <a th:href="@{'/profesor/ver/' + ${prof.id}}" class="btn-primary ver-perfil-btn">Ver perfil</a>
                         </div>
                     </div>
                 </div>
