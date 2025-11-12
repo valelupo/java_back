@@ -75,12 +75,26 @@ public class ProfesorService {
 
     @Transactional(readOnly = true)
     public List<ProfesorConPuntajeDTO> listarProfesoresPorPuntaje() {
-        return profesorRepository.profesoresConPuntaje();
+        List<ProfesorConPuntajeDTO> profesoresDTO = profesorRepository.profesoresConPuntaje();
+
+        for (ProfesorConPuntajeDTO pdto : profesoresDTO) {
+            List<DictadoClase> dictados = dictadoClaseRepository.findByProfesor(pdto.getId());
+            pdto.setDictados(dictados);
+        }
+
+        return profesoresDTO;
     }
 
     @Transactional(readOnly = true)
     public List<ProfesorConPuntajeDTO> listarProfesoresPorPuntajeOrdenados() {
-        return profesorRepository.profesoresConPuntajeOrdenados();
+        List<ProfesorConPuntajeDTO> profesoresOrdDTO = profesorRepository.profesoresConPuntajeOrdenados();
+
+        for (ProfesorConPuntajeDTO pdto : profesoresOrdDTO) {
+            List<DictadoClase> dictados = dictadoClaseRepository.findByProfesor(pdto.getId());
+            pdto.setDictados(dictados);
+        }
+
+        return profesoresOrdDTO;
     }
 
     @Transactional
