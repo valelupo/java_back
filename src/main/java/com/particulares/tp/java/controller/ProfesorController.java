@@ -55,7 +55,7 @@ public class ProfesorController {
         modelo.put("promedio", reseniaService.promedioReseniasPorProfesor(id));
         modelo.put("dictados", dictadoClaseService.obtenerDictadosPorProfesor(id));
         modelo.put("profesor", profesorService.getOne(id));
-        // modelo.put("resenias", reseniaService.);
+        modelo.put("resenias", reseniaService.reseniasPorProfesor(id));
         return "alumno/verProfesor";
     }
 

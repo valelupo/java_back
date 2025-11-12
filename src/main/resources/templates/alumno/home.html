@@ -38,7 +38,7 @@
                             onerror="this.onerror=null;this.src='/img/default-prof.jpg';">
                         <div class="card-body">
                             <h5 class="card-title" th:text="${prof.nombre} + ' ' + ${prof.apellido}"></h5>
-                            <p class="card-text">
+                            <div class="card-text">
                                 <strong>Modalidad:</strong> <span th:text="${prof.formaTrabajo}"></span><br>
                                 <strong>Precio por hora:</strong> $<span th:text="${prof.precioXHs}"></span><br>
                                 <span th:text="${prof.localidad.nombre} + ', ' + ${prof.provincia.nombre}"></span><br>
@@ -58,7 +58,7 @@
                                         </li>
                                     </ul>
                                 </section>
-                            </p>
+                            </div>
                         </div>
                         <div class="boton-ver-container">
                             <a th:href="@{'/profesor/ver/' + ${prof.id}}" class="btn-primary ver-perfil-btn">Ver perfil</a>
