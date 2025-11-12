@@ -6,6 +6,7 @@
     <title>Inicio Alumno</title>
     <link rel="icon" type="image/png" th:href="@{/img/favicon.png}" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-..." crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/general.css}" />
     <link rel="stylesheet" th:href="@{/css/persona.css}" />
 </head>
@@ -22,25 +23,30 @@
 
          <!-- Botón para ordenar -->
         <div class="ordenar-container">
-            <form method="get" action="/inicio">
-                <button type="submit" name="orden" value="puntaje">Ordenar por puntaje</button>
-            </form>
+            <a th:href="@{'/inicio'}">
+                 <i class="bi bi-filter"></i> Ordenar por puntaje
+            </a>
         </div>
 
         <!-- Lista de profesores -->
-        <div class="container mt-5">
+        <div class="container">
             <div class="row g-4">
-                <div class="col-md-4" th:each="prof : ${profesores}">
+                <div class="col-sm-6 col-md-4 col-lg-3" th:each="prof : ${profesores}">
                     <div class="card h-100">
-                        <img th:src="@{'/profesor/imagen/' + ${prof.id}}" class="card-img-top" alt="Foto del profesor"
+                        <img th:src="@{'/profesor/imagen/' + ${prof.id}}" class="card-img-top img-fluid object-fit-cover" alt="Foto del profesor"
                             onerror="this.onerror=null;this.src='/img/default-prof.jpg';">
                         <div class="card-body">
                             <h5 class="card-title" th:text="${prof.nombre} + ' ' + ${prof.apellido}"></h5>
                             <p class="card-text">
                                 <strong>Modalidad:</strong> <span th:text="${prof.formaTrabajo}"></span><br>
                                 <strong>Precio por hora:</strong> $<span th:text="${prof.precioXHs}"></span><br>
-                                <strong>Valoración:</strong>
-                                <span th:text="${prof.promedio > 0 ? #numbers.formatDecimal(prof.promedio, 1, 1) : 'Sin reseñas aún'}"></span>
+                                <div class="rating-stars">
+                                    <span th:each="i : ${#numbers.sequence(1,5)}">
+                                        <i class="bi bi-star-fill"
+                                        th:classappend="${i <= prof.promedio} ? ' text-warning' : ' text-secondary'"></i>
+                                    </span>
+                                    <span class="ms-2" th:text="${prof.promedio > 0 ? #numbers.formatDecimal(prof.promedio, 1, 1) : 'Sin reseñas aún'}"></span>
+                                </div>
                             </p>
                         </div>
                         <!-- <ul class="list-group list-group-flush">
@@ -54,24 +60,6 @@
                 </div>
             </div>
         </div>
-        <!-- <div class="profesor-grid">
-            <div class="card-profesor" th:each="prof : ${profesores}">
-                <div class="card-header">
-                    <h3 th:text="${prof.nombre} + ' ' + ${prof.apellido}"></h3>
-                </div>
-                <div class="card-body">
-                    <p><strong>Precio por hora:</strong> <span th:text="${prof.precioXHs}"></span></p>
-                    <p><strong>Modalidad:</strong> <span th:text="${prof.formaTrabajo}"></span></p>
-                    <p><strong>Valoración:</strong>
-                        <span th:text="${prof.promedio > 0 ? #numbers.formatDecimal(prof.promedio, 1, 1) : 'Sin reseñas aún'}"></span>
-                    </p>
-                </div>
-                <div class="card-footer">
-                    <a th:href="@{'/profesor/ver/' + ${prof.id}}" class="btn-ver">Ver perfil</a>
-                </div>
-            </div>
-        </div> -->
-
 
     </main>
 

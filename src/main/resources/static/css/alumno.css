@@ -1,0 +1,93 @@
+/* header alumno */
+.nav-alumno {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.nav-alumno .logo {
+    height: 45px;
+}
+
+.nav-alumno h1 {
+    font-size: 2rem;
+    margin: 0 10px;
+    flex-grow: 1;
+    text-align: left;
+    color: white;
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.nav-buttons a {
+    background-color: transparent;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 8px 16px;
+    /* border: 2px solid white;*/
+    border-radius: 6px; 
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.nav-buttons a:hover {
+    background-color: white;
+    color: #004080;
+}
+
+/* Título principal */
+main h2 {
+    text-align: center;
+    font-size: 2rem;
+    color: #004080;
+    margin: 40px 0 20px;
+}
+
+
+form {
+    text-align: right;
+}
+
+.ordenar-container {
+    display: flex;
+    justify-content: flex-end;
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.card-img-top {
+    height: 180px;
+    object-fit: cover;
+    border-bottom: 1px solid #ddd;
+}
+.card:hover {
+    transform: scale(1.02);
+    transition: transform 0.3s ease;
+}
+
+.container{
+    max-width: 1200px;
+    margin: 0 auto 15px;
+
+}
+
+.card {
+    padding: 12px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    font-size: 0.95rem;
+}
+.card-title {
+    font-size: 1.1rem;
+}
+.card-text {
+    font-size: 0.9rem;
+}
+
