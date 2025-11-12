@@ -1,5 +1,68 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Nuevo Dictado</title>
+
+  <!-- Bootstrap y Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- Tus estilos -->
+  <link rel="stylesheet" th:href="@{/css/general.css}" />
+  <link rel="stylesheet" th:href="@{/css/dictados.css}" />
+  <link rel="stylesheet" th:href="@{/css/persona.css}" />
+</head>
+
+<body>
+  <div th:replace="~{fragments/headerProfesor :: fragment}"></div>
+
+  <main class="form-container">
+    <div th:replace="~{fragments/mensajes :: fragment}"></div>
+
+    <form action="/dictadoClase/crear" method="post">
+      <!-- Título con flecha -->
+      <div class="titulo-con-flecha mb-4">
+        <a th:href="@{/dictadoClase/lista}" class="btn-volver" title="Volver">
+          <i class="bi bi-arrow-left"></i>
+        </a>
+        <h2>Registrar nuevo dictado</h2>
+      </div>
+
+      <!-- Materia -->
+      <label for="materia">Materia:</label>
+      <div class="materia-row d-flex align-items-center gap-3 mb-3">
+        <select name="idMateria" id="materia" required class="form-select w-auto">
+          <option value="" disabled selected>Seleccionar materia</option>
+          <option th:each="materia : ${materias}" th:value="${materia.id}" th:text="${materia.nombre}"></option>
+        </select>
+
+        <a th:href="@{/materia/registrar}" class="link-materia">Registrar nueva materia</a>
+      </div>
+
+      <!-- Niveles -->
+      <label for="niveles">Niveles:</label>
+      <div class="niveles-row d-flex align-items-start gap-4 mb-3">
+        <div class="niveles-checks">
+          <div class="form-check" th:each="nivel : ${niveles}">
+            <input class="form-check-input" type="checkbox" name="nrosNiveles" th:value="${nivel.nro}" th:id="'nivel-' + ${nivel.nro}">
+            <label class="form-check-label" th:for="'nivel-' + ${nivel.nro}" th:text="${nivel.descripcion}"></label>
+          </div>
+        </div>
+
+        <a th:href="@{/nivel/registrar}" class="link-materia mt-1">Registrar nuevo nivel</a>
+      </div>
+
+      <!-- Botón registrar -->
+      <button type="submit" class="btn btn-primary mt-4">Registrar</button>
+    </form>
+  </main>
+
+  <footer th:replace="fragments/footer :: footer"></footer>
+</body>
+</html>
+<!-- <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
   <meta charset="UTF-8">
@@ -17,37 +80,41 @@
     <div th:replace="~{fragments/mensajes :: fragment}"></div>
 
     <form action="/dictadoClase/crear" method="post">
-      <h2 class="form-title">Registrar nuevo dictado</h2>
 
-      <label for="materia">Materia:</label>
-      <div class="materia-row">
-        <select name="idMateria" id="materia" required>
-          <option value="" disabled selected>Seleccionar materia</option>
-          <option th:each="materia : ${materias}" th:value="${materia.id}" th:text="${materia.nombre}"></option>
-        </select>
+  <div class="titulo-con-flecha mb-4">
+    <a th:href="@{/dictadoClase/lista}" class="btn-volver" title="Volver">
+      <i class="bi bi-arrow-left"></i>
+    </a>
+    <h2>Registrar nuevo dictado</h2>
+  </div>
 
-        <div class="materia-extra">
-          <p>¿No aparece tu materia?</p>
-          <a th:href="@{/materia/registrar}" class="btn">Registrar nueva materia</a>
-        </div>
+  <label for="materia">Materia:</label>
+  <div class="materia-row d-flex align-items-center gap-3">
+    <select name="idMateria" id="materia" required class="form-select w-auto">
+      <option value="" disabled selected>Seleccionar materia</option>
+      <option th:each="materia : ${materias}" th:value="${materia.id}" th:text="${materia.nombre}"></option>
+    </select>
+
+    <a th:href="@{/materia/registrar}" class="link-materia">Registrar nueva materia</a>
+  </div>
+
+
+  <label for="niveles" class="mt-4">Niveles:</label>
+  <div class="niveles-row d-flex align-items-start gap-4">
+    <div class="niveles-checks">
+      <div class="form-check" th:each="nivel : ${niveles}">
+        <input class="form-check-input" type="checkbox" name="nrosNiveles" th:value="${nivel.nro}" th:id="'nivel-' + ${nivel.nro}">
+        <label class="form-check-label" th:for="'nivel-' + ${nivel.nro}" th:text="${nivel.descripcion}"></label>
       </div>
+    </div>
 
-      <label for="niveles">Niveles:</label>
-      <div th:each="nivel : ${niveles}">
-        <input type="checkbox" name="nrosNiveles" th:value="${nivel.nro}">
-        <span th:text="${nivel.descripcion}"></span>
-      </div>
-        <div class="materia-extra">
-          <p>¿No ecuentras el nivel?</p>
-          <a th:href="@{/nivel/registrar}" class="btn">Registrar nuevo nivel</a>
-        </div>
+    <a th:href="@{/nivel/registrar}" class="link-materia mt-1">Registrar nuevo nivel</a>
+  </div>
 
-      <button type="submit">Registrar</button>
-
-      <a th:href="@{/dictadoClase/lista}">Volver al listado</a>
-    </form>
+  <button type="submit" class="btn btn-primary mt-4">Registrar</button>
+</form>
   </main>
 
   <footer th:replace="fragments/footer :: footer"></footer>
 </body>
-</html>
+</html> -->
