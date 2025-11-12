@@ -3,14 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>Panel del Administrador</title>
+    <link rel="stylesheet" th:href="@{/css/general.css}" />
+    <link rel="stylesheet" th:href="@{/css/persona.css}" />
 </head>
 <body>
+
+    <div th:replace="~{fragments/headerPersona :: fragment}"></div>
 
     <nav>
         <ul>
             <li><a href="/perfil">Mi Perfil</a></li>
             <li><a th:href="@{/localidad/listar}">Administrar localidades</a></li>
             <li><a th:href="@{/provincia/listar}">Administrar provincias</a></li>
+            <li><a th:href="@{/materia/listar}">Administrar materias</a></li>
+            <li><a th:href="@{/nivel/listar}">Administrar niveles</a></li>
             <li><a href="/logout">Cerrar sesión</a></li>
         </ul>
     </nav>

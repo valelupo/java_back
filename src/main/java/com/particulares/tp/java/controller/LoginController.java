@@ -86,6 +86,7 @@ public class LoginController {
         Persona logueado = (Persona) session.getAttribute("personaSession");
 
         if (logueado.getRol().toString().equals("PROFESOR")) {
+            modelo.put("profesor", logueado);
             return "profesor/home";
         }
         else if (logueado.getRol().toString().equals("ADMIN")){

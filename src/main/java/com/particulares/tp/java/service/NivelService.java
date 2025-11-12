@@ -61,8 +61,15 @@ public class NivelService {
     @Transactional
     public void eliminar(int nro) throws Exception{
         Optional<Nivel> nivelOpt = nivelRepository.findById(nro);
+
         if (nivelOpt.isPresent()) {
+            // if (!nivelOpt.get().getDictados().isEmpty()){
+            //     throw new Exception("Existen profesores que dictan materias de este nivel");
+            // }
             nivelRepository.delete(nivelOpt.get());
+            for (DictadoClase dc : nivelOpt.get().getDictados()) {
+                dictadoClaseRepository.delete(dc);
+            }
         } else {
             throw new Exception("El nivel con el numero especificado no existe");
         }
@@ -95,6 +102,9 @@ public class NivelService {
     private void validar(String descripcion) throws Exception {
         if (descripcion.isEmpty() || descripcion == null) {
             throw new Exception("la descripcion no puede ser nulo o estar vacío");
+        }
+        if (nivelRepository.findByDescripcion(descripcion) != null){
+            throw new Exception("ya existe una materia con este nombre");
         }
     }
     

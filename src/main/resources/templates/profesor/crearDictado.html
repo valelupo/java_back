@@ -5,35 +5,46 @@
   <meta charset="UTF-8">
   <title>Nuevo Dictado</title>
   <link rel="stylesheet" th:href="@{/css/general.css}" />
-  <link rel="stylesheet" th:href="@{/css/dictados.css}">
+  <link rel="stylesheet" th:href="@{/css/dictados.css}"/>
+  <link rel="stylesheet" th:href="@{/css/persona.css}" />
 </head>
 
 <body>
-
-  <header th:replace="fragments/header :: fragment"></header>
+  <div th:replace="~{fragments/headerPersona :: fragment}"></div>
 
   <main class="form-container">
+
+    <div th:replace="~{fragments/mensajes :: fragment}"></div>
+
     <form action="/dictadoClase/crear" method="post">
       <h2 class="form-title">Registrar nuevo dictado</h2>
 
-      <div th:if="${exito}" class="alert-exito" th:text="${exito}"></div>
-      <div th:if="${error}" class="alert-error" th:text="${error}"></div>
-
       <label for="materia">Materia:</label>
-      <select name="idMateria" id="materia" required>
-        <option value="" disabled selected>Seleccionar materia</option>
-        <option th:each="materia : ${materias}" th:value="${materia.id}" th:text="${materia.nombre}"></option>
-      </select>
+      <div class="materia-row">
+        <select name="idMateria" id="materia" required>
+          <option value="" disabled selected>Seleccionar materia</option>
+          <option th:each="materia : ${materias}" th:value="${materia.id}" th:text="${materia.nombre}"></option>
+        </select>
+
+        <div class="materia-extra">
+          <p>¿No aparece tu materia?</p>
+          <a th:href="@{/materia/registrar}" class="btn">Registrar nueva materia</a>
+        </div>
+      </div>
 
       <label for="niveles">Niveles:</label>
       <div th:each="nivel : ${niveles}">
         <input type="checkbox" name="nrosNiveles" th:value="${nivel.nro}">
         <span th:text="${nivel.descripcion}"></span>
       </div>
+        <div class="materia-extra">
+          <p>¿No ecuentras el nivel?</p>
+          <a th:href="@{/nivel/registrar}" class="btn">Registrar nuevo nivel</a>
+        </div>
 
       <button type="submit">Registrar</button>
 
-      <a href="/dictadoClase/lista">Volver al listado</a>
+      <a th:href="@{/dictadoClase/lista}">Volver al listado</a>
     </form>
   </main>
 

@@ -5,17 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DICTADOS</title>
     <link rel="stylesheet" th:href="@{/css/general.css}" />
-    <link rel="stylesheet" th:href="@{/css/dictados.css}">
+    <link rel="stylesheet" th:href="@{/css/dictados.css}"/>
+    <link rel="stylesheet" th:href="@{/css/persona.css}" />
 </head>
 
 <body>
-  <header th:replace="fragments/header :: fragment"></header>
+  <div th:replace="~{fragments/headerPersona :: fragment}"></div>
 
   <main class="welcome">
-    <h2>Mis Dictados</h2>
 
-    <div th:if="${exito}" class="alert-exito" th:text="${exito}"></div>
-    <div th:if="${error}" class="alert-error" th:text="${error}"></div>
+    <div th:replace="~{fragments/mensajes :: fragment}"></div>
+
+    <h2>Mis Dictados</h2>
 
     <div class="buttons">
       <a href="/dictadoClase/registrar" class="btn">Crear nuevo dictado</a>

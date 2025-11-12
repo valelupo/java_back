@@ -19,25 +19,7 @@ public class Materia {
     private String nombre;
 
     @OneToMany(mappedBy = "materia")
-    private List<DictadoClase> dictados;
-
-/*     //relacion ternaria 
-    @ManyToMany 
-    @JoinTable(
-        name = "dictado_clase",
-        joinColumns = @JoinColumn(name = "materia_id"), 
-        inverseJoinColumns = @JoinColumn(name = "nivel_nro") 
-    )
-    private List<Nivel> niveles;
-
-    @ManyToMany 
-    @JoinTable(
-        name = "dictado_clase",
-        joinColumns = @JoinColumn(name = "materia_id"), 
-        inverseJoinColumns = @JoinColumn(name = "profesor_id") 
-    )
-    private List<Profesor> profesores;
-*/ 
+    private List<DictadoClase> dictados; 
 
     //setters y getters 
     public int getId() {

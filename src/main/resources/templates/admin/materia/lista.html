@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materias</title>
+    <link rel="stylesheet" th:href="@{/css/general.css}" />
+</head>
+<body>
+    <div th:replace="~{fragments/headerPersona :: fragment}"></div>
+
+    <div th:replace="~{fragments/mensajes :: fragment}"></div>
+
+    <div>
+        <h1>Materias</h1>
+        
+        <div>
+            <a th:href="@{/materia/registrar}">Crear nueva materia</a>
+        </div>
+        
+        <!-- Formulario de búsqueda -->
+        <div>
+            <form th:action="@{/materia/lista}" method="GET">
+                
+            </form>
+        </div>
+        
+        <table th:if="${materias != null and not #lists.isEmpty(materias)}">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>nombre</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="materia : ${materias}">
+                <td th:text="${materia.id}"></td>
+                <td th:text="${materia.nombre}"></td>
+                <td>
+                    <form th:action="@{'/materia/eliminar/' + ${materia.id}}" method="post" style="display:inline;">
+                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                    </form>
+                </td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div>
+            <a th:href="@{/inicio}">Volver</a>
+        </div>
+    </div>
+</body>
+</html>

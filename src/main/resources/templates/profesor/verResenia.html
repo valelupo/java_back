@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DICTADOS</title>
+    <link rel="stylesheet" th:href="@{/css/general.css}" />
+    <link rel="stylesheet" th:href="@{/css/dictados.css}"/>
+    <link rel="stylesheet" th:href="@{/css/persona.css}" />
+</head>
+
+<body>
+  <div th:replace="~{fragments/headerPersona :: fragment}"></div>
+
+  <main class="welcome">
+
+    <div th:replace="~{fragments/mensajes :: fragment}"></div>
+
+    <h2>Mis Resenias</h2>
+
+    <p th:if="${mensaje}" th:text="${mensaje}"></p>
+
+    <div class="tabla-container" th:if="${resenias}">
+      <table>
+        <thead>
+          <tr>
+            <th>fecha</th>
+            <th>descripcion</th>
+            <th>puntaje</th>
+            <th>Alumno</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="resenia : ${resenias}">
+            <td th:text="${resenia.fecha}"></td>
+            <td th:text="${resenia.descripcion}"></td>
+            <td th:text="${resenia.puntaje}"></td>
+            <td th:text="${resenia.alumno.email}"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="buttons">
+      <a th:href="@{/inicio}" class="btn">Volver</a>
+    </div>
+  </main>
+
+  <footer th:replace="fragments/footer :: footer"></footer>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Crear Materia</title>
+    <link rel="stylesheet" th:href="@{/css/general.css}" />
+</head>
+<body>
+
+    <div th:replace="~{fragments/headerPersona :: fragment}"></div>
+
+    <div th:replace="~{fragments/mensajes :: fragment}"></div>
+
+    <main class="form-container">
+        
+        <form th:action="@{/materia/crear}" method="post">
+            <h2 class="form-title">nueva materia</h2>
+
+            <label for="nombre">Nombre de la materia</label>
+            <input type="text" id="nombre" name="nombre" placeholder="Ej: Matemática" required />
+
+            <button type="submit">Registrar</button>
+            
+            <a th:href="@{/dictadoClase/registrar}">Volver</a>
+
+        </form>
+    </main>
+
+    <footer th:replace="fragments/footer :: footer"></footer>
+
+</body>
+</html>
+

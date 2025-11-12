@@ -2,9 +2,51 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Panel del Profesor</title>
+    <title>Inicio del Profesor</title>
+    <link rel="stylesheet" th:href="@{/css/general.css}" />
+    <link rel="stylesheet" th:href="@{/css/profesor.css}"/>
+    <link rel="stylesheet" th:href="@{/css/persona.css}" />
 </head>
 <body>
+
+    <div th:replace="~{fragments/headerPersona :: fragment}"></div>
+
+    <main class="welcome">
+
+        <h2>Bienvenido <span th:text="${profesor.nombre}">Profesor</span> a Geteacher</h2>
+        <p>Un lugar que permite dar a conocer tu potencial para enseñar</p>
+
+        <img th:src="@{'/profesor/imagen/' + ${profesor.id}}" class="fondo-img-profesor" alt="Foto del profesor" 
+                            onerror="this.onerror=null;this.src='/img/default-prof.jpg';">
+
+        <div class="reseñas-link">
+            <a th:href="@{/resenia/listar}">Ver mis reseñas</a>
+        </div>
+
+
+        <div class="buttons">
+            <a th:href="@{/dictadoClase/lista}" class="btn">Dictados de clase</a>
+            <a th:href="@{/material/registrar}" class="btn">Material</a>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Geteacher</p>
+    </footer>
+
+</body>
+</html>
+
+<!-- <!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel del Profesor</title>
+    <link rel="stylesheet" th:href="@{/css/general.css}" />
+</head>
+<body>
+
+    <div th:replace="~{fragments/headerPersona :: fragment}"></div>
 
     <nav>
         <ul>
@@ -32,4 +74,4 @@
     </main>
 
 </body>
-</html>
+</html> -->
