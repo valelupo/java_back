@@ -18,120 +18,117 @@
 </head>
 <body>
     <div th:replace="~{fragments/headerAlumno :: fragment}"></div>
-    <div class="container my-4" >
-        <h2 th:text="${profesor.nombre} + ' ' + ${profesor.apellido}"></h2>
-
-        <div class="row g-4">
-            <!-- Imagen + Datos personales -->
-            <div class="col-md-4 text-center align-self-center">
+    <div class="container my-5" >
+        <div class="mx-auto bg-white p-4 rounded shadow-sm" style="max-width: 800px;">
+            <div class="titulo-con-flecha">
+                <a th:href="@{/inicio}" class="btn-volver" title="Volver">
+                    <i class="bi bi-arrow-left"></i>
+                </a>
+                <h2 class="mb-4 text-center" th:text="${profesor.nombre} + ' ' + ${profesor.apellido}"></h2>
+            </div>
+           
+            <!-- Imagen -->
+            <div class="text-center mb-4">
                 <img th:src="@{'/profesor/imagen/' + ${profesor.id}}" class="rounded-circle img-fluid perfil-img mb-3" alt="Foto del profesor"
                     onerror="this.onerror=null;this.src='/img/default-prof.jpg';">
             </div>
-            <div class="col-md-8">
-                <div class="bg-white p-3 rounded shadow-sm">
-                    <h5>Datos personales</h5>
-                    <p><strong>Ubicación:</strong> <span th:text="${profesor.miLocalidad.nombre} + ', ' + ${profesor.miLocalidad.miProvincia.nombre}"></span></p>
-                    <p><strong>Teléfono:</strong> <span th:text="${profesor.telefono}"></span></p>
-                    <p><strong>Mail:</strong> <span th:text="${profesor.email}"></span></p>
-                    <p><strong>Forma de trabajo:</strong> <span th:text="${profesor.formaTrabajo}"></span></p>
-                    <p><strong>Precio por hora:</strong> <span th:text="${profesor.precioXHs} + ' ARS'"></span></p>
-                    <p><strong>Información académica:</strong> <span th:text="${profesor.infoAcademica}"></span></p>
+            <!-- Datos personales -->
+            <div class="mb-4">
+                <h5>Datos personales</h5>
+                <p><strong>Ubicación:</strong> <span th:text="${profesor.miLocalidad.nombre} + ', ' + ${profesor.miLocalidad.miProvincia.nombre}"></span></p>
+                <p><strong>Teléfono:</strong> <span th:text="${profesor.telefono}"></span></p>
+                <p><strong>Mail:</strong> <span th:text="${profesor.email}"></span></p>
+                <p><strong>Forma de trabajo:</strong> <span th:text="${profesor.formaTrabajo}"></span></p>
+                <p><strong>Precio por hora:</strong> <span th:text="${profesor.precioXHs} + ' ARS'"></span></p>
+                <p><strong>Información académica:</strong> <span th:text="${profesor.infoAcademica}"></span></p>
+                <div class="justify-content-between text-center">
+                    <a th:href="@{'https://wa.me/' + ${profesor.telefono} + '?text=Hola! Me interesa agendar una clase con ' + ${profesor.nombre} + ' ' + ${profesor.apellido}}" 
+                    class="perfil-btn text-center" target="_blank">
+                    <i class="bi bi-whatsapp"></i> Agendar Clase
+                    </a>
+                    <a th:href="@{/material}" class="ver-perfil-btn btn-primary ms-3">Ver material de estudio</a>
                 </div>
             </div>
-        </div>
 
-        <div  class="row justify-content-center g-4">
             <!-- Materias -->
-            <div class="col-md-6">
-                <div class="bg-white p-3 rounded shadow-sm my-4">
-                    <h5>Materias que dicta</h5>
-                    <ul class="list-unstyled">
-                        <li th:each="dictado : ${dictados}">
-                            <span th:text="${dictado.materia.nombre}"></span> -
-                            <span th:text="${dictado.nivel.descripcion}"></span>
-                        </li>
-                    </ul>
-                </div>
+            <div class="mb-4">  
+                <h5>Materias que dicta</h5>
+                <ul class="list-unstyled">
+                    <li th:each="dictado : ${dictados}">
+                        <span th:text="${dictado.materia.nombre}"></span> -
+                        <span th:text="${dictado.nivel.descripcion}"></span>
+                    </li>
+                </ul>
             </div>
+
             <!-- Material de estudio -->
-            <div class="col-md-6 align-self-center">
-                <div class="bg-white p-5 rounded shadow-sm my-4 align-self-center justify-content-center text-center">
-                    <h5 class="text-center">Encuentra el material de estudio que buscas</h5>
-                    <a th:href="@{/material}" class="ver-perfil-btn btn-primary">Ver material</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="row justify-content-center g-4">
+            <!-- <div class=" mb-4 text-center">
+                <h5>Encuentra el material de estudio que buscas</h5>
+                <a th:href="@{/material}" class="ver-perfil-btn btn-primary">Ver material</a>
+            </div> -->
+          
             <!-- Valoración -->
-            <div class="col-md-4">
-                <div class="bg-white p-3 rounded shadow-sm mb-4">
-                    <h5>Valoración promedio</h5>
-                    <div class="rating-stars2 text-center">
-                        <span th:each="i : ${#numbers.sequence(1,5)}">
-                            <i class="bi bi-star-fill" th:classappend="${i <= promedio} ? ' text-warning' : ' text-secondary'"></i>
-                        </span>
-                        <span class="ms-2" th:text="${promedio > 0 ? #numbers.formatDecimal(promedio, 1, 1) : 'Sin reseñas aún'}"></span>
-                        <button type="button" onclick="mostrarCamposResenia(true)"  class="btn">Dejar Reseña</button>
-                    </div>
-                    
+            <div class="text-center mb-4">
+                <h5>Valoración promedio</h5>
+                <div class="rating-stars2 text-center">
+                    <span th:each="i : ${#numbers.sequence(1,5)}">
+                        <i class="bi bi-star-fill" th:classappend="${i <= promedio} ? ' text-warning' : ' text-secondary'"></i>
+                    </span>
+                    <span class="ms-2" th:text="${promedio > 0 ? #numbers.formatDecimal(promedio, 1, 1) : 'Sin reseñas aún'}"></span>
                 </div>
             </div>
-            
+                
             <!-- Reseñas existentes -->
-            <div class="col-md-8">
-                <div class="row g-3">
-                    <div class="col-md-4" th:each="res, iterStat : ${resenias}" th:if="${iterStat.index < 3}">
-                    <div class="bg-white p-3 rounded shadow-sm">
-                        <p><strong th:text="${res.alumno.nombre} + ' ' + ${res.alumno.apellido}"></strong></p>
-                        <p th:text="${#temporals.format(res.fecha, 'dd/MM/yyyy HH:mm')}"></p>
-                        <p th:text="${res.descripcion}"></p>
-                        <div class="rating-stars">
-                            <span th:each="i : ${#numbers.sequence(1,5)}">
-                                <i class="bi bi-star-fill"
-                                th:classappend="${i <= res.puntaje} ? ' text-warning' : ' text-secondary'"></i>
-                            </span>
-                            <span class="ms-2" th:text="${res.puntaje}"></span>
-                        </div>
-                        <!-- <small th:text="'Puntaje: ' + ${res.puntaje}"></small> -->
+            <div class="mb-4">
+                <div th:each="res, iterStat : ${resenias}" th:if="${iterStat.index < 3}" class="border rounded p-3 mb-3">
+                    <div class="d-flex justify-content-between mb-2">
+                        <strong th:text="${res.alumno.nombre + ' ' + res.alumno.apellido}"></strong>
+                        <small class="text-muted" th:text="${#temporals.format(res.fecha, 'dd/MM/yyyy HH:mm')}"></small>
                     </div>
+                    <!-- <p><strong th:text="${res.alumno.nombre} + ' ' + ${res.alumno.apellido}"></strong></p> 
+                    <p th:text="${#temporals.format(res.fecha, 'dd/MM/yyyy HH:mm')}"></p> -->
+                    <p th:text="${res.descripcion}"></p>
+                    <div class="rating-stars">
+                        <span th:each="i : ${#numbers.sequence(1,5)}">
+                            <i class="bi bi-star-fill"
+                            th:classappend="${i <= res.puntaje} ? ' text-warning' : ' text-secondary'"></i>
+                        </span>
+                        <span class="ms-2" th:text="${res.puntaje}"></span>
                     </div>
-                </div>
+                </div>   
+                <button type="button" onclick="mostrarCamposResenia(true)"  class="btn">Dejar Reseña</button>    
             </div>
-        </div>
-        <!-- Reseña -->
-        <div class="bg-white p-3 rounded shadow-sm mb-4" id="campos-resenia" style="display:none;">
-            <h5>Dejar una reseña</h5>
-            <form th:action="@{/resenia/registrar}" method="post">
-                <input type="hidden" name="idProfesor" th:value="${profesor.id}" />
-                <div class="mb-3">
-                    <label class="form-label">Puntaje:</label>
-                    <div class="star-rating justify-content-center">
-                        <i class="bi bi-star-fill" data-value="1"></i>
-                        <i class="bi bi-star-fill" data-value="2"></i>
-                        <i class="bi bi-star-fill" data-value="3"></i>
-                        <i class="bi bi-star-fill" data-value="4"></i>
-                        <i class="bi bi-star-fill" data-value="5"></i>
-                    </div>
-                    <input type="hidden" name="puntaje" id="puntaje" value="0">
-                </div>
-                <!-- <div class="mb-3">
-                    <label for="puntaje" class="form-label">Puntaje:</label>
-                    <select name="puntaje" id="puntaje" class="form-select w-auto">
-                    <option th:each="i : ${#numbers.sequence(1, 5)}" th:value="${i}" th:text="${i}"></option>
-                    </select>
-                </div> -->
-                <div class="mb-3">
-                    <label for="descripcion" class="form-label">Descripción:</label>
-                    <textarea name="descripcion" id="descripcion" rows="4" class="form-control"></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary">Enviar reseña</button>
-            </form>
-        </div>
 
-        <!-- Volver -->
-        <div class="mt-4">
-            <a th:href="@{/inicio}" class="btn btn-outline-secondary">Volver</a>
+            <!-- Dejar Reseña -->
+            <div class="mb-4" id="campos-resenia" style="display:none;">
+                <h5>Dejar una reseña</h5>
+                <form th:action="@{/resenia/registrar}" method="post">
+                    <input type="hidden" name="idProfesor" th:value="${profesor.id}" />
+                    <div class="mb-3">
+                        <label class="form-label">Puntaje:</label>
+                        <div class="star-rating justify-content-center">
+                            <i class="bi bi-star-fill" data-value="1"></i>
+                            <i class="bi bi-star-fill" data-value="2"></i>
+                            <i class="bi bi-star-fill" data-value="3"></i>
+                            <i class="bi bi-star-fill" data-value="4"></i>
+                            <i class="bi bi-star-fill" data-value="5"></i>
+                        </div>
+                        <input type="hidden" name="puntaje" id="puntaje" value="0">
+                    </div>
+                    <!-- <div class="mb-3">
+                        <label for="puntaje" class="form-label">Puntaje:</label>
+                        <select name="puntaje" id="puntaje" class="form-select w-auto">
+                        <option th:each="i : ${#numbers.sequence(1, 5)}" th:value="${i}" th:text="${i}"></option>
+                        </select>
+                    </div> -->
+                    <div class="mb-3">
+                        <label for="descripcion" class="form-label">Descripción:</label>
+                        <textarea name="descripcion" id="descripcion" rows="4" class="form-control"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Enviar reseña</button>
+                </form>
+            </div>
+
         </div>
     </div>
 

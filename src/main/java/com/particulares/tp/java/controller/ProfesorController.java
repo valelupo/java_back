@@ -1,6 +1,5 @@
 package com.particulares.tp.java.controller;
 
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -17,10 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.particulares.tp.java.entities.DictadoClase;
-import com.particulares.tp.java.entities.Material;
 import com.particulares.tp.java.entities.Profesor;
-import com.particulares.tp.java.repository.LocalidadRepository;
 import com.particulares.tp.java.service.DictadoClaseService;
 import com.particulares.tp.java.service.LocalidadService;
 import com.particulares.tp.java.service.MaterialService;
