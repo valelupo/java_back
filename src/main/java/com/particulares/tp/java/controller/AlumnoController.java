@@ -13,6 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.particulares.tp.java.entities.Persona;
 import com.particulares.tp.java.service.AlumnoService;
 import com.particulares.tp.java.service.LocalidadService;
+import com.particulares.tp.java.service.ProvinciaService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -24,6 +25,9 @@ public class AlumnoController {
 
     @Autowired
     private LocalidadService localidadService;
+
+    @Autowired
+    private ProvinciaService provinciaService;
 
     @GetMapping("/perfil")
     public String verPerfil(HttpSession session, ModelMap modelo) {
@@ -38,6 +42,7 @@ public class AlumnoController {
     public String mostrarFormularioModificacion(@PathVariable int id, ModelMap modelo) {
         modelo.put("alumno", alumnoService.getOne(id));
         modelo.put("localidades", localidadService.listarLocalidades());
+        modelo.put("provincias", provinciaService.listarProvincias());
         return "alumno/modificar";
     }
 
@@ -48,15 +53,14 @@ public class AlumnoController {
                                 @RequestParam String email, 
                                 @RequestParam int idLocalidad, 
                                 @RequestParam String clave, 
-                                @RequestParam String clave2, ModelMap modelo) {
+                                @RequestParam String clave2, ModelMap modelo, RedirectAttributes redirectAttributes) {
         try {
             alumnoService.modificarAlumno(nombre, apellido, email, idLocalidad, clave, clave2, id);
-            modelo.put("exito", "Perfil modificado correctamente.");
-            return "redirect:/alumno/perfil/" + id;
+            redirectAttributes.addFlashAttribute("exito", "Perfil modificado correctamente.");
+            return "redirect:/alumno/perfil";
         } catch (Exception e) {
-            modelo.put("error", e.getMessage());
-            modelo.put("alumno", alumnoService.getOne(id));
-            return "alumno/perfilAlumno";
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+            return "redirect:/alumno/modificar/" + id;
         }
     }
 
@@ -67,7 +71,8 @@ public class AlumnoController {
             redirectAttributes.addFlashAttribute("exito", "Alumno eliminada correctamente.");
         } catch (Exception ex) {
             redirectAttributes.addFlashAttribute("error", ex.getMessage());
+            return "redirect:/alumno/modificar/" + id;
         }
-        return "redirect:/materia/listar";
+        return "redirect:/";
     }
 }

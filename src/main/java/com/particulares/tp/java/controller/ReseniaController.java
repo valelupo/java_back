@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.particulares.tp.java.entities.Persona;
-import com.particulares.tp.java.entities.Profesor;
 import com.particulares.tp.java.service.ReseniaService;
 
 import jakarta.servlet.http.HttpSession;
