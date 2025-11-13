@@ -40,7 +40,7 @@ public class ReseniaController {
     @GetMapping("/listar")
     public String listarPorProfesor (HttpSession session, ModelMap modelo) {
         Persona profesor = (Persona) session.getAttribute("personaSession");
-        modelo.addAttribute("resenias", reseniaService.listarPorProfesor(profesor.getId())); 
+        modelo.addAttribute("resenias", reseniaService.reseniasPorProfesor(profesor.getId())); 
         return "profesor/verResenia";
     }
 

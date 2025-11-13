@@ -22,8 +22,10 @@ import com.particulares.tp.java.entities.Material;
 import com.particulares.tp.java.entities.Profesor;
 import com.particulares.tp.java.repository.LocalidadRepository;
 import com.particulares.tp.java.service.DictadoClaseService;
+import com.particulares.tp.java.service.LocalidadService;
 import com.particulares.tp.java.service.MaterialService;
 import com.particulares.tp.java.service.ProfesorService;
+import com.particulares.tp.java.service.ProvinciaService;
 import com.particulares.tp.java.service.ReseniaService;
 
 import jakarta.servlet.http.HttpSession;
@@ -46,7 +48,11 @@ public class ProfesorController {
     private MaterialService materialService;
 
     @Autowired
-    private LocalidadRepository localidadRepository;
+    private LocalidadService localidadService;
+
+    @Autowired
+    private ProvinciaService provinciaService;
+
 
     @GetMapping("/ver/{id}")
     public String verProfesor(@PathVariable Integer id, ModelMap modelo) {
@@ -84,21 +90,22 @@ public class ProfesorController {
         return "profesor/perfil";
     }
 
-    @GetMapping("/editar")
+    @GetMapping("/editar/{id}")
     public String editarPerfil(HttpSession session, ModelMap modelo) {
         Profesor profesor = (Profesor) session.getAttribute("personaSession");
 
         if (profesor == null) {
             return "redirect:/login";
         }
-
+        modelo.put("localidades", localidadService.listarLocalidades());
+        modelo.put("provincias", provinciaService.listarProvincias());
         modelo.addAttribute("profesor", profesor);
-        modelo.addAttribute("localidades", localidadRepository.findAll());
         return "profesor/editarPerfil";
     }
 
-    @PostMapping("/editar")
+    @PostMapping("/actualizar/{id}")
     public String actualizarPerfil(
+            @PathVariable int id,
             @RequestParam String nombre,
             @RequestParam String apellido,
             @RequestParam String email,
@@ -112,27 +119,20 @@ public class ProfesorController {
             @RequestParam(required = false) MultipartFile imagen,
             HttpSession session,
             RedirectAttributes redirectAttributes) {
-
-        Profesor profesor = (Profesor) session.getAttribute("personaSession");
-
-        if (profesor == null) {
-            return "redirect:/login";
-        }
-
         try {
-            profesorService.modificarProfesor(nombre, apellido, email, idLocalidad, clave, clave2,
-                    telefono, formaTrabajo, infoAcademica, precioXHs, profesor.getId(), imagen);
-
+            Profesor actualizado = profesorService.modificarProfesor(nombre, apellido, email, idLocalidad, clave, clave2,
+                    telefono, formaTrabajo, infoAcademica, precioXHs, id, imagen);
+            session.setAttribute("personaSession", actualizado);
             redirectAttributes.addFlashAttribute("exito", "Perfil actualizado correctamente.");
             return "redirect:/profesor/perfil";
 
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
-            return "redirect:/profesor/editar";
+            return "redirect:/profesor/editar/"+ id;
         }
     }
 
-    @PostMapping("/eliminar")
+    @PostMapping("/eliminar/{id}")
     public String eliminarProfesor(HttpSession session, RedirectAttributes redirectAttributes) {
         Profesor profesor = (Profesor) session.getAttribute("personaSession");
 

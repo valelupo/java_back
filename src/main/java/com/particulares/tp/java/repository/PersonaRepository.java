@@ -1,6 +1,7 @@
 package com.particulares.tp.java.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -21,4 +22,7 @@ public interface PersonaRepository extends JpaRepository<Persona, Integer> {
 
     @Query("SELECT p.miLocalidad FROM Persona p")
     List<Localidad> buscarLocalidades();
+
+    @Query("SELECT p FROM Persona p WHERE p.email = ?1")
+    Optional<Persona> findByEmail(String email);
 }

@@ -2,6 +2,7 @@ package com.particulares.tp.java.entities;
 
 import com.particulares.tp.java.enums.Rol;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -23,7 +24,10 @@ public abstract class Persona {
     private int id; 
     private String nombre;
     private String apellido;
+    
+    @Column(unique = true, nullable = false)
     private String email;
+
     private String clave;
 
     @Enumerated(EnumType.STRING)

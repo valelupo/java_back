@@ -2,66 +2,154 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Editar Perfil</title>
+  <title>Modificar Profesor</title>
+  <link rel="icon" type="image/png" th:href="@{/img/favicon.png}" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <link rel="stylesheet" th:href="@{/css/general.css}" />
+  <link rel="stylesheet" th:href="@{/css/persona.css}" />
   <link rel="stylesheet" th:href="@{/css/profesor.css}" />
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const provinciaId = document.getElementById("provincia").value;
+      const localidadId = document.getElementById("localidad").dataset.id;
+
+      if (provinciaId) {
+        fetch('/localidad/listaProv?idProvincia=' + provinciaId)
+          .then(response => response.json())
+          .then(data => {
+            const localidadSelect = document.getElementById('localidad');
+            localidadSelect.innerHTML = '';
+
+            data.forEach(loc => {
+              const option = document.createElement('option');
+              option.value = loc.id;
+              option.text = loc.nombre;
+              if (loc.id == localidadId) {
+                option.selected = true;
+              }
+              localidadSelect.appendChild(option);
+            });
+          });
+      }
+    });
+
+    function cargarLocalidades(idProvincia) {
+      fetch('/localidad/listaProv?idProvincia=' + idProvincia)
+        .then(response => response.json())
+        .then(data => {
+          const localidadSelect = document.getElementById('localidad');
+          localidadSelect.innerHTML = '';
+
+          if (data.length === 0) {
+            const option = document.createElement('option');
+            option.text = 'No hay localidades disponibles';
+            option.disabled = true;
+            localidadSelect.appendChild(option);
+            return;
+          }
+
+          data.forEach(loc => {
+            const option = document.createElement('option');
+            option.value = loc.id;
+            option.text = loc.nombre;
+            localidadSelect.appendChild(option);
+          });
+        })
+        .catch(error => {
+          console.error('Error al cargar localidades:', error);
+        });
+    }
+  </script>
 </head>
 
 <body>
   <div th:replace="~{fragments/headerGral :: fragment}"></div>
 
-  <main class="form-container">
-    <form th:action="@{/profesor/editar}" method="post" enctype="multipart/form-data">
-      <h2 class="form-title">Editar Perfil</h2>
+  <!-- Título con flecha -->
+  <div class="titulo-con-flecha">
+    <a th:href="@{/profesor/perfil}" class="btn-volver" title="Volver">
+      <i class="bi bi-arrow-left"></i>
+    </a>
+    <h2>Modificar Perfil</h2>
+  </div>
 
-      <label>Nombre</label>
-      <input type="text" name="nombre" th:value="${profesor.nombre}" required>
+  <div class="form-container">
+    <form th:action="@{'/profesor/actualizar/' + ${profesor.id}}" method="post" enctype="multipart/form-data">
+      <div th:replace="~{fragments/mensajes :: fragment}"></div>
 
-      <label>Apellido</label>
-      <input type="text" name="apellido" th:value="${profesor.apellido}" required>
-
-      <label>Email</label>
-      <input type="email" name="email" th:value="${profesor.email}" required>
-
-      <label>Localidad</label>
-      <select name="idLocalidad" required>
-        <option th:each="loc : ${localidades}" th:value="${loc.id}" th:text="${loc.nombre}" 
-          th:selected="${profesor.miLocalidad.id == loc.id}">
-        </option>
-      </select>
-
-      <label>Clave</label>
-      <input type="password" name="clave" placeholder="Nueva contraseña" required>
-
-      <label>Repetir clave</label>
-      <input type="password" name="clave2" placeholder="Repetir contraseña" required>
-
-      <label>Teléfono</label>
-      <input type="text" name="telefono" th:value="${profesor.telefono}" required>
-
-      <label>Forma de trabajo</label>
-      <select name="formaTrabajo" required>
-        <option th:selected="${profesor.formaTrabajo == 'ONLINE'}" value="ONLINE">Online</option>
-        <option th:selected="${profesor.formaTrabajo == 'PRESENCIAL'}" value="PRESENCIAL">Presencial</option>
-        <option th:selected="${profesor.formaTrabajo == 'AMBAS'}" value="AMBAS">Ambas</option>
-      </select>
-
-      <label>Información Académica</label>
-      <textarea name="infoAcademica" th:text="${profesor.infoAcademica}" required></textarea>
-
-      <label>Precio por hora</label>
-      <input type="number" step="0.01" name="precioXHs" th:value="${profesor.precioXHs}" required>
-
-      <label>Imagen</label>
-      <input type="file" name="imagen" accept="image/*">
-
-      <div class="buttons">
-        <button type="submit">Guardar Cambios</button>
-        <a th:href="@{/profesor/perfil}" class="btn">Cancelar</a>
+      <div class="mb-3">
+        <label for="nombre" class="form-label">Nombre</label>
+        <input type="text" class="form-control" id="nombre" name="nombre" th:value="${profesor.nombre}" required>
       </div>
-    </form>
-  </main>
 
-  <footer th:replace="fragments/footer :: footer"></footer>
+      <div class="mb-3">
+        <label for="apellido" class="form-label">Apellido</label>
+        <input type="text" class="form-control" id="apellido" name="apellido" th:value="${profesor.apellido}" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" class="form-control" id="email" name="email" th:value="${profesor.email}" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="provincia" class="form-label">Provincia</label>
+        <select id="provincia" name="idProvincia" class="form-select" onchange="cargarLocalidades(this.value)">
+          <option th:each="prov : ${provincias}" th:value="${prov.id}" th:text="${prov.nombre}" th:selected="${prov.id == profesor.miLocalidad.miProvincia.id}"></option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label for="localidad" class="form-label">Localidad</label>
+        <select id="localidad" name="idLocalidad" class="form-select" th:data-id="${profesor.miLocalidad.id}" required></select>
+      </div>
+
+      <div class="mb-3">
+        <label for="telefono" class="form-label">Teléfono</label>
+        <input type="text" class="form-control" id="telefono" name="telefono" th:value="${profesor.telefono}" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="formaTrabajo" class="form-label">Forma de trabajo</label>
+        <select id="formaTrabajo" name="formaTrabajo" class="form-select" required>
+          <option value="Virtual" th:selected="${profesor.formaTrabajo == 'Virtual'}">Virtual</option>
+          <option value="Presencial" th:selected="${profesor.formaTrabajo == 'Presencial'}">Presencial</option>
+          <option value="Ambas" th:selected="${profesor.formaTrabajo == 'Ambas'}">Ambas</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label for="infoAcademica" class="form-label">Información Académica</label>
+        <textarea class="form-control" id="infoAcademica" name="infoAcademica" rows="3" required th:text="${profesor.infoAcademica}"></textarea>
+      </div>
+
+      <div class="mb-3">
+        <label for="precioXHs" class="form-label">Precio por hora</label>
+        <input type="number" step="0.01" class="form-control" id="precioXHs" name="precioXHs" th:value="${profesor.precioXHs}" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="imagen" class="form-label">Imagen</label>
+        <input type="file" class="form-control" id="imagen" name="imagen" accept="image/*">
+      </div>
+
+      <div class="mb-3">
+        <label for="clave" class="form-label">Clave</label>
+        <input type="password" class="form-control" id="clave" name="clave" placeholder="Contraseña" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="clave2" class="form-label">Confirmar clave</label>
+        <input type="password" class="form-control" id="clave2" name="clave2" placeholder="Repetir contraseña" required>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+    </form>
+  </div>
+
+  <div th:replace="~{fragments/footer :: fragment}"></div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

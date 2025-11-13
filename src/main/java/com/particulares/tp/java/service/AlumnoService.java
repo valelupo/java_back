@@ -12,9 +12,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.particulares.tp.java.entities.Alumno;
 import com.particulares.tp.java.entities.Localidad;
+import com.particulares.tp.java.entities.Persona;
 import com.particulares.tp.java.enums.Rol;
 import com.particulares.tp.java.repository.AlumnoRepository;
 import com.particulares.tp.java.repository.LocalidadRepository;
+import com.particulares.tp.java.repository.PersonaRepository;
 
 
 @Service
@@ -25,10 +27,18 @@ public class AlumnoService {
     @Autowired
     private LocalidadRepository localidadRepository;
 
+    @Autowired
+    private PersonaRepository personaRepository;
+
     @Transactional
     public void crearAlumno(String nombre, String apellido, String email, int idLocalidad, String clave, String clave2) throws Exception {
 
         validar(nombre, apellido, email, idLocalidad, clave, clave2);
+
+        Optional<Persona> existente = personaRepository.findByEmail(email);
+        if (existente.isPresent()) {
+            throw new Exception("Ya existe una cuenta con ese email.");
+        }
 
         Localidad miLocalidad = localidadRepository.findById(idLocalidad).get();
 
@@ -57,6 +67,10 @@ public class AlumnoService {
     public void modificarAlumno(String nombre, String apellido, String email, int idLocalidad, String clave, String clave2, int id) throws Exception {
         
         validar(nombre, apellido, email, idLocalidad, clave, clave2);
+        Optional<Persona> existente = personaRepository.findByEmail(email);
+        if (existente.isPresent() && existente.get().getId() != id) {
+            throw new Exception("Ya existe una cuenta con ese email.");
+        }
 
         Optional<Localidad> localidadOpt = localidadRepository.findById(idLocalidad);
         Optional<Alumno> alumnoOpt = alumnoRepository.findById(id);

@@ -17,8 +17,10 @@ import com.particulares.tp.java.enums.Rol;
 import com.particulares.tp.java.dto.ProfesorConPuntajeDTO;
 import com.particulares.tp.java.entities.DictadoClase;
 import com.particulares.tp.java.entities.Localidad;
+import com.particulares.tp.java.entities.Persona;
 import com.particulares.tp.java.repository.ProfesorRepository;
 import com.particulares.tp.java.repository.LocalidadRepository;
+import com.particulares.tp.java.repository.PersonaRepository;
 import com.particulares.tp.java.repository.DictadoClaseRepository;
 
 
@@ -33,12 +35,18 @@ public class ProfesorService {
     @Autowired
     private DictadoClaseRepository dictadoClaseRepository;
 
+    @Autowired
+    private PersonaRepository personaRepository;
+
     @Transactional
     public void crearProfesor(String nombre, String apellido, String email, int idLocalidad, String clave, String clave2,
-                              String telefono, String formaTrabajo, String infoAcademica, Double precioXHs, MultipartFile imagen) throws Exception {
+                            String telefono, String formaTrabajo, String infoAcademica, Double precioXHs, MultipartFile imagen) throws Exception {
 
         validar(nombre, apellido, email, idLocalidad, clave, clave2, telefono, formaTrabajo, infoAcademica, precioXHs);
-
+        Optional<Persona> existente = personaRepository.findByEmail(email);
+        if (existente.isPresent()) {
+            throw new Exception("Ya existe una cuenta con ese email.");
+        }
         Localidad miLocalidad = localidadRepository.findById(idLocalidad).get();
         //Conversión del String al Enum
         FormaTrabajo estadoFT = FormaTrabajo.valueOf(formaTrabajo);
@@ -46,7 +54,6 @@ public class ProfesorService {
         if (miLocalidad == null) {
             throw new Exception("La localidad especificada no existe.");
         }
-
         Profesor profesor = new Profesor();
 
         profesor.setNombre(nombre);
@@ -60,7 +67,6 @@ public class ProfesorService {
         profesor.setInfoAcademica(infoAcademica);
         profesor.setPrecioXHs(precioXHs);
         profesor.setImagen(imagen.getBytes());
-
         profesorRepository.save(profesor);
     }
 
@@ -94,10 +100,14 @@ public class ProfesorService {
     }
 
     @Transactional
-    public void modificarProfesor(String nombre, String apellido, String email, int idLocalidad, String clave, String clave2,
+    public Profesor modificarProfesor(String nombre, String apellido, String email, int idLocalidad, String clave, String clave2,
                                   String telefono, String formaTrabajo, String infoAcademica, Double precioXHs, int id, MultipartFile imagen) throws Exception {
         
         validar(nombre, apellido, email, idLocalidad, clave, clave2, telefono, formaTrabajo, infoAcademica, precioXHs);
+        Optional<Persona> existente = personaRepository.findByEmail(email);
+        if (existente.isPresent() && existente.get().getId() != id) {
+            throw new Exception("Ya existe una cuenta con ese email.");
+        }
 
         Optional<Localidad> localidadOpt = localidadRepository.findById(idLocalidad);
         Optional<Profesor> profesorOpt = profesorRepository.findById(id);
@@ -123,7 +133,7 @@ public class ProfesorService {
             profesor.setPrecioXHs(precioXHs);
             profesor.setImagen(imagen.getBytes());
 
-            profesorRepository.save(profesor);
+            return profesorRepository.save(profesor);
         } else {
             throw new Exception("No se encontró un profesor con el ID especificado");
         }

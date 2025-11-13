@@ -63,11 +63,6 @@ public class ReseniaService {
     }
 
     @Transactional(readOnly = true)
-    public List<Resenia> listarPorProfesor(int idProfesor){
-        return reseniaRepository.findByProfesor(idProfesor);
-    }
-
-    @Transactional(readOnly = true)
     public Double promedioReseniasPorProfesor(int idProfesor) {
         Double promedio = reseniaRepository.findPromedioByProfesorId(idProfesor);
         return promedio != null ? promedio : 0.0;
