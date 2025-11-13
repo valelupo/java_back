@@ -73,6 +73,11 @@ public class ReseniaService {
         return promedio != null ? promedio : 0.0;
     }
 
+    @Transactional(readOnly = true)
+    public List<Resenia> reseniasPorProfesor(int idProfesor) {
+        return reseniaRepository.findReseniasByProfesorId(idProfesor);
+    }
+
     @Transactional
     public void modificarResenia(String descripcion, int idProfesor, int idAlumno, Integer idResenia, int puntaje) throws Exception {
         

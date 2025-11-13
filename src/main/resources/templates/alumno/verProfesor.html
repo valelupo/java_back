@@ -2,72 +2,159 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Perfil del Profesor</title>
-    <link rel="stylesheet" href="/css/estilos.css">
+    <link rel="icon" type="image/png" th:href="@{/img/favicon.png}" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-..." crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/general.css}" />
+    <link rel="stylesheet" th:href="@{/css/alumno.css}" />
+    <link rel="stylesheet" th:href="@{/css/persona.css}" />
+
+    <script>
+        function mostrarCamposResenia(valor) {
+            const seccion = document.getElementById("campos-resenia");
+            seccion.style.display = valor ? "block" : "none";
+        }
+    </script>
 </head>
 <body>
-    <div class="perfil-container">
+    <div th:replace="~{fragments/headerAlumno :: fragment}"></div>
+    <div class="container my-4" >
         <h2 th:text="${profesor.nombre} + ' ' + ${profesor.apellido}"></h2>
 
-        <!--Datos personales-->
-        <section class="datos-personales">
-            <p><strong>Localidad:</strong> <span th:text="${profesor.miLocalidad.nombre}"></span></p>
-            <p><strong>Provincia:</strong> <span th:text="${profesor.miLocalidad.miProvincia.nombre}"></span></p>
-            <p><strong>Forma de trabajo:</strong> <span th:text="${profesor.formaTrabajo}"></span></p>
-            <p><strong>Precio por hora:</strong> <span th:text="${profesor.precioXHs} + ' ARS'"></span></p>
-            <p><strong>Información académica:</strong> <span th:text="${profesor.infoAcademica}"></span></p>
-        </section>
-
-        <!--Materias y niveles-->
-        <section class="materias-dictadas">
-            <h3>Materias que dicta</h3>
-            <ul>
-                <li th:each="dictado : ${dictados}">
-                    <span th:text="${dictado.materia.nombre}"></span> -
-                    <span th:text="${dictado.nivel.descripcion}"></span>
-                </li>
-            </ul>
-        </section>
-
-        <!--Valoracion-->
-        <section class="valoracion">
-            <h3>Valoración promedio</h3>
-            <div class="estrellas">
-                <span th:each="i : ${#numbers.sequence(1, 5)}">
-                    <i th:class="${i <= promedio ? 'estrella llena' : 'estrella vacia'}"></i>
-                </span>
-                <span th:text="'(' + ${#numbers.formatDecimal(promedio, 1, 1)} + ')'"></span>
+        <div class="row g-4">
+            <!-- Imagen + Datos personales -->
+            <div class="col-md-4 text-center align-self-center">
+                <img th:src="@{'/profesor/imagen/' + ${profesor.id}}" class="rounded-circle img-fluid perfil-img mb-3" alt="Foto del profesor"
+                    onerror="this.onerror=null;this.src='/img/default-prof.jpg';">
             </div>
-        </section>
+            <div class="col-md-8">
+                <div class="bg-white p-3 rounded shadow-sm">
+                    <h5>Datos personales</h5>
+                    <p><strong>Ubicación:</strong> <span th:text="${profesor.miLocalidad.nombre} + ', ' + ${profesor.miLocalidad.miProvincia.nombre}"></span></p>
+                    <p><strong>Teléfono:</strong> <span th:text="${profesor.telefono}"></span></p>
+                    <p><strong>Mail:</strong> <span th:text="${profesor.email}"></span></p>
+                    <p><strong>Forma de trabajo:</strong> <span th:text="${profesor.formaTrabajo}"></span></p>
+                    <p><strong>Precio por hora:</strong> <span th:text="${profesor.precioXHs} + ' ARS'"></span></p>
+                    <p><strong>Información académica:</strong> <span th:text="${profesor.infoAcademica}"></span></p>
+                </div>
+            </div>
+        </div>
 
-        <!--Dejar reseña-->
-        <section class="nueva-resenia">
-            <h3>Dejar una reseña</h3>
+        <div  class="row justify-content-center g-4">
+            <!-- Materias -->
+            <div class="col-md-6">
+                <div class="bg-white p-3 rounded shadow-sm my-4">
+                    <h5>Materias que dicta</h5>
+                    <ul class="list-unstyled">
+                        <li th:each="dictado : ${dictados}">
+                            <span th:text="${dictado.materia.nombre}"></span> -
+                            <span th:text="${dictado.nivel.descripcion}"></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Material de estudio -->
+            <div class="col-md-6 align-self-center">
+                <div class="bg-white p-5 rounded shadow-sm my-4 align-self-center justify-content-center text-center">
+                    <h5 class="text-center">Encuentra el material de estudio que buscas</h5>
+                    <a th:href="@{/material}" class="ver-perfil-btn btn-primary">Ver material</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center g-4">
+            <!-- Valoración -->
+            <div class="col-md-4">
+                <div class="bg-white p-3 rounded shadow-sm mb-4">
+                    <h5>Valoración promedio</h5>
+                    <div class="rating-stars2 text-center">
+                        <span th:each="i : ${#numbers.sequence(1,5)}">
+                            <i class="bi bi-star-fill" th:classappend="${i <= promedio} ? ' text-warning' : ' text-secondary'"></i>
+                        </span>
+                        <span class="ms-2" th:text="${promedio > 0 ? #numbers.formatDecimal(promedio, 1, 1) : 'Sin reseñas aún'}"></span>
+                        <button type="button" onclick="mostrarCamposResenia(true)"  class="btn">Dejar Reseña</button>
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <!-- Reseñas existentes -->
+            <div class="col-md-8">
+                <div class="row g-3">
+                    <div class="col-md-4" th:each="res, iterStat : ${resenias}" th:if="${iterStat.index < 3}">
+                    <div class="bg-white p-3 rounded shadow-sm">
+                        <p><strong th:text="${res.alumno.nombre} + ' ' + ${res.alumno.apellido}"></strong></p>
+                        <p th:text="${#temporals.format(res.fecha, 'dd/MM/yyyy HH:mm')}"></p>
+                        <p th:text="${res.descripcion}"></p>
+                        <div class="rating-stars">
+                            <span th:each="i : ${#numbers.sequence(1,5)}">
+                                <i class="bi bi-star-fill"
+                                th:classappend="${i <= res.puntaje} ? ' text-warning' : ' text-secondary'"></i>
+                            </span>
+                            <span class="ms-2" th:text="${res.puntaje}"></span>
+                        </div>
+                        <!-- <small th:text="'Puntaje: ' + ${res.puntaje}"></small> -->
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Reseña -->
+        <div class="bg-white p-3 rounded shadow-sm mb-4" id="campos-resenia" style="display:none;">
+            <h5>Dejar una reseña</h5>
             <form th:action="@{/resenia/registrar}" method="post">
                 <input type="hidden" name="idProfesor" th:value="${profesor.id}" />
-                <label for="puntaje">Puntaje:</label>
-                <select name="puntaje" id="puntaje">
+                <div class="mb-3">
+                    <label class="form-label">Puntaje:</label>
+                    <div class="star-rating justify-content-center">
+                        <i class="bi bi-star-fill" data-value="1"></i>
+                        <i class="bi bi-star-fill" data-value="2"></i>
+                        <i class="bi bi-star-fill" data-value="3"></i>
+                        <i class="bi bi-star-fill" data-value="4"></i>
+                        <i class="bi bi-star-fill" data-value="5"></i>
+                    </div>
+                    <input type="hidden" name="puntaje" id="puntaje" value="0">
+                </div>
+                <!-- <div class="mb-3">
+                    <label for="puntaje" class="form-label">Puntaje:</label>
+                    <select name="puntaje" id="puntaje" class="form-select w-auto">
                     <option th:each="i : ${#numbers.sequence(1, 5)}" th:value="${i}" th:text="${i}"></option>
-                </select>
-                <label for="descripcion">Descripcion:</label>
-                <textarea name="descripcion" id="descripcion" rows="4" cols="50"></textarea>
-                <button type="submit">Enviar reseña</button>
+                    </select>
+                </div> -->
+                <div class="mb-3">
+                    <label for="descripcion" class="form-label">Descripción:</label>
+                    <textarea name="descripcion" id="descripcion" rows="4" class="form-control"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Enviar reseña</button>
             </form>
-        </section>
+        </div>
+
+        <!-- Volver -->
+        <div class="mt-4">
+            <a th:href="@{/inicio}" class="btn btn-outline-secondary">Volver</a>
+        </div>
     </div>
 
-    <section>
-        <div>
-            <a th:href="@{/inicio}">Volver</a>
-        </div>
-    </section>
 
-    <!-- css para estrellas -->
-    <!-- .estrella {
-        font-size: 20px;
-        color: #ccc;
-    }
-    .estrella.llena {
-        color: gold;
-    } -->
+    <div th:replace="~{fragments/footer :: fragment}"></div>
+
+    <script>
+    document.querySelectorAll('.star-rating i').forEach(star => {
+        star.addEventListener('click', () => {
+            const value = parseInt(star.getAttribute('data-value'));
+            document.getElementById('puntaje').value = value;
+
+            // Reset all stars
+            document.querySelectorAll('.star-rating i').forEach(s => {
+                s.classList.remove('selected');
+            });
+
+            // Highlight selected stars
+            for (let i = 0; i < value; i++) {
+                document.querySelectorAll('.star-rating i')[i].classList.add('selected');
+            }
+        });
+    });
+    </script>
 </body>
 </html>

@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.particulares.tp.java.entities.Materia;
-import com.particulares.tp.java.entities.Provincia;
 import com.particulares.tp.java.entities.DictadoClase;
 import com.particulares.tp.java.repository.MateriaRepository;
 import com.particulares.tp.java.repository.DictadoClaseRepository;

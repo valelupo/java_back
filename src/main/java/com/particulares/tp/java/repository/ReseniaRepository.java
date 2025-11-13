@@ -15,6 +15,7 @@ public interface ReseniaRepository extends JpaRepository<Resenia, Integer> {
     @Query("SELECT AVG(r.puntaje) FROM Resenia r WHERE r.profesor.id = ?1")
     Double findPromedioByProfesorId(int idProfesor);
 
-    @Query("SELECT r FROM Resenia r WHERE r.profesor.id = ?1")
-    List<Resenia> findByProfesor(int idProfesor);
+    @Query("SELECT r FROM Resenia r WHERE r.profesor.id = ?1 ORDER BY r.fecha DESC")
+    List<Resenia> findReseniasByProfesorId(int idProfesor);
+    
 } 

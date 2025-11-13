@@ -89,6 +89,7 @@ header h1 {
 
 .btn:hover {
     background-color: #614132;
+    color: white;
 }
 
 
@@ -158,6 +159,7 @@ footer {
 
 
 label {
+    text-align: left;
     display: block;
     font-weight: 600;
 }
@@ -220,18 +222,18 @@ a:hover {
 /* estilos para que con el boton se pueda volver a la pagina ppal*/
 
 .navbar a {
-  text-decoration: none;   /* sin subrayado */
-  color: inherit;           /* usa el color del contenedor */
+  text-decoration: none;  
+  color: inherit;        
   display: flex;
   align-items: center;
 }
 
 .navbar a:visited {
-  color: inherit;           /* evita el color lila de enlaces visitados */
+  color: inherit;           
 }
 
 .navbar a:hover {
-  opacity: 0.8;             /* efecto sutil al pasar el mouse */
+  opacity: 0.8;           
 }
 
 /* para el boton de volver atras  */

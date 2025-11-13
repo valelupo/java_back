@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modificar Alumno</title>
+    <link rel="icon" type="image/png" th:href="@{/img/favicon.png}" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/general.css}" />
+    <link rel="stylesheet" th:href="@{/css/alumno.css}" />
+    <link rel="stylesheet" th:href="@{/css/persona.css}" />
+
+    <script>
+        
+        document.addEventListener("DOMContentLoaded", function () {
+            const provinciaId = document.getElementById("provincia").value;
+            const localidadId = 0;
+
+            if (provinciaId) {
+                fetch('/localidad/listaProv?idProvincia=' + provinciaId)
+                    .then(response => response.json())
+                    .then(data => {
+                        const localidadSelect = document.getElementById('localidad');
+                        localidadSelect.innerHTML = '';
+
+                        data.forEach(loc => {
+                            const option = document.createElement('option');
+                            option.value = loc.id;
+                            option.text = loc.nombre;
+                            if (loc.id === localidadId) {
+                                option.selected = true;
+                            }
+                            localidadSelect.appendChild(option);
+                        });
+                    });
+            }
+        });
+
+        function cargarLocalidades(idProvincia) {
+            fetch('/localidad/listaProv?idProvincia=' + idProvincia)
+                .then(response => response.json())
+                .then(data => {
+                    const localidadSelect = document.getElementById('localidad');
+                    localidadSelect.innerHTML = '';
+
+                    if (data.length === 0) {
+                        const option = document.createElement('option');
+                        option.text = 'No hay localidades disponibles';
+                        option.disabled = true;
+                        localidadSelect.appendChild(option);
+                        return;
+                    }
+
+                    data.forEach(loc => {
+                        const option = document.createElement('option');
+                        option.value = loc.id;
+                        option.text = loc.nombre;
+                        localidadSelect.appendChild(option);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error al cargar localidades:', error);
+                });
+        }
+    </script>
+</head>
+<body>
+    <div th:replace="~{fragments/headerAlumno :: fragment}"></div>
+    <!-- Formulario de modificación -->
+    <div class="titulo-con-flecha">
+        <a th:href="@{/alumno/perfil}" class="btn-volver" title="Volver">
+            <i class="bi bi-arrow-left"></i>
+        </a>
+        <h2>Modificar Perfil</h2>
+    </div>
+    
+    <div class="form-container ">
+        <form th:action="@{'/alumno/modificar/' + ${alumno.id}}" method="post" class="bg-white p-4 rounded shadow-sm mt-4">
+            <div th:replace="~{fragments/mensajes :: fragment}"></div>
+            <div class="mb-3">
+                <label for="nombre" class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="nombre" name="nombre" th:value="${alumno.nombre}" required>
+            </div>
+            <div class="mb-3">
+                <label for="apellido" class="form-label">Apellido</label>
+                <input type="text" class="form-control" id="apellido" name="apellido" th:value="${alumno.apellido}" required>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" th:value="${alumno.email}" required>
+            </div>
+            <div class="mb-3">
+                <label for="idProvincia" class="form-label">Provincia:</label>
+                <select id="provincia" name="idProvincia" onchange="cargarLocalidades(this.value)">
+                    <option th:each="prov : ${provincias}" th:value="${prov.id}" th:text="${prov.nombre}" th:selected="${prov.id == alumno.miLocalidad.miProvincia.id}"></option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="idLocalidad" class="form-label">Localidad:</label>
+                <select  id="localidad" name="idLocalidad" th:data-id="${alumno.miLocalidad.id}" required></select>
+            </div>
+            <div class="mb-3">
+                <label for="clave" class="form-label">Clave</label>
+                <input type="password" class="form-control" id="clave" name="clave">
+            </div>
+            <div class="mb-3">
+                <label for="clave2" class="form-label">Confirmar clave</label>
+                <input type="password" class="form-control" id="clave2" name="clave2">
+            </div>
+            <button type="submit" class="btn btn-primary">Modificar</button>
+        </form>
+    
+  
+    </div>
+    <div th:replace="~{fragments/footer :: fragment}"></div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
