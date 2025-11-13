@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Editar Perfil</title>
+  <link rel="stylesheet" th:href="@{/css/general.css}" />
+  <link rel="stylesheet" th:href="@{/css/profesor.css}" />
+</head>
+
+<body>
+  <div th:replace="~{fragments/headerGral :: fragment}"></div>
+
+  <main class="form-container">
+    <form th:action="@{/profesor/editar}" method="post" enctype="multipart/form-data">
+      <h2 class="form-title">Editar Perfil</h2>
+
+      <label>Nombre</label>
+      <input type="text" name="nombre" th:value="${profesor.nombre}" required>
+
+      <label>Apellido</label>
+      <input type="text" name="apellido" th:value="${profesor.apellido}" required>
+
+      <label>Email</label>
+      <input type="email" name="email" th:value="${profesor.email}" required>
+
+      <label>Localidad</label>
+      <select name="idLocalidad" required>
+        <option th:each="loc : ${localidades}" th:value="${loc.id}" th:text="${loc.nombre}" 
+          th:selected="${profesor.miLocalidad.id == loc.id}">
+        </option>
+      </select>
+
+      <label>Clave</label>
+      <input type="password" name="clave" placeholder="Nueva contraseña" required>
+
+      <label>Repetir clave</label>
+      <input type="password" name="clave2" placeholder="Repetir contraseña" required>
+
+      <label>Teléfono</label>
+      <input type="text" name="telefono" th:value="${profesor.telefono}" required>
+
+      <label>Forma de trabajo</label>
+      <select name="formaTrabajo" required>
+        <option th:selected="${profesor.formaTrabajo == 'ONLINE'}" value="ONLINE">Online</option>
+        <option th:selected="${profesor.formaTrabajo == 'PRESENCIAL'}" value="PRESENCIAL">Presencial</option>
+        <option th:selected="${profesor.formaTrabajo == 'AMBAS'}" value="AMBAS">Ambas</option>
+      </select>
+
+      <label>Información Académica</label>
+      <textarea name="infoAcademica" th:text="${profesor.infoAcademica}" required></textarea>
+
+      <label>Precio por hora</label>
+      <input type="number" step="0.01" name="precioXHs" th:value="${profesor.precioXHs}" required>
+
+      <label>Imagen</label>
+      <input type="file" name="imagen" accept="image/*">
+
+      <div class="buttons">
+        <button type="submit">Guardar Cambios</button>
+        <a th:href="@{/profesor/perfil}" class="btn">Cancelar</a>
+      </div>
+    </form>
+  </main>
+
+  <footer th:replace="fragments/footer :: footer"></footer>
+</body>
+</html>

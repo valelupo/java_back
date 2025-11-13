@@ -39,9 +39,9 @@ public class ReseniaController {
     }
 
     @GetMapping("/listar")
-    public String listar(ModelMap modelo) {
-
-        modelo.addAttribute("resenias", reseniaService.listarResenias()); 
+    public String listarPorProfesor (HttpSession session, ModelMap modelo) {
+        Persona profesor = (Persona) session.getAttribute("personaSession");
+        modelo.addAttribute("resenias", reseniaService.listarPorProfesor(profesor.getId())); 
         return "profesor/verResenia";
     }
 

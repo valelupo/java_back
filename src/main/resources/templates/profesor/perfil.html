@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Perfil del Profesor</title>
+  <link rel="stylesheet" th:href="@{/css/general.css}" />
+  <link rel="stylesheet" th:href="@{/css/profesor.css}" />
+</head>
+
+<body>
+
+  <div th:replace="~{fragments/headerGral :: fragment}"></div>
+
+  <main class="welcome">
+    <div th:replace="~{fragments/mensajes :: fragment}"></div>
+
+    <div class="perfil-card">
+      <img th:src="@{'/profesor/imagen/' + ${profesor.id}}" alt="Foto del profesor" class="fondo-img-profesor">
+
+      <h2 th:text="${profesor.nombre + ' ' + profesor.apellido}">Nombre Apellido</h2>
+      <p><strong>Email:</strong> <span th:text="${profesor.email}">email</span></p>
+      <p><strong>Teléfono:</strong> <span th:text="${profesor.telefono}">telefono</span></p>
+      <p><strong>Localidad:</strong> <span th:text="${profesor.miLocalidad.nombre}">localidad</span></p>
+      <p><strong>Forma de trabajo:</strong> <span th:text="${profesor.formaTrabajo}">formaTrabajo</span></p>
+      <p><strong>Información académica:</strong> <span th:text="${profesor.infoAcademica}">info</span></p>
+      <p><strong>Precio por hora:</strong> $<span th:text="${profesor.precioXHs}">0.0</span></p>
+
+      <div class="buttons">
+        <a th:href="@{/profesor/editar}" class="btn">Modificar Perfil</a>
+
+        <form th:action="@{/profesor/eliminar}" method="post" onsubmit="return confirm('¿Estás seguro de que querés eliminar tu cuenta?');">
+          <button type="submit" class="btn-eliminar">Eliminar Cuenta</button>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <footer th:replace="fragments/footer :: footer"></footer>
+</body>
+</html>

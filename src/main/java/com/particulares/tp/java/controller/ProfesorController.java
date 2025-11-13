@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +19,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.particulares.tp.java.entities.DictadoClase;
 import com.particulares.tp.java.entities.Material;
-import com.particulares.tp.java.entities.Persona;
 import com.particulares.tp.java.entities.Profesor;
 import com.particulares.tp.java.repository.LocalidadRepository;
 import com.particulares.tp.java.service.DictadoClaseService;
@@ -29,6 +27,7 @@ import com.particulares.tp.java.service.ProfesorService;
 import com.particulares.tp.java.service.ReseniaService;
 
 import jakarta.servlet.http.HttpSession;
+
 
 @Controller
 @RequestMapping("/profesor")
@@ -76,85 +75,85 @@ public class ProfesorController {
         }
     }
 
-    // @GetMapping("/perfil")
-    // public String perfil(HttpSession session, ModelMap modelo) {
-    //     Profesor profesor = (Profesor) session.getAttribute("personaSession");
+    @GetMapping("/perfil")
+    public String perfil(HttpSession session, ModelMap modelo) {
+        Profesor profesor = (Profesor) session.getAttribute("personaSession");
 
-    //     if (profesor == null) {
-    //         modelo.addAttribute("error", "Debe iniciar sesión para ver su perfil.");
-    //         return "redirect:/login";
-    //     }
+        if (profesor == null) {
+            modelo.addAttribute("error", "Debe iniciar sesión para ver su perfil.");
+            return "redirect:/login";
+        }
 
-    //     modelo.addAttribute("profesor", profesor);
-    //     return "profesor/perfil";
-    // }
+        modelo.addAttribute("profesor", profesor);
+        return "profesor/perfil";
+    }
 
-    // @GetMapping("/editar")
-    // public String editarPerfil(HttpSession session, ModelMap modelo) {
-    //     Profesor profesor = (Profesor) session.getAttribute("personaSession");
+    @GetMapping("/editar")
+    public String editarPerfil(HttpSession session, ModelMap modelo) {
+        Profesor profesor = (Profesor) session.getAttribute("personaSession");
 
-    //     if (profesor == null) {
-    //         return "redirect:/login";
-    //     }
+        if (profesor == null) {
+            return "redirect:/login";
+        }
 
-    //     modelo.addAttribute("profesor", profesor);
-    //     modelo.addAttribute("localidades", localidadRepository.findAll());
-    //     return "profesor/editarPerfil";
-    // }
+        modelo.addAttribute("profesor", profesor);
+        modelo.addAttribute("localidades", localidadRepository.findAll());
+        return "profesor/editarPerfil";
+    }
 
-    // @PostMapping("/editar")
-    // public String actualizarPerfil(
-    //         @RequestParam String nombre,
-    //         @RequestParam String apellido,
-    //         @RequestParam String email,
-    //         @RequestParam int idLocalidad,
-    //         @RequestParam String clave,
-    //         @RequestParam String clave2,
-    //         @RequestParam String telefono,
-    //         @RequestParam String formaTrabajo,
-    //         @RequestParam String infoAcademica,
-    //         @RequestParam Double precioXHs,
-    //         @RequestParam(required = false) MultipartFile imagen,
-    //         HttpSession session,
-    //         RedirectAttributes redirectAttributes) {
+    @PostMapping("/editar")
+    public String actualizarPerfil(
+            @RequestParam String nombre,
+            @RequestParam String apellido,
+            @RequestParam String email,
+            @RequestParam int idLocalidad,
+            @RequestParam String clave,
+            @RequestParam String clave2,
+            @RequestParam String telefono,
+            @RequestParam String formaTrabajo,
+            @RequestParam String infoAcademica,
+            @RequestParam Double precioXHs,
+            @RequestParam(required = false) MultipartFile imagen,
+            HttpSession session,
+            RedirectAttributes redirectAttributes) {
 
-    //     Profesor profesor = (Profesor) session.getAttribute("personaSession");
+        Profesor profesor = (Profesor) session.getAttribute("personaSession");
 
-    //     if (profesor == null) {
-    //         return "redirect:/login";
-    //     }
+        if (profesor == null) {
+            return "redirect:/login";
+        }
 
-    //     try {
-    //         profesorService.modificarProfesor(nombre, apellido, email, idLocalidad, clave, clave2,
-    //                 telefono, formaTrabajo, infoAcademica, precioXHs, profesor.getId(), imagen);
+        try {
+            profesorService.modificarProfesor(nombre, apellido, email, idLocalidad, clave, clave2,
+                    telefono, formaTrabajo, infoAcademica, precioXHs, profesor.getId(), imagen);
 
-    //         redirectAttributes.addFlashAttribute("exito", "Perfil actualizado correctamente.");
-    //         return "redirect:/profesor/perfil";
+            redirectAttributes.addFlashAttribute("exito", "Perfil actualizado correctamente.");
+            return "redirect:/profesor/perfil";
 
-    //     } catch (Exception e) {
-    //         redirectAttributes.addFlashAttribute("error", e.getMessage());
-    //         return "redirect:/profesor/editar";
-    //     }
-    // }
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+            return "redirect:/profesor/editar";
+        }
+    }
 
-    // @PostMapping("/eliminar")
-    // public String eliminarProfesor(HttpSession session, RedirectAttributes redirectAttributes) {
-    //     Profesor profesor = (Profesor) session.getAttribute("personaSession");
+    @PostMapping("/eliminar")
+    public String eliminarProfesor(HttpSession session, RedirectAttributes redirectAttributes) {
+        Profesor profesor = (Profesor) session.getAttribute("personaSession");
 
-    //     if (profesor == null) {
-    //         return "redirect:/login";
-    //     }
+        if (profesor == null) {
+            return "redirect:/login";
+        }
 
-    //     try {
-    //         profesorService.eliminarProfesor(profesor.getId());
-    //         session.invalidate();
-    //         redirectAttributes.addFlashAttribute("exito", "Cuenta eliminada correctamente.");
-    //         return "redirect:/";
+        try {
+            profesorService.eliminarProfesor(profesor.getId());
+            session.invalidate();
+            redirectAttributes.addFlashAttribute("exito", "Cuenta eliminada correctamente.");
+            return "redirect:/";
 
-    //     } catch (Exception e) {
-    //         redirectAttributes.addFlashAttribute("error", e.getMessage());
-    //         return "redirect:/profesor/perfil";
-    //     }
-    // }
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+            return "redirect:/profesor/perfil";
+        }
+    }
 
 }
