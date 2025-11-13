@@ -14,9 +14,9 @@
     <main>
         <div th:replace="~{fragments/mensajes :: fragment}"></div>
         <section class="welcome">
+            <h2>GETEACHER</h2>
+            <p class="text-welcome">Un sitio donde podras encontrar a tu profesor ideal o relucir tus habilidades de enseñanza</p>
             <img src="/img/fondo.jpg" alt="Ilustración de bienvenida" class="fondo-img">
-            <h2>Bienvenido a Geteacher</h2>
-            <p>Un sitio donde podras encontrar a tu profesor ideal.</p>
             <div class="buttons">
                 <a th:if="${session.usuariosession == null}" href="/registrar" class="btn">Registrarse</a>
                 <a th:if="${session.usuariosession == null}" href="/login" class="btn">Iniciar sesión</a>
