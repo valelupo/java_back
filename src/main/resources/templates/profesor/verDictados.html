@@ -16,8 +16,6 @@
 
   <main class="welcome">
 
-    <div th:replace="~{fragments/mensajes :: fragment}"></div>
-
     <div class="titulo-con-flecha">
       <a th:href="@{/inicio}" class="btn-volver" title="Volver">
         <i class="bi bi-arrow-left"></i>
@@ -45,6 +43,8 @@
         </div>
       </div>
     </div>
+
+    <div th:replace="~{fragments/mensajes :: fragment}"></div>
 
     <div class="buttons">
       <a href="/dictadoClase/registrar" class="btn">Crear nuevo dictado</a>

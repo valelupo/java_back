@@ -17,7 +17,7 @@ body {
 
 /* Encabezado */
 header {
-    background-color: #004080;
+    background-color: #122941;
     color: white;
     padding: 8px 0;
     text-align: center;
@@ -54,12 +54,19 @@ header h1 {
 .welcome h2 {
     font-size: 2rem;
     margin-bottom: 10px;
-    color: #004080;
+    color: #122941;
 }
 
-.welcome p {
+.text-welcome {
     font-size: 1.2rem;
     margin-bottom: 30px;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.welcome p{
+  font-size: 1.2rem;
+  margin-bottom: 30px;
 }
 
 .fondo-img {
@@ -76,7 +83,7 @@ header h1 {
 
 .btn {
     /* background-color: #7f718a; */
-    background-color: #815743; 
+    background-color: #8b6f62; 
     color: white;
     padding: 8px 16px;
     text-decoration: none;
@@ -95,7 +102,7 @@ header h1 {
 
 /* Estilo para el botón de Submit */
 button[type="submit"] {
-    background-color: #815743;
+    background-color: #8b6f62;
     color: #fff;
     padding: 12px;
     border: none;
@@ -127,7 +134,7 @@ button.btn-eliminar:hover {
 
 /* Footer */
 footer {
-    background-color: #004080;
+    background-color: #122941;
     color: white;
     text-align: center;
     padding: 15px 0;
@@ -136,13 +143,13 @@ footer {
 
 /* Mensajes */
 .alert-exito {
-    color: #28a745; /* verde éxito */
+    color: #114f20; /* verde éxito */
     font-weight: 500;
     margin: 20px 0;
 }
 
 .alert-error {
-    color: #dc3545; /* rojo error */
+    color: #710d17; /* rojo error */
     font-weight: 500;
     margin: 20px 0;
 }
@@ -154,7 +161,7 @@ footer {
     margin-bottom: 10px;
     text-align: center;
     font-size: 2.2rem;
-    color: #004080;
+    color: #122941;
 }
 
 
@@ -200,7 +207,7 @@ textarea {
 /* Estilo para enlaces dentro de la caja del formulario */
 .form-container a {
     text-align: center;
-    color: #815743;
+    color: #122941;
     text-decoration: none;
 }
 
@@ -208,14 +215,14 @@ textarea {
     text-decoration: underline;
 }
 
-a {
+.btn-ordenar {
     text-align: right;
-    color: #004080;
+    color: #122941;
     text-decoration: none;
     padding: 10px;
 }
 
-a:hover {
+.btn-ordenar:hover {
     text-decoration: underline;
 }
 
@@ -238,6 +245,8 @@ a:hover {
 
 /* para el boton de volver atras  */
 .titulo-con-flecha {
+  color: #122941;
+  font-size: 1.4rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -248,7 +257,7 @@ a:hover {
 
 .btn-volver {
   font-size: 1.5rem;
-  color: #004080;
+  color: #000000;
   text-decoration: none;
   padding: 6px;
   border-radius: 4px;
@@ -280,7 +289,7 @@ a:hover {
 }
 
 .tabla-container th {
-  background-color: #004080;
+  background-color: #122941;
   color: white;
   font-weight: 500;
 }
@@ -300,6 +309,6 @@ button.btn-buscar {
 }
 
 button.btn-buscar:hover {
-  color: #002f5f;
+  color: #122941;
   background: none;
 }
