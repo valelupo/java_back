@@ -85,6 +85,7 @@ form {
     background-color: #815743; /* tu color personalizado */
     color: white ;
     text-align: center;
+    text-decoration: none;
     padding: 8px 75px;
     border-radius: 6px;
     font-weight: bold;
@@ -96,7 +97,6 @@ form {
 
 .ver-perfil-btn:hover {
     background-color: #614132;
-    text-decoration: none;
 }
 
 .perfil-btn {
@@ -104,6 +104,7 @@ form {
     background-color: #004080; 
     color: white ;
     text-align: center;
+    text-decoration: none;
     padding: 8px 75px;
     border-radius: 6px;
     font-weight: bold;
@@ -115,7 +116,6 @@ form {
 
 .perfil-btn:hover {
     background-color: #002f5f;
-    text-decoration: none;
 }
 
 .perfil-img {
