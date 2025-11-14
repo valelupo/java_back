@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.particulares.tp.java.entities.Profesor;
+import com.particulares.tp.java.entities.Resenia;
 import com.particulares.tp.java.enums.FormaTrabajo;
 import com.particulares.tp.java.enums.Rol;
 import com.particulares.tp.java.dto.ProfesorConPuntajeDTO;
@@ -19,6 +20,7 @@ import com.particulares.tp.java.entities.DictadoClase;
 import com.particulares.tp.java.entities.Localidad;
 import com.particulares.tp.java.entities.Persona;
 import com.particulares.tp.java.repository.ProfesorRepository;
+import com.particulares.tp.java.repository.ReseniaRepository;
 import com.particulares.tp.java.repository.LocalidadRepository;
 import com.particulares.tp.java.repository.PersonaRepository;
 import com.particulares.tp.java.repository.DictadoClaseRepository;
@@ -37,6 +39,9 @@ public class ProfesorService {
 
     @Autowired
     private PersonaRepository personaRepository;
+
+    @Autowired
+    private ReseniaRepository reseniaRepository;
 
     @Transactional
     public void crearProfesor(String nombre, String apellido, String email, int idLocalidad, String clave, String clave2,
@@ -144,6 +149,10 @@ public class ProfesorService {
             profesorRepository.delete(profesorOpt.get());
             for (DictadoClase dc : profesorOpt.get().getDictados()) {
                 dictadoClaseRepository.delete(dc);
+            }
+            List<Resenia> resenias = reseniaRepository.findReseniasByProfesorId(id);
+            for (Resenia r: resenias){
+                reseniaRepository.delete(r);
             }
         } else {
             throw new Exception("El profesor con el ID especificado no existe");
