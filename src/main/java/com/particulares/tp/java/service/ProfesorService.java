@@ -48,7 +48,6 @@ public class ProfesorService {
             throw new Exception("Ya existe una cuenta con ese email.");
         }
         Localidad miLocalidad = localidadRepository.findById(idLocalidad).get();
-        //Conversión del String al Enum
         FormaTrabajo estadoFT = FormaTrabajo.valueOf(formaTrabajo);
 
         if (miLocalidad == null) {
@@ -111,7 +110,6 @@ public class ProfesorService {
 
         Optional<Localidad> localidadOpt = localidadRepository.findById(idLocalidad);
         Optional<Profesor> profesorOpt = profesorRepository.findById(id);
-        //Conversión del String al Enum
         FormaTrabajo estadoFT = FormaTrabajo.valueOf(formaTrabajo);
 
         if (localidadOpt.isEmpty()) {
@@ -186,9 +184,7 @@ public class ProfesorService {
         if (email.isEmpty() || email == null) {
             throw new Exception("el email no puede ser nulo o estar vacío");
         }
-        // if (!email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
-        //     throw new Exception("El email no tiene un formato válido");
-        // }
+
         if(idLocalidad <= 0) {
             throw new Exception("El idLocalidad debe ser un numero positivo");
         }

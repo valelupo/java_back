@@ -19,13 +19,13 @@
             const index = materiales.length;
             materiales.push({ archivo, descripcion });
 
-            // Mostrar en lista
+
             const lista = document.getElementById("listaMateriales");
             const item = document.createElement("li");
             item.textContent = `Material n° ${index + 1}: ${descripcion} `;
 
             const btnEliminar = document.createElement("button");
-            // btnEliminar.className = "btn-eliminar";
+
             btnEliminar.innerHTML = `
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                     <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
@@ -40,11 +40,9 @@
                 actualizarLista();
             };
 
-            // btnEliminar.appendChild(icon);
             item.appendChild(btnEliminar);
             lista.appendChild(item);
 
-            // Limpiar campos
             document.getElementById("archivo").value = "";
             document.getElementById("descripcion").value = "";
         }
@@ -65,15 +63,12 @@
                     </svg>
                 `;
 
-                // btnEliminar.textContent = "Eliminar";
-                // btnEliminar.className = "btn-eliminar";
     
                 btnEliminar.onclick = () => {
                     materiales.splice(i, 1);
                     actualizarLista();
                 };
 
-                //btnEliminar.appendChild(icon);
                 item.appendChild(btnEliminar);
                 lista.appendChild(item);
             });
@@ -83,7 +78,6 @@
             const archivo = document.getElementById("archivo").files[0];
             const descripcion = document.getElementById("descripcion").value;
 
-            // Si no se presionó "Ingresar otro", agregamos el material actual
             if (archivo && descripcion) {
                 materiales.push({ archivo, descripcion });
             }

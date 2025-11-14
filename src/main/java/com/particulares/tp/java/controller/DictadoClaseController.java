@@ -40,7 +40,7 @@ public class DictadoClaseController {
         return "profesor/crearDictado";
     }
 
-    @PostMapping("/crear") // localhost:8080/dictadoClase/crear
+    @PostMapping("/crear") 
     public String crear(HttpSession session, 
                         @RequestParam int idMateria, 
                         @RequestParam(name = "nrosNiveles", required = false) List<Integer> nrosNiveles, 
@@ -57,7 +57,7 @@ public class DictadoClaseController {
         return "profesor/crearDictado";
     }
 
-    @GetMapping("/lista") //dictados 
+    @GetMapping("/lista") 
     public String listar(ModelMap modelo, HttpSession session) {
 
         Profesor profesor = (Profesor) session.getAttribute("personaSession");
@@ -80,7 +80,6 @@ public class DictadoClaseController {
             redirectAttributes.addFlashAttribute("error", ex.getMessage());
         }
 
-        // Redirigís a la lista para que se actualice
         return "redirect:/dictadoClase/lista";
     }
 

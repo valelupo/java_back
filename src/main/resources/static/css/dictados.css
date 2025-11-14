@@ -1,12 +1,9 @@
-
-/* Contenedor de tabla */
 .tabla-container {
   display: flex;
   justify-content: center;
   margin-top: 30px;
 }
 
-/* Tabla general */
 table {
   width: 80%;
   border-collapse: collapse;
@@ -31,9 +28,6 @@ tr:hover {
   background-color: #f5f5f5;
 }
 
-
-
-/* para agregar una nueva materia */
 
 .materia-row {
   display: flex;
@@ -68,33 +62,29 @@ tr:hover {
   transform: scale(1.02);
 }
 
-/* Contenedor general */
 .form-container {
     max-width: 650px;
     margin: 40px auto;
 }
 
-/* Tarjeta del formulario */
 .dictado-card {
     background: #fff;
     border-radius: 18px;
     padding: 40px;
 }
 
-/* Inputs con estética más profesional */
 .custom-input {
     padding: 10px 14px;
     border-radius: 10px;
 }
 
-/* Caja donde están los niveles */
 .niveles-box {
     background: #f8f9fa;
     border: 1px solid #dcdcdc;
     border-radius: 12px;
 }
 
-/* Links para registrar nuevas entidades */
+
 .link-accion {
     display: inline-block;
     margin-top: 8px;
@@ -108,7 +98,7 @@ tr:hover {
     text-decoration: underline;
 }
 
-/* Botón Registrar */
+
 .btn-submit {
     width: 100%;
     padding: 12px;
@@ -116,7 +106,7 @@ tr:hover {
     border-radius: 12px;
 }
 
-/* Título con flecha */
+
 .titulo-con-flecha h2 {
     font-size: 1.8rem;
     color: #0b203d;

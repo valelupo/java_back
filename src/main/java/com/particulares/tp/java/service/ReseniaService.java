@@ -93,7 +93,7 @@ public class ReseniaService {
             Resenia resenia = reseniaOpt.get();
 
             resenia.setDescripcion(descripcion);
-            resenia.setFecha(LocalDateTime.now()); // la fecha se actualiza al modificar
+            resenia.setFecha(LocalDateTime.now()); 
             resenia.setAlumno(alumnoOpt.get());
             resenia.setProfesor(profesorOpt.get());
             resenia.setPuntaje(puntaje);

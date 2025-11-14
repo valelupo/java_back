@@ -16,8 +16,6 @@
 
   <main class="container py-5">
 
-    <div th:replace="~{fragments/mensajes :: fragment}"></div>
-
     <div class="titulo-con-flecha mb-4">
                     <a th:href="@{/inicio}" class="btn-volver" title="Volver">
                     <i class="bi bi-arrow-left"></i>
@@ -86,6 +84,8 @@
       <a th:href="@{/materia/registrar}" class="btn btn-primary">
         Crear nueva materia
       </a>
+
+      <div th:replace="~{fragments/mensajes :: fragment}"></div>
     </div>
 
   </main>

@@ -1,5 +1,3 @@
-/* header persona */
-/* --- Header persona (profesor, alumno, admin) --- */
 .nav-persona {
     display: flex;
     align-items: center;
@@ -7,7 +5,6 @@
     box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
-/* Logo + nombre Geteacher */
 .brand-link {
     display: flex;
     align-items: center;
@@ -31,7 +28,6 @@
     margin: 0;
 }
 
-/* Botones del lado derecho */
 .nav-buttons {
     display: flex;
     gap: 15px;
@@ -73,12 +69,11 @@
     color: #122941; 
 }
 
-/* --- Ajuste del card de la tabla --- */
 .tabla-card {
-  max-width: 700px;      /* Más chico */
-  margin: 0 auto;        /* Centrado */
-  border-radius: 12px;   /* Bordes redondeados */
-  overflow: hidden;      /* Para que el header redondeado quede prolijo */
+  max-width: 700px;      
+  margin: 0 auto;        
+  border-radius: 12px;   
+  overflow: hidden;      
 }
 
 /* Encabezado azul */
@@ -103,10 +98,9 @@
 }
 
 .btn-trash:hover i {
-  color: #fa1616 !important; /* Rojo más oscuro */
+  color: #fa1616 !important; 
 }
 
-/* Encabezado de columnas sin el fondo oscuro de Bootstrap */
 .table thead {
   background-color: #f2f2f2;
 }
@@ -118,7 +112,6 @@
     gap: 12px;
 }
 
-/* Ícono + texto */
 .filtro-label {
     font-weight: 600;
     display: flex;
@@ -126,21 +119,19 @@
     gap: 6px;
 }
 
-/* Igual que un input normal (mismo ancho y alto) */
+
 .filtro-select {
-    width: 250px; /* Podés ajustar este valor */
+    width: 250px; 
     padding: 8px 12px;
     border-radius: 6px;
     border: 1px solid #ced4da;
 }
 
-/* Para que el ícono se vea bien */
 .filtro-label i {
     font-size: 1rem;
     color: #555;
 }
 
-/* Botón rojo exclusivo del admin */
 a.btn-eliminar {
     background-color: #720b15 !important;
     color: white !important;

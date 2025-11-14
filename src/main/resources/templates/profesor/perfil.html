@@ -14,15 +14,12 @@
 
   <div class="container my-5">
 
-    <!-- Título con flecha -->
     <div class="titulo-con-flecha mb-4">
       <a th:href="@{/inicio}" class="btn-volver" title="Volver">
         <i class="bi bi-arrow-left"></i>
       </a>
       <h2>Mi perfil</h2>
     </div>
-
-    <!-- <h2 class="mb-4" th:text="${profesor.nombre} + ' ' + ${profesor.apellido}"></h2> -->
 
     <div class="row justify-content-center">
       <div class="col-md-8">
@@ -43,7 +40,6 @@
           <p><strong>Provincia:</strong> <span th:text="${profesor.miLocalidad.miProvincia.nombre}"></span></p>
         </div>
 
-        <!-- Botones centrados -->
         <div class="botones-perfil d-flex justify-content-center gap-3 mt-4">
           <a th:href="@{'/profesor/editar/' + ${profesor.id}}" class="btn btn-primary">Modificar perfil</a>
 
@@ -54,7 +50,7 @@
           </form>
         </div>
 
-        <!-- Mensajes -->
+
         <div th:replace="~{fragments/mensajes :: fragment}" class="mt-4"></div>
 
       </div>

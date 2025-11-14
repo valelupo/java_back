@@ -48,7 +48,7 @@
 
         <div class="form-container ">
             <form th:action="@{/registro}" method="post" enctype="multipart/form-data">
-                <!-- <h2 class="form-title">Registro</h2> -->
+
                 <div class="titulo-con-flecha mb-4">
                         <a th:href="@{/}" class="btn-volver" title="Volver">
                         <i class="bi bi-arrow-left"></i>
@@ -125,7 +125,7 @@
     </div>
 
     <script>
-        // Mostrar campos si ya se había seleccionado "PROFESOR"
+
         const rolActual =  '';
         if (rolActual === 'PROFESOR') {
             mostrarCamposProfesor('PROFESOR');

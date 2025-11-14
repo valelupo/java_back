@@ -17,7 +17,6 @@
 
         <div class="form-container">
             <form th:action="@{/logincheck}" method="post">
-                <!-- <h2 class="form-title">Iniciar sesión</h2> -->
                     <div class="titulo-con-flecha mb-4">
                         <a th:href="@{/}" class="btn-volver" title="Volver">
                         <i class="bi bi-arrow-left"></i>
@@ -37,12 +36,6 @@
                 <a href="/registrar">¿No tienes cuenta? Regístrate aquí</a>
             </form>
 
-            <!-- <div th:if="${param.error}">
-                <p class="error">Usuario o contraseña incorrectos</p>
-            </div>
-            <div th:if="${param.logout}">
-                <p class="success">Sesión cerrada correctamente</p>
-            </div> -->
         </div>
 
     </div>
