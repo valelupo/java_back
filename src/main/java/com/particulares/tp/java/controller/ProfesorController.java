@@ -19,7 +19,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.particulares.tp.java.entities.Profesor;
 import com.particulares.tp.java.service.DictadoClaseService;
 import com.particulares.tp.java.service.LocalidadService;
-import com.particulares.tp.java.service.MaterialService;
 import com.particulares.tp.java.service.ProfesorService;
 import com.particulares.tp.java.service.ProvinciaService;
 import com.particulares.tp.java.service.ReseniaService;
@@ -39,9 +38,6 @@ public class ProfesorController {
 
     @Autowired
     private ReseniaService reseniaService;
-
-    @Autowired
-    private MaterialService materialService;
 
     @Autowired
     private LocalidadService localidadService;

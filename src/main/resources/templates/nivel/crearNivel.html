@@ -3,25 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <title>Crear Nivel</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/general.css}" />
 </head>
 <body>
 
     <div th:replace="~{fragments/headerGral :: fragment}"></div>
 
-    <div th:replace="~{fragments/mensajes :: fragment}"></div>
-
     <main class="form-container">
         
         <form th:action="@{/nivel/crear}" method="post">
-            <h2 class="form-title">nuevo nivel</h2>
+            <div class="titulo-con-flecha mb-4">
+                    <a th:href="@{/dictadoClase/registrar}" class="btn-volver" title="Volver">
+                    <i class="bi bi-arrow-left"></i>
+                    </a>
+                    <h2>Registrar nuevo nivel</h2>
+            </div>
 
             <label for="descripcion">descripcion del nivel</label>
             <input type="text" id="descripcion" name="descripcion" placeholder="Ej: Secundario" required />
 
             <button type="submit">Registrar</button>
             
-            <a th:href="@{/dictadoClase/registrar}">Volver</a>
+            <div th:replace="~{fragments/mensajes :: fragment}"></div>
 
         </form>
     </main>

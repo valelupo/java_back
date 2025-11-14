@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.particulares.tp.java.entities.DictadoClase;
+import com.particulares.tp.java.entities.Materia;
 
 
 
@@ -18,4 +19,7 @@ public interface DictadoClaseRepository extends JpaRepository<DictadoClase, Inte
 
     @Query("SELECT DC FROM DictadoClase DC WHERE DC.profesor.id = ?1")
     List <DictadoClase> findByProfesor(int idProfesor);
+
+    @Query("SELECT dc.materia FROM DictadoClase dc WHERE dc.nivel.nro = ?1")
+    List <Materia> findMateriaByNivel(int nro);
 }

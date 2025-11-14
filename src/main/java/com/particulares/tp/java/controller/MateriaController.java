@@ -12,6 +12,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.particulares.tp.java.entities.Persona;
 import com.particulares.tp.java.service.MateriaService;
+import com.particulares.tp.java.service.NivelService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -21,6 +22,9 @@ public class MateriaController {
 
     @Autowired
     private MateriaService materiaService;
+
+    @Autowired
+    private NivelService nivelService;
     
     @GetMapping("/registrar") 
     public String registrar(ModelMap modelo, HttpSession session) {
@@ -43,13 +47,39 @@ public class MateriaController {
         return "materia/crearMateria";
     }
 
-    @GetMapping("/listar")
-    public String listar(ModelMap modelo, HttpSession session) {
-        Persona logueado = (Persona) session.getAttribute("personaSession");
-        modelo.put("persona", logueado);
-        modelo.addAttribute("materias", materiaService.listarMaterias()); 
-        return "admin/materia/lista";
+    // @GetMapping("/listar")
+    // public String listar(ModelMap modelo, HttpSession session) {
+    //     Persona logueado = (Persona) session.getAttribute("personaSession");
+    //     modelo.put("persona", logueado);
+    //     modelo.addAttribute("materias", materiaService.listarMaterias()); 
+    //     return "admin/materia/lista";
+    // }
+
+   @GetMapping("/listar")
+public String listar(@RequestParam(required = false) Integer nivel,
+                     ModelMap modelo,
+                     HttpSession session) {
+
+    Persona logueado = (Persona) session.getAttribute("personaSession");
+    modelo.put("persona", logueado);
+
+    // Lista de niveles para el filtro
+    modelo.addAttribute("niveles", nivelService.listarNiveles());
+
+    // Filtro
+    if (nivel != null) {
+        modelo.addAttribute("materias", materiaService.listarPorNivel(nivel));
+    } else {
+        modelo.addAttribute("materias", materiaService.listarMaterias());
     }
+
+    modelo.addAttribute("nivelSeleccionado", nivel);
+
+    return "admin/materia/lista";
+}
+
+
+
 
     @PostMapping("/eliminar/{id}")
     public String eliminar(@PathVariable int id, RedirectAttributes redirectAttributes) {

@@ -57,6 +57,93 @@
     object-fit: cover;
 }
 
+.admin-card {
+    background: white;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border-radius: 12px;
+}
+
+.admin-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+}
+
+.icon-admin {
+    font-size: 2.5rem;
+    color: #122941; 
+}
+
+/* --- Ajuste del card de la tabla --- */
+.tabla-card {
+  max-width: 700px;      /* Más chico */
+  margin: 0 auto;        /* Centrado */
+  border-radius: 12px;   /* Bordes redondeados */
+  overflow: hidden;      /* Para que el header redondeado quede prolijo */
+}
+
+/* Encabezado azul */
+.titulo-azul {
+  background-color: #1b4e8a; /* El azul que estabas usando */
+}
+
+/* Icono de basurero sin fondo */
+.btn-trash {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0;
+  cursor: pointer;
+  box-shadow: none !important;
+}
+
+.btn-trash i {
+  color: #7a0b0b !important; 
+  font-size: 1.2rem;
+  transition: color .3s ease;
+}
+
+.btn-trash:hover i {
+  color: #fa1616 !important; /* Rojo más oscuro */
+}
+
+/* Encabezado de columnas sin el fondo oscuro de Bootstrap */
+.table thead {
+  background-color: #f2f2f2;
+}
+
+.filtro-nivel {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Ícono + texto */
+.filtro-label {
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* Igual que un input normal (mismo ancho y alto) */
+.filtro-select {
+    width: 250px; /* Podés ajustar este valor */
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid #ced4da;
+}
+
+/* Para que el ícono se vea bien */
+.filtro-label i {
+    font-size: 1rem;
+    color: #555;
+}
+
+
+
+
+
 
 
 

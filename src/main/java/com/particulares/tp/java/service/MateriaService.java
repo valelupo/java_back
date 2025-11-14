@@ -38,6 +38,11 @@ public class MateriaService {
         return materiaRepository.findAll();
     }
 
+    @Transactional(readOnly = true)
+    public List<Materia> listarPorNivel(int nro){
+        return dictadoClaseRepository.findMateriaByNivel(nro);
+    }
+
     @Transactional
     public void modificarMaterias(String nombre, int id) 
     throws Exception {

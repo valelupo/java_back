@@ -3,28 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <title>Crear Materia</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/general.css}" />
 </head>
 <body>
 
     <div th:replace="~{fragments/headerGral :: fragment}"></div>
 
-    <div th:replace="~{fragments/mensajes :: fragment}"></div>
-
     <main class="form-container">
         
         <form th:action="@{/materia/crear}" method="post">
-            <h2 class="form-title">nueva materia</h2>
+                <div class="titulo-con-flecha mb-4">
+                <a th:href="${persona != null and persona.rol.name() == 'PROFESOR'} ? @{/dictadoClase/registrar} : @{/materia/listar}"
+                class="btn-volver" title="Volver">
+                <i class="bi bi-arrow-left"></i>
+                </a>
+
+                <h2>Registrar nueva materia</h2>
+                </div>
 
             <label for="nombre">Nombre de la materia</label>
             <input type="text" id="nombre" name="nombre" placeholder="Ej: Matemática" required />
 
             <button type="submit">Registrar</button>
-            
-            <a th:if="${persona != null and persona.rol == 'PROFESOR'}" th:href="@{/dictadoClase/registrar}">Volver</a>
-            <a th:if="${persona != null and persona.rol == 'ADMIN'}" th:href="@{/materia/listar}">Volver</a>
 
-
+            <div th:replace="~{fragments/mensajes :: fragment}"></div>
 
         </form>
     </main>
