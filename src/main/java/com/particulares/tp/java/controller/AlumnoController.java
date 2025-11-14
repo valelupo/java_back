@@ -53,9 +53,14 @@ public class AlumnoController {
                                 @RequestParam String email, 
                                 @RequestParam int idLocalidad, 
                                 @RequestParam String clave, 
-                                @RequestParam String clave2, ModelMap modelo, RedirectAttributes redirectAttributes) {
+                                @RequestParam String clave2, 
+                                ModelMap modelo, RedirectAttributes redirectAttributes, HttpSession session) {
         try {
             alumnoService.modificarAlumno(nombre, apellido, email, idLocalidad, clave, clave2, id);
+
+            Persona actualizado = alumnoService.getOne(id);
+            session.setAttribute("personaSession", actualizado);
+
             redirectAttributes.addFlashAttribute("exito", "Perfil modificado correctamente.");
             return "redirect:/alumno/perfil";
         } catch (Exception e) {

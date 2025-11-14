@@ -15,7 +15,7 @@
         
         document.addEventListener("DOMContentLoaded", function () {
             const provinciaId = document.getElementById("provincia").value;
-            const localidadId = 0;
+            const localidadId = parseInt(document.getElementById("localidad").dataset.id);
 
             if (provinciaId) {
                 fetch('/localidad/listaProv?idProvincia=' + provinciaId)
