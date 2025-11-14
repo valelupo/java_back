@@ -9,7 +9,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.particulares.tp.java.entities.Persona;
 import com.particulares.tp.java.service.NivelService;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/nivel")
@@ -19,12 +23,16 @@ public class NivelController {
     private NivelService nivelService;
     
     @GetMapping("/registrar") 
-    public String registrar() {
+    public String registrar(HttpSession session, ModelMap modelo) {
+        Persona logueado = (Persona) session.getAttribute("personaSession");
+        modelo.put("persona", logueado);
         return "nivel/crearNivel";
     }
 
     @PostMapping("/crear") 
-    public String crear(@RequestParam String descripcion, ModelMap modelo){
+    public String crear(@RequestParam String descripcion, ModelMap modelo, HttpSession session){
+        Persona logueado = (Persona) session.getAttribute("personaSession");
+        modelo.put("persona", logueado);
         try {
             nivelService.crearNivel(descripcion);  
             modelo.put("exito", "El nivel fue cargado correctamente");

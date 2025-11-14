@@ -19,7 +19,7 @@
 
   <main class="form-container">
 
-    <form action="/dictadoClase/crear" method="post">
+    <form action="/dictadoClase/crear" method="post" class="dictado-card shadow-sm">
 
       <div class="titulo-con-flecha mb-4">
         <a th:href="@{/dictadoClase/lista}" class="btn-volver" title="Volver">
@@ -28,36 +28,46 @@
         <h2>Registrar nuevo dictado</h2>
       </div>
 
-      <label for="materia">Materia:</label>
-      <div class="materia-row d-flex align-items-center gap-3 mb-3">
-        <select name="idMateria" id="materia" required class="form-select w-auto">
+      <div class="mb-4">
+        <label for="materia" class="form-label fw-semibold">Materia:</label>
+        <select name="idMateria" id="materia" required class="form-select custom-input">
           <option value="" disabled selected>Seleccionar materia</option>
-          <option th:each="materia : ${materias}" th:value="${materia.id}" th:text="${materia.nombre}"></option>
+          <option th:each="materia : ${materias}"
+                  th:value="${materia.id}"
+                  th:text="${materia.nombre}">
+          </option>
         </select>
-      </div>
-      <div class="materia-row d-flex align-items-center gap-3 mb-3">
-        <a th:href="@{/materia/registrar}" class="link-materia">Registrar nueva materia</a>
+
+        <a th:href="@{/materia/registrar}" class="link-accion">Registrar nueva materia</a>
       </div>
 
-      <label for="niveles">Niveles:</label>
-      <div class="niveles-row d-flex align-items-start gap-4 mb-3">
-        <div class="niveles-checks">
-          <div class="form-check" th:each="nivel : ${niveles}">
-            <input class="form-check-input" type="checkbox" name="nrosNiveles" th:value="${nivel.nro}" th:id="'nivel-' + ${nivel.nro}">
-            <label class="form-check-label" th:for="'nivel-' + ${nivel.nro}" th:text="${nivel.descripcion}"></label>
+      <div class="mb-4">
+        <label class="form-label fw-semibold">Niveles:</label>
+
+        <div class="niveles-box p-3 rounded">
+          <div class="form-check mb-2" th:each="nivel : ${niveles}">
+            <input class="form-check-input" type="checkbox" name="nrosNiveles"
+                  th:value="${nivel.nro}" th:id="'nivel-' + ${nivel.nro}">
+            <label class="form-check-label"
+                  th:for="'nivel-' + ${nivel.nro}"
+                  th:text="${nivel.descripcion}">
+            </label>
           </div>
         </div>
-      </div>
-      <div class="niveles-row d-flex align-items-start gap-4 mb-3">
-        <a th:href="@{/nivel/registrar}" class="link-materia mt-1">Registrar nuevo nivel</a>
+
+        <a th:href="@{/nivel/registrar}" class="link-accion">Registrar nuevo nivel</a>
       </div>
 
-      <!-- Botón registrar -->
-      <button type="submit" class="btn btn-primary mt-4">Registrar</button>
+      <button type="submit" class="btn btn-primary btn-submit">
+        Registrar
+      </button>
 
       <div th:replace="~{fragments/mensajes :: fragment}"></div>
+
     </form>
+
   </main>
+
 
   <footer th:replace="fragments/footer :: footer"></footer>
 </body>

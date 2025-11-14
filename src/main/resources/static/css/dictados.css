@@ -67,3 +67,58 @@ tr:hover {
 .card:hover {
   transform: scale(1.02);
 }
+
+/* Contenedor general */
+.form-container {
+    max-width: 650px;
+    margin: 40px auto;
+}
+
+/* Tarjeta del formulario */
+.dictado-card {
+    background: #fff;
+    border-radius: 18px;
+    padding: 40px;
+}
+
+/* Inputs con estética más profesional */
+.custom-input {
+    padding: 10px 14px;
+    border-radius: 10px;
+}
+
+/* Caja donde están los niveles */
+.niveles-box {
+    background: #f8f9fa;
+    border: 1px solid #dcdcdc;
+    border-radius: 12px;
+}
+
+/* Links para registrar nuevas entidades */
+.link-accion {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 0.95rem;
+    color: #0d6efd;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.link-accion:hover {
+    text-decoration: underline;
+}
+
+/* Botón Registrar */
+.btn-submit {
+    width: 100%;
+    padding: 12px;
+    font-size: 1.1rem;
+    border-radius: 12px;
+}
+
+/* Título con flecha */
+.titulo-con-flecha h2 {
+    font-size: 1.8rem;
+    color: #0b203d;
+    font-weight: 700;
+}

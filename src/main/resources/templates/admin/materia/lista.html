@@ -25,24 +25,18 @@
                     <h2>Listado de materias</h2>
     </div>
 
-    <form method="get" action="/materia/listar" class="filtro-nivel">
-    
-        <label for="nivel" class="filtro-label">
-            <i class="bi bi-funnel-fill"></i> Filtrar por nivel:
+    <div class="d-flex justify-content-center mb-4">
+      <form method="get" action="/materia/listar" class="d-flex align-items-center gap-3">
+        <label for="nivel" class="form-label mb-0">
+          <i class="bi bi-funnel-fill"></i> Filtrar por nivel:
         </label>
 
-        <select name="nivel" id="nivel" class="form-select filtro-select"
-                onchange="this.form.submit()">
-            <option value="">Todos</option>
-
-            <option th:each="n : ${niveles}"
-                    th:value="${n.nro}"
-                    th:text="${n.descripcion}"
-                    th:selected="${nivelSeleccionado == n.nro}">
-            </option>
+        <select name="nivel" id="nivel" class="form-select w-auto" onchange="this.form.submit()">
+          <option value="">Todos</option>
+          <option th:each="n : ${niveles}" th:value="${n.nro}" th:text="${n.descripcion}" th:selected="${nivelSeleccionado == n.nro}"></option>
         </select>
-
-    </form>
+      </form>
+    </div>
 
     <div class="card tabla-card shadow-sm">
 

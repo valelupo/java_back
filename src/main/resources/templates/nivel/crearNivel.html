@@ -15,10 +15,12 @@
         
         <form th:action="@{/nivel/crear}" method="post">
             <div class="titulo-con-flecha mb-4">
-                    <a th:href="@{/dictadoClase/registrar}" class="btn-volver" title="Volver">
-                    <i class="bi bi-arrow-left"></i>
-                    </a>
-                    <h2>Registrar nuevo nivel</h2>
+                <a th:href="${persona != null and persona.rol.name() == 'PROFESOR'} ? @{/dictadoClase/registrar} : @{/nivel/listar}"
+                class="btn-volver" title="Volver">
+                <i class="bi bi-arrow-left"></i>
+                </a>
+
+                <h2>Registrar nuevo nivel</h2>
             </div>
 
             <label for="descripcion">descripcion del nivel</label>

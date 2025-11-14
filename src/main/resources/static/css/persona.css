@@ -140,6 +140,24 @@
     color: #555;
 }
 
+/* Botón rojo exclusivo del admin */
+a.btn-eliminar {
+    background-color: #720b15 !important;
+    color: white !important;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-weight: 600;
+    display: inline-block;
+    text-align: center;
+}
+
+a.btn-eliminar:hover {
+    background-color: #9f1e2b !important;
+}
+
+
+
 
 
 
