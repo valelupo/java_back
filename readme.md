@@ -24,7 +24,7 @@ Se desarrollará un sistema en el que los estudiantes podrán encontrar profesor
 |Requerimiento|cant. mín. 1 o 2 integ|
 |:-|:-|
 |ABMC simple|- Alumno<br>- Materia|
-|ABMC dependiente|- Profesor (depende de Materia y Nivel)|
+|ABMC dependiente|- Dictado_Clase (depende de Materia, Nivel y Profesor)|
 |CU NO-ABMC|- Dejar reseñas a profesores|
 |Listado simple|- Listado de Materias|
 |Listado complejo|0|
