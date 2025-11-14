@@ -11,8 +11,8 @@
   <link rel="stylesheet" th:href="@{/css/persona.css}" />
 </head>
 <body>
-  <div th:replace="~{fragments/headerAlumno :: fragment}"></div>
-
+  <div th:replace="~{fragments/headerGral :: fragment}"></div>
+ 
   <div class="container my-5">
     <div class="titulo-con-flecha">
       <a th:href="@{/inicio}" class="btn-volver" title="Volver">
@@ -23,6 +23,7 @@
 
     <div class="row justify-content-center">
       <div class="col-md-8">
+        <div th:replace="~{fragments/mensajes :: fragment}" class="mt-4"></div>
         <div class="bg-white p-4 rounded shadow-sm">
             <h5 class="mb-3">Datos del alumno</h5>
             <p><strong>Email:</strong> <span th:text="${alumno.email}"></span></p>
@@ -40,10 +41,6 @@
             </button>
           </form>
         </div>
-
-        <!-- Mensajes -->
-        <div th:replace="~{fragments/mensajes :: fragment}" class="mt-4"></div>
-
       </div>
     </div>
   </div>

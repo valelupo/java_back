@@ -106,6 +106,7 @@ public class LoginController {
 
         //para no cargar ambas listas en memoria
         if ("puntaje".equals(orden)) {
+            System.out.println("Ordenando por puntaje...");
             modelo.put("profesores", profesorService.listarProfesoresPorPuntajeOrdenados());
         }else{
             modelo.put("profesores", profesorService.listarProfesoresPorPuntaje());

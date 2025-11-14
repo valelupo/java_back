@@ -42,7 +42,7 @@ public class ProfesorService {
     public void crearProfesor(String nombre, String apellido, String email, int idLocalidad, String clave, String clave2,
                             String telefono, String formaTrabajo, String infoAcademica, Double precioXHs, MultipartFile imagen) throws Exception {
 
-        validar(nombre, apellido, email, idLocalidad, clave, clave2, telefono, formaTrabajo, infoAcademica, precioXHs);
+        validar(nombre, apellido, email, idLocalidad, clave, clave2, telefono, formaTrabajo, infoAcademica, precioXHs, imagen);
         Optional<Persona> existente = personaRepository.findByEmail(email);
         if (existente.isPresent()) {
             throw new Exception("Ya existe una cuenta con ese email.");
@@ -103,7 +103,7 @@ public class ProfesorService {
     public Profesor modificarProfesor(String nombre, String apellido, String email, int idLocalidad, String clave, String clave2,
                                   String telefono, String formaTrabajo, String infoAcademica, Double precioXHs, int id, MultipartFile imagen) throws Exception {
         
-        validar(nombre, apellido, email, idLocalidad, clave, clave2, telefono, formaTrabajo, infoAcademica, precioXHs);
+        validar(nombre, apellido, email, idLocalidad, clave, clave2, telefono, formaTrabajo, infoAcademica, precioXHs, imagen);
         Optional<Persona> existente = personaRepository.findByEmail(email);
         if (existente.isPresent() && existente.get().getId() != id) {
             throw new Exception("Ya existe una cuenta con ese email.");
@@ -176,7 +176,7 @@ public class ProfesorService {
 
 
     private void validar(String nombre, String apellido, String email, int idLocalidad, String clave, String clave2,
-                         String telefono, String formaTrabajo, String infoAcademica, double precioXHs) throws Exception {
+                         String telefono, String formaTrabajo, String infoAcademica, double precioXHs, MultipartFile imagen) throws Exception {
         if (nombre.isEmpty() || nombre == null) {
             throw new Exception("el nombre no puede ser nulo o estar vacío");
         }
@@ -210,6 +210,16 @@ public class ProfesorService {
         if (precioXHs <= 0) {
             throw new Exception("el precioXHs debe ser un numero positivo");
         }
+        if (imagen != null && !imagen.isEmpty()) {
+            long maxSize = 5 * 1024 * 1024; // 5MB
+            if (imagen.getSize() > maxSize) {
+                throw new Exception("La imagen supera el tamaño máximo permitido (5MB).");
+            }
+        } 
+        if (imagen == null && imagen.isEmpty()) {
+            throw new Exception("Debe proporcionar una imagen.");
+        }
+
     }
     
 }
