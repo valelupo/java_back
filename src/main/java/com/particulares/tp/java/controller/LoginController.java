@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.particulares.tp.java.entities.Persona;
 import com.particulares.tp.java.entities.Profesor;
@@ -56,13 +57,15 @@ public class LoginController {
                             @RequestParam (required = false) String formaTrabajo,
                             @RequestParam (required = false) String infoAcademica,
                             @RequestParam (required = false) Double precioXHs, 
-                            @RequestParam (required = false) MultipartFile imagen, ModelMap modelo) {
+                            @RequestParam (required = false) MultipartFile imagen, 
+                            ModelMap modelo, RedirectAttributes redirectAttributes) {
         try {
             if (rol.equals("ALUMNO")) {
                 alumnoService.crearAlumno(nombre, apellido, email, idLocalidad, clave, clave2);
             }else if (rol.equals("PROFESOR")){
                 profesorService.crearProfesor(nombre, apellido, email, idLocalidad, clave, clave2, telefono, formaTrabajo, infoAcademica, precioXHs, imagen);
             }
+            
             modelo.put("exito", "Usuario registrado correctamente!");
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -70,12 +73,12 @@ public class LoginController {
             modelo.put("nombre", nombre);
             modelo.put("apellido", apellido);
             modelo.put("email", email);
+            modelo.put("provincias", provinciaService.listarProvincias());
             return "registro.html";
         }
         return "index.html";
     }
 
-    //modelo: guardo los datos para mandarlos despues a la vista desde el controlador 
 
     @GetMapping("/login")
     public String login(@RequestParam(required = false) String error, ModelMap modelo ) {
@@ -104,21 +107,14 @@ public class LoginController {
             return "admin/home";
         }
 
-        //para no cargar ambas listas en memoria
         if ("puntaje".equals(orden)) {
             System.out.println("Ordenando por puntaje...");
             modelo.put("profesores", profesorService.listarProfesoresPorPuntajeOrdenados());
         }else{
             modelo.put("profesores", profesorService.listarProfesoresPorPuntaje());
-            // modelo.put("profesores", profesorService.listarProfesores());
         }
 
         return "alumno/home";
     }
 
-    // @GetMapping("/inicio")
-    // public String dashboard(Model model, Principal principal) {
-    //     model.addAttribute("usuario", principal.getName());
-    //     return "dashboard";
-    // }
 }

@@ -146,7 +146,6 @@ public class ProfesorService {
     public void eliminarProfesor(int id) throws Exception{
         Optional<Profesor> profesorOpt = profesorRepository.findById(id);
         if (profesorOpt.isPresent()) {
-            profesorRepository.delete(profesorOpt.get());
             for (DictadoClase dc : profesorOpt.get().getDictados()) {
                 dictadoClaseRepository.delete(dc);
             }
@@ -154,6 +153,7 @@ public class ProfesorService {
             for (Resenia r: resenias){
                 reseniaRepository.delete(r);
             }
+            profesorRepository.delete(profesorOpt.get());
         } else {
             throw new Exception("El profesor con el ID especificado no existe");
         }

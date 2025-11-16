@@ -2,7 +2,6 @@ package com.particulares.tp.java.entities;
 
 import java.time.LocalDateTime;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,10 +20,10 @@ public class Resenia {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id; 
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Profesor profesor;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Alumno alumno;
 
     //getters y setters 

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.particulares.tp.java.entities.Persona;
 import com.particulares.tp.java.service.ReseniaService;
@@ -25,14 +26,14 @@ public class ReseniaController {
                                     @RequestParam int idProfesor,
                                     @RequestParam int puntaje,
                                     HttpSession session,
-                                    ModelMap model) {
+                                    ModelMap model, RedirectAttributes redirectAttributes) {
         try {
             Persona alumno = (Persona) session.getAttribute("personaSession");
             reseniaService.crearResenia(descripcion, idProfesor, alumno.getId(), puntaje);
 
-            model.put("exito", "Reseña cargada correctamente.");
+            redirectAttributes.addFlashAttribute("exito", "Reseña cargada correctamente.");
         } catch (Exception e) {
-            model.put("error", "Error al cargar la reseña: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("error", "Error al cargar la reseña: " + e.getMessage());
         }
         return "redirect:/profesor/ver/" + idProfesor;
     }

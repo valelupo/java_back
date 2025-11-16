@@ -34,7 +34,6 @@ public class AlumnoController {
         Persona logueado = (Persona) session.getAttribute("personaSession");
         System.out.println("Alumno ID: " + logueado.getId());
         modelo.put("alumno", logueado);
-        // modelo.put("localidades", localidadService.listarLocalidades());
         return "alumno/perfilAlumno";
     }
 
