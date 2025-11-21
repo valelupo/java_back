@@ -7,14 +7,12 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "material")
-
 public class Material {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,8 +24,7 @@ public class Material {
     private byte[] archivo;
     
     @ManyToOne
-    @JoinColumn(name = "persona_profesor_id")
-    private Profesor profesor; 
+    private DictadoClase dictadoClase; 
 
     //getters y setters 
     public int getId() {
@@ -42,17 +39,17 @@ public class Material {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-    public Profesor getProfesor() {
-        return profesor;
-    }
-    public void setProfesor(Profesor profesor) {
-        this.profesor = profesor;
-    }
     public byte[] getArchivo() {
         return archivo;
     }
     public void setArchivo(byte[] archivo) {
         this.archivo = archivo;
+    }
+    public DictadoClase getDictadoClase() {
+        return dictadoClase;
+    }
+    public void setDictadoClase(DictadoClase dictadoClase) {
+        this.dictadoClase = dictadoClase;
     }
     
 }

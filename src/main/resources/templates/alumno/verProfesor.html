@@ -46,7 +46,7 @@
                     class="perfil-btn text-center" target="_blank">
                     <i class="bi bi-whatsapp"></i> Agendar Clase
                     </a>
-                    <a th:href="@{/material}" class="ver-perfil-btn btn-primary ms-3">Ver material de estudio</a>
+                    <a th:href="@{'/material/listar/' + ${profesor.id}}" class="ver-perfil-btn btn-primary ms-3">Ver material de estudio</a>
                 </div>
             </div>
 

@@ -39,6 +39,7 @@ public class SeguridadWeb {
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/")
                         .permitAll())
+                .headers(headers -> headers.frameOptions(frame -> frame.sameOrigin()))
                 .csrf(csrf -> csrf.disable());
         return http.build();
     }
