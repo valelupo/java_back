@@ -4,63 +4,84 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Localidades</title>
+
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
   <link rel="stylesheet" th:href="@{/css/general.css}" />
+  <link rel="stylesheet" th:href="@{/css/persona.css}" />
 </head>
 
 <body>
-  <div th:replace="~{fragments/headerGral :: fragment}"></div>
-  <main class="welcome">
-    <div th:replace="~{fragments/mensajes :: fragment}"></div>
 
-    <div class="titulo-con-flecha mb-4">
-      <a th:href="@{/inicio}" class="btn-volver" title="Volver">
-        <i class="bi bi-arrow-left"></i>
-      </a>
-      <h2>Localidades</h2>
-    </div>
+<div th:replace="~{fragments/headerGral :: fragment}"></div>
 
-    <div th:if="${exito}" class="alert alert-success" th:text="${exito}"></div>
-    <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
-    <div th:if="${advertencia}" class="alert alert-warning" th:text="${advertencia}"></div>
+<main class="container py-5">
 
-    <div class="search-form mb-4">
-      <form th:action="@{/localidad/listar}" method="GET" class="d-flex flex-column align-items-center gap-2">
-        <label for="provincia">Filtrar por provincia:</label>
-        <div class="d-flex align-items-center gap-2">
-        <input type="text" id="provincia" name="provincia" th:value="${provinciaSeleccionada}" placeholder="Buscar por provincia" class="form-control">
-        <button type="submit" class="btn-buscar" title="Buscar">
-            <i class="bi bi-search"></i>
-        </button>
+  <div class="titulo-con-flecha mb-4">
+    <a th:href="@{/inicio}" class="btn-volver" title="Volver">
+      <i class="bi bi-arrow-left"></i>
+    </a>
+    <h2>Localidades</h2>
+  </div>
+
+  <div th:replace="~{fragments/mensajes :: fragment}"></div>
+
+<div class="d-flex justify-content-center mb-4">
+    <form th:action="@{/localidad/listar}" method="GET" class="d-flex align-items-center gap-3">
+
+        <label for="provincia" class="form-label mb-0">
+            <i class="bi bi-funnel-fill"></i> Filtrar por provincia:
+        </label>
+
+        <select id="provincia"
+                name="provincia"
+                class="form-select w-auto"
+                onchange="this.form.submit()">
+
+            <option value="">Todas</option>
+
+            <option th:each="prov : ${provincias}"
+                    th:value="${prov.nombre}"
+                    th:text="${prov.nombre}"
+                    th:selected="${provinciaSeleccionada == prov.nombre}">
+            </option>
+        </select>
+
+    </form>
 </div>
-</button>
-</button>
-</button>
-        </div>
-      </form>
-    </div>
 
-    <div class="tabla-container" th:if="${localidades != null and not #lists.isEmpty(localidades)}">
-      <table>
+  <div class="card tabla-card shadow-sm" th:if="${localidades != null and not #lists.isEmpty(localidades)}">
+
+    <div class="card-body">
+      <table class="table table-hover align-middle">
         <thead>
           <tr>
             <th>ID</th>
             <th>Localidad</th>
             <th>Código Postal</th>
             <th>Provincia</th>
-            <th></th>
+            <th class="text-center"></th>
           </tr>
         </thead>
+
         <tbody>
           <tr th:each="localidad : ${localidades}">
             <td th:text="${localidad.id}"></td>
             <td th:text="${localidad.nombre}"></td>
             <td th:text="${localidad.codPostal}"></td>
-            <td th:text="${localidad.miProvincia.getNombre()}"></td>
-            <td>
-              <form th:action="@{'/localidad/eliminar/' + ${localidad.id}}" method="post" style="display:inline;">
-                <button type="submit" class="btn-eliminar">Eliminar</button>
+            <td th:text="${localidad.miProvincia.nombre}"></td>
+
+            <td class="text-center">
+              <form th:action="@{'/localidad/eliminar/' + ${localidad.id}}"
+                    method="post"
+                    class="d-inline-block"
+                    onsubmit="return confirm('¿Seguro que querés eliminar esta localidad?')">
+
+                <button type="submit" class="btn btn-trash">
+                  <i class="bi bi-trash3-fill"></i>
+                </button>
+
               </form>
             </td>
           </tr>
@@ -68,9 +89,19 @@
       </table>
     </div>
 
-    <div class="buttons mt-4">
-      <a th:href="@{/localidad/registrar}" class="btn">Crear nueva localidad</a>
-    </div>
-  </main>
+  </div>
+
+  <div th:if="${localidades == null or #lists.isEmpty(localidades)}" class="text-center py-3">
+    <p class="text-muted">No hay localidades registradas.</p>
+  </div>
+
+  <div class="mt-4 text-center">
+    <a th:href="@{/localidad/registrar}" class="btn btn-primary">
+      Crear nueva localidad
+    </a>
+  </div>
+
+</main>
+
 </body>
 </html>

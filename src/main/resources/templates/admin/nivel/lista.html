@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,12 +8,14 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <link rel="stylesheet" th:href="@{/css/general.css}" />
+  <link rel="stylesheet" th:href="@{/css/persona.css}" />
 </head>
 
 <body>
+
   <div th:replace="~{fragments/headerGral :: fragment}"></div>
-  <main class="welcome">
-    <div th:replace="~{fragments/mensajes :: fragment}"></div>
+
+  <main class="container py-5">
 
     <div class="titulo-con-flecha mb-4">
       <a th:href="@{/inicio}" class="btn-volver" title="Volver">
@@ -21,39 +24,61 @@
       <h2>Niveles</h2>
     </div>
 
-    <div class="search-form mb-4">
-      <form th:action="@{/nivel/lista}" method="GET">
+    <div class="card tabla-card shadow-sm">
 
-      </form>
+      <div class="card-body">
+
+        <div th:if="${niveles != null and not #lists.isEmpty(niveles)}">
+          <table class="table table-hover align-middle">
+            <thead>
+              <tr>
+                <th>Nro</th>
+                <th>Descripción</th>
+                <th class="text-center"></th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr th:each="nivel : ${niveles}">
+                <td th:text="${nivel.nro}"></td>
+                <td th:text="${nivel.descripcion}"></td>
+                <td class="text-center">
+
+                  <form th:action="@{'/nivel/eliminar/' + ${nivel.nro}}"
+                        method="post"
+                        class="d-inline-block"
+                        onsubmit="return confirm('¿Seguro que querés eliminar este nivel?')">
+
+                    <button type="submit" class="btn btn-trash">
+                      <i class="bi bi-trash3-fill"></i>
+                    </button>
+
+                  </form>
+
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div th:if="${niveles == null or #lists.isEmpty(niveles)}" class="text-center py-3">
+          <p class="text-muted">No hay niveles registrados.</p>
+        </div>
+
+      </div>
     </div>
 
-    <div class="tabla-container" th:if="${niveles != null and not #lists.isEmpty(niveles)}">
-      <table>
-        <thead>
-          <tr>
-            <th>Nro</th>
-            <th>Descripción</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr th:each="nivel : ${niveles}">
-            <td th:text="${nivel.nro}"></td>
-            <td th:text="${nivel.descripcion}"></td>
-            <td>
-              <form th:action="@{'/nivel/eliminar/' + ${nivel.nro}}" method="post" style="display:inline;">
-                <button type="submit" class="btn-eliminar">Eliminar</button>
-              </form>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="mt-4 text-center">
+      <a th:href="@{/nivel/registrar}" class="btn btn-primary">
+        Crear nuevo nivel
+      </a>
+
+      <div th:replace="~{fragments/mensajes :: fragment}"></div>
     </div>
 
-
-    <div class="buttons mt-4">
-      <a th:href="@{/nivel/registrar}" class="btn">Crear nuevo nivel</a>
-    </div>
   </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+

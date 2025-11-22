@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.particulares.tp.java.entities.Localidad;
+import com.particulares.tp.java.entities.Provincia;
 import com.particulares.tp.java.service.LocalidadService;
 import com.particulares.tp.java.service.ProvinciaService;
 
@@ -64,6 +65,9 @@ public class LocalidadController {
     public String listarLocalidades(@RequestParam(required = false) String provincia, Model model) {
         try {
             List<Localidad> localidades = localidadService.listarLocalidades();
+            List<Provincia> provincias = provinciaService.listarProvincias();
+            model.addAttribute("provincias", provincias);
+
 
             if (provincia != null && !provincia.isEmpty()) {
                 localidades = localidadService.listarLocalidadesPorProvincia(provincia);
