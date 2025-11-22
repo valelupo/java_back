@@ -77,6 +77,7 @@
         function enviarMateriales() {
             const archivo = document.getElementById("archivo").files[0];
             const descripcion = document.getElementById("descripcion").value;
+            const idDictadoClase = document.getElementById("dictado").value;
 
             if (archivo && descripcion) {
                 materiales.push({ archivo, descripcion });
@@ -87,11 +88,17 @@
                 return;
             }
 
+            if (!idDictadoClase) {
+                alert("Seleccioná una materia antes de enviar.");
+                return;
+            }
+
             const formData = new FormData();
 
             materiales.forEach((mat) => {
                 formData.append("archivos", mat.archivo);
                 formData.append("descripciones", mat.descripcion);
+                formData.append("idDictadoClase", idDictadoClase);
             });
 
             fetch("/material/registro", {
@@ -117,6 +124,11 @@
         <form id="formMateriales" enctype="multipart/form-data">
             <input type="file" id="archivo" accept=".pdf" />
             <input type="text" id="descripcion" placeholder="Descripción"/>
+            <label for="dictado">Seleccioná la materia:</label>
+            <select id="dictado" name="idDictadoClase" class="form-select" required>
+                <option value="" disabled selected>Elegí una materia</option>
+                <option th:each="d : ${dictados}" th:value="${d.id}" th:text="${d.materia.nombre + ' - ' + d.nivel.descripcion}"></option>
+            </select>
             <div>
                 <button type="button" onclick="agregarMaterial()">Ingresar otro</button>
                 <button type="button" onclick="enviarMateriales()">Aceptar</button>

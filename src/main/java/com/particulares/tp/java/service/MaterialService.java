@@ -11,9 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.particulares.tp.java.entities.Material;
-import com.particulares.tp.java.entities.Profesor;
+import com.particulares.tp.java.entities.DictadoClase;
 import com.particulares.tp.java.repository.MaterialRepository;
-import com.particulares.tp.java.repository.ProfesorRepository;
+import com.particulares.tp.java.repository.DictadoClaseRepository;
 
 
 @Service
@@ -22,17 +22,17 @@ public class MaterialService {
     private MaterialRepository materialRepository;
 
     @Autowired
-    private ProfesorRepository profesorRepository;
+    private DictadoClaseRepository dictadoClaseRepository;
 
     @Transactional
-    public void crearmaterial(String[] descripciones, int idProfesor,  MultipartFile[] archivos) throws Exception {
+    public void crearmaterial(String[] descripciones, int idDictadoClase,  MultipartFile[] archivos) throws Exception {
 
-        //validar(descripcion, idProfesor);
+        //validar(descripcion, idDictadoClase);
 
-        Profesor miProfesor = profesorRepository.findById(idProfesor).get();
+        DictadoClase dictadoClase = dictadoClaseRepository.findById(idDictadoClase).get();
 
-        if (miProfesor == null) {
-            throw new Exception("El profesor especificado no existe.");
+        if (dictadoClase == null) {
+            throw new Exception("El dictadoClase especificado no existe.");
         }
 
         for (int i = 0; i < archivos.length; i++) {
@@ -43,7 +43,7 @@ public class MaterialService {
                 Material material = new Material();
 
                 material.setDescripcion(descripcion);
-                material.setProfesor(miProfesor);
+                material.setDictadoClase(dictadoClase);
                 material.setArchivo(archivo.getBytes());
 
                 materialRepository.save(material);
@@ -63,22 +63,22 @@ public class MaterialService {
     }
 
     @Transactional
-    public void modificarMaterial(String descripcion, int idProfesor, int id, MultipartFile archivo) throws Exception {
+    public void modificarMaterial(String descripcion, int idDictadoClase, int id, MultipartFile archivo) throws Exception {
         
-        //validar(descripcion, idProfesor);
+        //validar(descripcion, idDictadoClase);
 
         Optional<Material> materialOpt = materialRepository.findById(id);
-        Optional<Profesor> profesorOpt = profesorRepository.findById(idProfesor);
+        Optional<DictadoClase> dictadoClaseOpt = dictadoClaseRepository.findById(idDictadoClase);
 
-        if (profesorOpt.isEmpty()) {
-            throw new Exception("El profesor especificado no existe.");
+        if (dictadoClaseOpt.isEmpty()) {
+            throw new Exception("El dictadoClase especificado no existe.");
         }
 
         if (materialOpt.isPresent()) {
             Material material = materialOpt.get();
 
             material.setDescripcion(descripcion);
-            material.setProfesor(profesorOpt.get());
+            material.setDictadoClase(dictadoClaseOpt.get());
             material.setArchivo(archivo.getBytes());
 
             materialRepository.save(material);
@@ -104,12 +104,12 @@ public class MaterialService {
     }
 
 
-    private void validar(String descripcion, int idProfesor) throws Exception {
+    private void validar(String descripcion, int idDictadoClase) throws Exception {
         if (descripcion.isEmpty() || descripcion == null) {
             throw new Exception("la descripcion no puede ser nulo o estar vacío");
         }
-        if (idProfesor <= 0) {
-            throw new Exception("El idProfesor debe ser un numero positivo");
+        if (idDictadoClase <= 0) {
+            throw new Exception("El idDictadoClase debe ser un numero positivo");
         }
     }
     

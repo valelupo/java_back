@@ -28,26 +28,8 @@ public class Profesor extends Persona{
     @Column(columnDefinition = "LONGBLOB", nullable = true)
     private byte[] imagen;
 
-    @OneToMany(mappedBy = "profesor") //se usa mappedBy para indicar que la relacion se mapea a traves de otra entidad 
+    @OneToMany(mappedBy = "profesor") 
     private List<DictadoClase> dictados;
-
-/*    //relacion ternaria 
-    @ManyToMany 
-    @JoinTable(
-        name = "dictado_clase",
-        joinColumns = @JoinColumn(name = "profesor_id"), 
-        inverseJoinColumns = @JoinColumn(name = "nivel_nro") 
-    )
-    private List<Nivel> niveles;
-
-    @ManyToMany 
-    @JoinTable(
-        name = "dictado_clase",
-        joinColumns = @JoinColumn(name = "profesor_id"), 
-        inverseJoinColumns = @JoinColumn(name = "materia_id") 
-    )
-    private List<Materia> materias;
-*/ 
 
     //getters y setters 
     public String getTelefono() {

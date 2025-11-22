@@ -11,6 +11,6 @@ import com.particulares.tp.java.entities.Material;
 @Repository
 public interface MaterialRepository extends JpaRepository<Material, Integer> {
  
-    @Query("SELECT m FROM Material m WHERE m.profesor.id = ?1")
+    @Query("SELECT m FROM Material m WHERE m.dictadoClase.profesor.id = ?1")
     List<Material> findByProfesorId(int idProfesor);
 }

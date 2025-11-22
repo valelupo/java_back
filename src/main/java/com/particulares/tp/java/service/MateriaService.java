@@ -85,6 +85,7 @@ public class MateriaService {
         return materiaRepository.getReferenceById(id);
     }
 
+    @Transactional
     public void agregarDictado(int id, Integer idDC) 
     throws Exception{
         Materia materia = materiaRepository.findById(id).get();

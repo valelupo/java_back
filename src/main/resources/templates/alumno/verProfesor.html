@@ -26,7 +26,7 @@
                 </a>
                 <h2 class="mb-4 text-center" th:text="${profesor.nombre} + ' ' + ${profesor.apellido}"></h2>
             </div>
-           
+            <div th:replace="~{fragments/mensajes :: fragment}" class="mt-4"></div>
             <!-- Imagen -->
             <div class="text-center mb-4">
                 <img th:src="@{'/profesor/imagen/' + ${profesor.id}}" class="rounded-circle img-fluid perfil-img mb-3" alt="Foto del profesor"
@@ -42,11 +42,11 @@
                 <p><strong>Precio por hora:</strong> <span th:text="${profesor.precioXHs} + ' ARS'"></span></p>
                 <p><strong>Información académica:</strong> <span th:text="${profesor.infoAcademica}"></span></p>
                 <div class="justify-content-between text-center">
-                    <a th:href="@{'https://wa.me/' + ${profesor.telefono} + '?text=Hola! Me interesa agendar una clase con ' + ${profesor.nombre} + ' ' + ${profesor.apellido}}" 
+                    <a th:href="@{'https://wa.me/54' + ${profesor.telefono} + '?text=Hola! Me interesa agendar una clase con ' + ${profesor.nombre} + ' ' + ${profesor.apellido}}" 
                     class="perfil-btn text-center" target="_blank">
                     <i class="bi bi-whatsapp"></i> Agendar Clase
                     </a>
-                    <a th:href="@{/material}" class="ver-perfil-btn btn-primary ms-3">Ver material de estudio</a>
+                    <a th:href="@{'/material/listar/' + ${profesor.id}}" class="ver-perfil-btn btn-primary ms-3">Ver material de estudio</a>
                 </div>
             </div>
 
@@ -60,12 +60,6 @@
                     </li>
                 </ul>
             </div>
-
-            <!-- Material de estudio -->
-            <!-- <div class=" mb-4 text-center">
-                <h5>Encuentra el material de estudio que buscas</h5>
-                <a th:href="@{/material}" class="ver-perfil-btn btn-primary">Ver material</a>
-            </div> -->
           
             <!-- Valoración -->
             <div class="text-center mb-4">
@@ -85,8 +79,6 @@
                         <strong th:text="${res.alumno.nombre + ' ' + res.alumno.apellido}"></strong>
                         <small class="text-muted" th:text="${#temporals.format(res.fecha, 'dd/MM/yyyy HH:mm')}"></small>
                     </div>
-                    <!-- <p><strong th:text="${res.alumno.nombre} + ' ' + ${res.alumno.apellido}"></strong></p> 
-                    <p th:text="${#temporals.format(res.fecha, 'dd/MM/yyyy HH:mm')}"></p> -->
                     <p th:text="${res.descripcion}"></p>
                     <div class="rating-stars">
                         <span th:each="i : ${#numbers.sequence(1,5)}">
@@ -115,12 +107,6 @@
                         </div>
                         <input type="hidden" name="puntaje" id="puntaje" value="0">
                     </div>
-                    <!-- <div class="mb-3">
-                        <label for="puntaje" class="form-label">Puntaje:</label>
-                        <select name="puntaje" id="puntaje" class="form-select w-auto">
-                        <option th:each="i : ${#numbers.sequence(1, 5)}" th:value="${i}" th:text="${i}"></option>
-                        </select>
-                    </div> -->
                     <div class="mb-3">
                         <label for="descripcion" class="form-label">Descripción:</label>
                         <textarea name="descripcion" id="descripcion" rows="4" class="form-control"></textarea>

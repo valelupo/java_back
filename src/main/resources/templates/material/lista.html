@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista Materiales</title>
+    <link rel="icon" type="image/png" th:href="@{/img/favicon.png}" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-..." crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/general.css}" />
+</head>
+<body>
+    <h3>Materiales del profesor</h3>
+    <ul class="list-group">
+        <li th:each="mat : ${materiales}" class="list-group-item d-flex justify-content-between align-items-center">
+            <span th:text="${mat.descripcion}"></span>
+            <a th:href="@{'/material/ver/' + ${mat.id}}" target="_blank" class="btn btn-outline-primary btn-sm">
+                Ver PDF
+            </a>
+        </li>
+    </ul>
+</body>
+</html>
