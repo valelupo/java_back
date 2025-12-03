@@ -1,42 +1,41 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrar Provincia</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/general.css}" />
 </head>
 <body>
-    <div>
-            <h2>Registrar Nueva Provincia</h2>
 
-            <div th:if="${exito}">        
-                <p th:text="${exito}">
-                    La provincia fue registrada exitosamente 
-                </p>
-            </div>
+<div th:replace="~{fragments/headerGral :: fragment}"></div>
 
-            <div th:if="${error}">
-                <p th:text="${error}"></p>
-            </div>
+<main class="form-container">
 
-        <form th:action="@{/provincia/crear}" method="POST" enctype="multipart/form-data">
-            
-            <div>
-                <h5>Nombre:</h5> 
-                <input type="text" name="nombre" placeholder="nombre">
-            </div>
+    <form th:action="@{/provincia/crear}" method="post">
 
-            <div>
-                <button type="submit">Registrar provincia</button>
-            </div>
+        <!-- Título + volver -->
+        <div class="titulo-con-flecha mb-4">
+            <a th:href="@{/provincia/listar}" class="btn-volver" title="Volver">
+                <i class="bi bi-arrow-left"></i>
+            </a>
 
-        </form>
+            <h2>Registrar nueva provincia</h2>
+        </div>
 
-        <section>
-            <a th:href="@{/provincia/listar}">Volver</a>
-        </section>
-    </div>
+        <!-- Campo nombre -->
+        <label for="nombre">Nombre de la provincia</label>
+        <input type="text" id="nombre" name="nombre" placeholder="Ej: Santa Fe" required />
 
-    
+        <button type="submit">Registrar</button>
+
+        <!-- Mensajes -->
+        <div th:replace="~{fragments/mensajes :: fragment}"></div>
+
+    </form>
+
+</main>
+
 </body>
 </html>
