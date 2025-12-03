@@ -27,8 +27,7 @@ public class MaterialService {
     @Transactional
     public void crearmaterial(String[] descripciones, int idDictadoClase,  MultipartFile[] archivos) throws Exception {
 
-        //validar(descripcion, idDictadoClase);
-
+       
         DictadoClase dictadoClase = dictadoClaseRepository.findById(idDictadoClase).get();
 
         if (dictadoClase == null) {
@@ -38,6 +37,7 @@ public class MaterialService {
         for (int i = 0; i < archivos.length; i++) {
             MultipartFile archivo = archivos[i];
             String descripcion = descripciones[i];
+            validar(descripcion, idDictadoClase, archivo);
 
             if (!archivo.isEmpty()) {
                 Material material = new Material();
@@ -65,7 +65,7 @@ public class MaterialService {
     @Transactional
     public void modificarMaterial(String descripcion, int idDictadoClase, int id, MultipartFile archivo) throws Exception {
         
-        //validar(descripcion, idDictadoClase);
+        validar(descripcion, idDictadoClase, archivo);
 
         Optional<Material> materialOpt = materialRepository.findById(id);
         Optional<DictadoClase> dictadoClaseOpt = dictadoClaseRepository.findById(idDictadoClase);
@@ -79,7 +79,9 @@ public class MaterialService {
 
             material.setDescripcion(descripcion);
             material.setDictadoClase(dictadoClaseOpt.get());
-            material.setArchivo(archivo.getBytes());
+            if (archivo != null && !archivo.isEmpty()) {
+                material.setArchivo(archivo.getBytes());
+            }
 
             materialRepository.save(material);
         } else {
@@ -104,12 +106,15 @@ public class MaterialService {
     }
 
 
-    private void validar(String descripcion, int idDictadoClase) throws Exception {
+    private void validar(String descripcion, int idDictadoClase, MultipartFile archivo) throws Exception {
         if (descripcion.isEmpty() || descripcion == null) {
             throw new Exception("la descripcion no puede ser nulo o estar vacío");
         }
         if (idDictadoClase <= 0) {
             throw new Exception("El idDictadoClase debe ser un numero positivo");
+        }
+        if (archivo == null && archivo.isEmpty()) {
+            throw new Exception("Debe proporcionar un archivo");
         }
     }
     

@@ -312,3 +312,22 @@ button.btn-buscar:hover {
   color: #122941;
   background: none;
 }
+
+.lista-materiales {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 10px;
+}
+
+.lista-materiales li {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 500;
+    color: #122941;
+}

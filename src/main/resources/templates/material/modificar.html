@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Modificar Material</title>
+    <link rel="stylesheet" th:href="@{/css/general.css}" />
+    <link rel="stylesheet" th:href="@{/css/profesor.css}" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+
+<body>
+    <div th:replace="~{fragments/headerGral :: fragment}"></div>
+
+    <div class="form-container">
+        <form th:action="@{'/material/modificar/' + ${material.id}}" method="post" enctype="multipart/form-data">
+            <div class="titulo-con-flecha">
+                <a th:href="@{'/material/listar/' + ${material.dictadoClase.profesor.id}}" class="btn-volver" title="Volver">
+                    <i class="bi bi-arrow-left"></i>
+                </a>
+                <h2>Modificar Material</h2>
+            </div>
+
+            <div th:replace="~{fragments/mensajes :: fragment}"></div>
+
+            <!-- Descripción -->
+            <div>
+                <label for="descripcion">Descripción</label>
+                <input type="text" id="descripcion" name="descripcion" th:value="${material.descripcion}" required />
+            </div>
+
+            <!-- Dictado -->
+            <div>
+                <label for="dictado">Materia / Nivel</label>
+                <select id="dictado" name="idDictadoClase" required>
+                    <option th:each="d : ${dictados}" th:value="${d.id}"
+                            th:text="${d.materia.nombre + ' - ' + d.nivel.descripcion}"
+                            th:selected="${material.dictadoClase.id == d.id}">
+                    </option>
+                </select>
+            </div>
+
+            <!-- Archivo -->
+            <div>
+                <label for="archivo">Reemplazar archivo (opcional)</label>
+                <input type="file" id="archivo" name="archivo" accept=".pdf" th:value="${material.archivo}" />
+                <small style="color:#555;">Si no seleccionás nada, se mantiene el PDF actual.</small>
+            </div>
+
+            <!-- Botones -->
+            <div class="buttons">
+                <button type="submit">Guardar cambios</button>
+            </div>
+        </form>
+    </div>
+
+    <div th:replace="~{fragments/footer :: fragment}"></div>
+</body>
+</html>

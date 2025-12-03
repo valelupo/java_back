@@ -36,7 +36,7 @@
 
         <div class="buttons">
             <a th:href="@{/dictadoClase/lista}" class="btn">Dictados de clase</a>
-            <a th:href="@{/material/registrar}" class="btn">Material</a>
+            <a th:href="@{'/material/listar/' + ${profesor.id}}" class="btn">Material</a>
         </div>
     </main>
 

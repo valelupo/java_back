@@ -3,6 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Registrar Material</title>
+    <link rel="icon" type="image/png" th:href="@{/img/favicon.png}" />
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-..." crossorigin="anonymous"> -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/general.css}" />
+    <link rel="stylesheet" th:href="@{/css/alumno.css}" />
 
     <script>
         let materiales = [];
@@ -25,13 +30,8 @@
             item.textContent = `Material n° ${index + 1}: ${descripcion} `;
 
             const btnEliminar = document.createElement("button");
-
-            btnEliminar.innerHTML = `
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
-                    <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
-                </svg>
-            `;
+            btnEliminar.className = "btn-eliminar";
+            btnEliminar.innerHTML =`<i class="bi bi-trash"></i>`;
 
 
             btnEliminar.onclick = () => {
@@ -43,8 +43,9 @@
             item.appendChild(btnEliminar);
             lista.appendChild(item);
 
-            document.getElementById("archivo").value = "";
+            //document.getElementById("archivo").value = "";
             document.getElementById("descripcion").value = "";
+            document.getElementById("dictado").selectedIndex = 0;
         }
 
         function actualizarLista() {
@@ -56,13 +57,7 @@
 
                 const btnEliminar = document.createElement("button");
                 btnEliminar.className = "btn-eliminar";
-                btnEliminar.innerHTML = `
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
-                        <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
-                    </svg>
-                `;
-
+                btnEliminar.innerHTML = `<i class="bi bi-trash"></i>`;
     
                 btnEliminar.onclick = () => {
                     materiales.splice(i, 1);
@@ -118,34 +113,45 @@
 </head>
 
 <body>
-
-    <div>
-        <h2>Cargar Nuevo Material</h2>
+    <div th:replace="~{fragments/headerGral :: fragment}"></div>
+    <div class="form-container">
         <form id="formMateriales" enctype="multipart/form-data">
-            <input type="file" id="archivo" accept=".pdf" />
-            <input type="text" id="descripcion" placeholder="Descripción"/>
-            <label for="dictado">Seleccioná la materia:</label>
-            <select id="dictado" name="idDictadoClase" class="form-select" required>
-                <option value="" disabled selected>Elegí una materia</option>
-                <option th:each="d : ${dictados}" th:value="${d.id}" th:text="${d.materia.nombre + ' - ' + d.nivel.descripcion}"></option>
-            </select>
+            <div class="titulo-con-flecha">
+                <a th:href="@{ '/material/listar/' + ${profesor.id} }"
+                class="btn-volver" title="Volver">
+                    <i class="bi bi-arrow-left"></i>
+                </a>
+                <h2>Cargar Nuevo Material</h2>
+            </div>
+            <div th:replace="~{fragments/mensajes :: fragment}"></div>
             <div>
-                <button type="button" onclick="agregarMaterial()">Ingresar otro</button>
-                <button type="button" onclick="enviarMateriales()">Aceptar</button>
+                <label for="archivo">Archivo PDF</label>
+                <input type="file" id="archivo" accept=".pdf" />
+            </div>
+
+            <div>
+                <label for="descripcion">Descripción</label>
+                <input type="text" id="descripcion" placeholder="Descripción"/>
+            </div>
+            <div>
+                <label for="dictado">Seleccioná la materia:</label>
+                <select id="dictado" name="idDictadoClase" class="form-select" required>
+                    <option value="" disabled selected>Elegí una materia</option>
+                    <option th:each="d : ${dictados}" th:value="${d.id}" th:text="${d.materia.nombre + ' - ' + d.nivel.descripcion}"></option>
+                </select>
+            </div>
+            <div class="buttons">
+                <button type="button" onclick="agregarMaterial()" class="btn">Ingresar otro</button>
+                <button type="button" onclick="enviarMateriales()" class="btn">Aceptar</button>
+            </div>
+            <div>
+                <h5>Materiales agregados:</h4>
+                <ul id="listaMateriales" class="lista-materiales"></ul>
             </div>
     
         </form>
-
-        <h4>Materiales agregados:</h4>
-        <ul id="listaMateriales"></ul>
-
-        <section>
-            <div>
-                <a th:href="@{/inicio}">Volver</a>
-            </div>
-        </section>
     </div>
-
+    <div th:replace="~{fragments/footer :: fragment}"></div>
    
 </body>
 </html>
