@@ -7,6 +7,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -24,6 +25,7 @@ public class Material {
     private byte[] archivo;
     
     @ManyToOne
+    @JoinColumn(name = "dictado_clase_id", nullable = false)
     private DictadoClase dictadoClase; 
 
     //getters y setters 

@@ -27,12 +27,19 @@
             </a>
         </div>
         <div th:replace="~{fragments/mensajes :: fragment}"></div>
+       
+        <div th:if="${info}" class="text-center mb-4">
+            <p th:text="${info}" class="fs-5 text-muted"></p>
+        </div>
+
+
         <div class="row row-cols-1 row-cols-md-3 g-4">
             <div th:each="mat : ${materiales}" class="col">
                 <a th:href="@{'/material/ver/' + ${mat.id}}" target="_blank" style="text-decoration: none;">
                     <div class="card h-100 text-center shadow-sm justify-content-center" style="cursor: pointer;">
                         <div class="card-body d-flex flex-column justify-content-center">
                             <h5 th:text="${mat.descripcion}"></h5>
+                            <p th:text="${mat.dictadoClase.materia.nombre + ' - ' + mat.dictadoClase.nivel.descripcion}"></p>
                         </div>
 
                         <!-- Botones solo si es profesor -->

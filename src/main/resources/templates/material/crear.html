@@ -9,7 +9,7 @@
     <link rel="stylesheet" th:href="@{/css/general.css}" />
     <link rel="stylesheet" th:href="@{/css/alumno.css}" />
 
-    <script>
+    <script th:inline="javascript">
         let materiales = [];
 
         function agregarMaterial() {
@@ -103,7 +103,7 @@
             .then(response => {
                 if (response.ok) {
                     alert("Materiales cargados correctamente.");
-                    window.location.href = "/inicio";
+                    window.location.href = /*[[@{/material/listar/{id}(id=${profesor.id})}]]*/ '';
                 } else {
                     alert("Error al cargar materiales.");
                 }

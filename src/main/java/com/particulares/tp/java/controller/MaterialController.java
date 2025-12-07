@@ -1,5 +1,7 @@
 package com.particulares.tp.java.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
@@ -71,8 +73,15 @@ public class MaterialController {
             boolean esProfe = (persona != null && persona.getId() == id);
             model.put("esProfe", esProfe);
         } 
+        
+        List<Material> materiales =  materialService.listarMaterialesPorProfesor(id);
+        if (materiales.isEmpty()) {
+            model.put("info", "No hay materiales cargados");
+        } else {
+            model.put("materiales", materiales);
+        }
         model.put("profesor", profesorService.getOne(id));
-        model.put("materiales", materialService.listarMaterialesPorProfesor(id));
+       
         return "material/lista";
     }
 

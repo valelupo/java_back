@@ -5,6 +5,7 @@ import java.util.List;
 import com.particulares.tp.java.enums.FormaTrabajo;
 
 import jakarta.persistence.Basic;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -28,8 +29,12 @@ public class Profesor extends Persona{
     @Column(columnDefinition = "LONGBLOB", nullable = true)
     private byte[] imagen;
 
-    @OneToMany(mappedBy = "profesor") 
+    @OneToMany(mappedBy = "profesor", cascade = CascadeType.ALL, orphanRemoval = true) 
     private List<DictadoClase> dictados;
+
+    @OneToMany(mappedBy = "profesor", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Resenia> resenias;
+
 
     //getters y setters 
     public String getTelefono() {

@@ -18,10 +18,12 @@ import com.particulares.tp.java.enums.Rol;
 import com.particulares.tp.java.dto.ProfesorConPuntajeDTO;
 import com.particulares.tp.java.entities.DictadoClase;
 import com.particulares.tp.java.entities.Localidad;
+import com.particulares.tp.java.entities.Material;
 import com.particulares.tp.java.entities.Persona;
 import com.particulares.tp.java.repository.ProfesorRepository;
 import com.particulares.tp.java.repository.ReseniaRepository;
 import com.particulares.tp.java.repository.LocalidadRepository;
+import com.particulares.tp.java.repository.MaterialRepository;
 import com.particulares.tp.java.repository.PersonaRepository;
 import com.particulares.tp.java.repository.DictadoClaseRepository;
 
@@ -42,6 +44,9 @@ public class ProfesorService {
 
     @Autowired
     private ReseniaRepository reseniaRepository;
+
+    @Autowired
+    private MaterialRepository materialRepository;
 
     @Transactional
     public void crearProfesor(String nombre, String apellido, String email, int idLocalidad, String clave, String clave2,
@@ -143,21 +148,32 @@ public class ProfesorService {
     }
 
     @Transactional
-    public void eliminarProfesor(int id) throws Exception{
-        Optional<Profesor> profesorOpt = profesorRepository.findById(id);
-        if (profesorOpt.isPresent()) {
-            for (DictadoClase dc : profesorOpt.get().getDictados()) {
-                dictadoClaseRepository.delete(dc);
-            }
-            List<Resenia> resenias = reseniaRepository.findReseniasByProfesorId(id);
-            for (Resenia r: resenias){
-                reseniaRepository.delete(r);
-            }
-            profesorRepository.delete(profesorOpt.get());
-        } else {
-            throw new Exception("El profesor con el ID especificado no existe");
-        }
+    public void eliminarProfesor(int id) throws Exception {
+        Profesor profesor = profesorRepository.findById(id)
+                .orElseThrow(() -> new Exception("El profesor con el ID especificado no existe"));
+
+        profesorRepository.delete(profesor);
     }
+
+    // @Transactional
+    // public void eliminarProfesor(int id) throws Exception{
+    //     Optional<Profesor> profesorOpt = profesorRepository.findById(id);
+    //     if (profesorOpt.isPresent()) {
+    //         for (Material m : materialRepository.findByProfesorId(id)) {
+    //             materialRepository.delete(m);
+    //         }
+    //         for (DictadoClase dc : profesorOpt.get().getDictados()) {
+    //             dictadoClaseRepository.delete(dc);
+    //         }
+    //         List<Resenia> resenias = reseniaRepository.findReseniasByProfesorId(id);
+    //         for (Resenia r: resenias){
+    //             reseniaRepository.delete(r);
+    //         }
+    //         profesorRepository.delete(profesorOpt.get());
+    //     } else {
+    //         throw new Exception("El profesor con el ID especificado no existe");
+    //     }
+    // }
 
     @Transactional(readOnly = true)
     public Profesor getOne(int id){
@@ -215,12 +231,6 @@ public class ProfesorService {
         if (precioXHs <= 0) {
             throw new Exception("el precioXHs debe ser un numero positivo");
         }
-        if (imagen != null && !imagen.isEmpty()) {
-            long maxSize = 5 * 1024 * 1024; // 5MB
-            if (imagen.getSize() > maxSize) {
-                throw new Exception("La imagen supera el tamaño máximo permitido (5MB).");
-            }
-        } 
         if (imagen == null && imagen.isEmpty()) {
             throw new Exception("Debe proporcionar una imagen.");
         }
