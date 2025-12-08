@@ -43,9 +43,9 @@
             item.appendChild(btnEliminar);
             lista.appendChild(item);
 
-            //document.getElementById("archivo").value = "";
+            document.getElementById("archivo").value = "";
             document.getElementById("descripcion").value = "";
-            document.getElementById("dictado").selectedIndex = 0;
+            //document.getElementById("dictado").selectedIndex = 0;
         }
 
         function actualizarLista() {
@@ -106,8 +106,8 @@
                     window.location.href = /*[[@{/material/listar/{id}(id=${profesor.id})}]]*/ '';
                 } else {
                     alert("Error al cargar materiales.");
-                }
-            });
+                } 
+            })
         }
     </script>
 </head>

@@ -49,12 +49,12 @@ public class DictadoClaseController {
             Profesor profesor = (Profesor) session.getAttribute("personaSession");
             dictadoClaseService.crearDictadoClase(profesor.getId(), idMateria, nrosNiveles);   
             modelo.put("exito", "El dictado fue cargado correctamente");
-        
+            return "redirect:/dictadoClase/lista";
         } catch (Exception ex) {
             modelo.put("error", ex.getMessage());
-
+            return "profesor/crearDictado";
         }        
-        return "profesor/crearDictado";
+     
     }
 
     @GetMapping("/lista") 

@@ -18,10 +18,16 @@
 
         <h2>Busca a tu profe ideal</h2>
 
-         <!-- Botón para ordenar -->
-        <div class="ordenar-container">
-            <a th:href="@{'/inicio?orden=puntaje'}" class="btn-ordenar" >
-                 <i class="bi bi-filter"></i> Ordenar por puntaje
+        <form method="get" action="/inicio" class="d-flex flex-column align-items-center gap-2 mb-4">
+            <div class="input-group" style="max-width: 300px;">
+                <input type="text" name="materia" class="form-control" placeholder="Buscar por materia..." th:value="${materia}" />
+                <button type="submit" class="btn btn-outline-secondary"><i class="bi bi-search"></i></button>
+            </div>
+        </form>
+
+        <div class="d-flex justify-content-end mb-2" style="max-width: 1250px;">
+            <a th:href="@{'/inicio'(orden='puntaje', materia=${materia})}" class="btn-ordenar">
+                <i class="bi bi-filter"></i> Ordenar por puntaje
             </a>
         </div>
 

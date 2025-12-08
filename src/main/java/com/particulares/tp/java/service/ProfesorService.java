@@ -87,25 +87,33 @@ public class ProfesorService {
     @Transactional(readOnly = true)
     public List<ProfesorConPuntajeDTO> listarProfesoresPorPuntaje() {
         List<ProfesorConPuntajeDTO> profesoresDTO = profesorRepository.profesoresConPuntaje();
-
-        for (ProfesorConPuntajeDTO pdto : profesoresDTO) {
-            List<DictadoClase> dictados = dictadoClaseRepository.findByProfesor(pdto.getId());
-            pdto.setDictados(dictados);
-        }
-
-        return profesoresDTO;
+        return cargarDictados(profesoresDTO);
     }
 
     @Transactional(readOnly = true)
     public List<ProfesorConPuntajeDTO> listarProfesoresPorPuntajeOrdenados() {
-        List<ProfesorConPuntajeDTO> profesoresOrdDTO = profesorRepository.profesoresConPuntajeOrdenados();
+        List<ProfesorConPuntajeDTO> profesoresDTO = profesorRepository.profesoresConPuntajeOrdenados();
+        return cargarDictados(profesoresDTO);
+    }
+    
+    @Transactional(readOnly = true)
+    public List<ProfesorConPuntajeDTO> buscarPorMateria (String materia){
+        List<ProfesorConPuntajeDTO> profesoresDTO = profesorRepository.profesoresPorMateria(materia.toLowerCase());
+        return cargarDictados(profesoresDTO);
+    }
 
-        for (ProfesorConPuntajeDTO pdto : profesoresOrdDTO) {
+    @Transactional(readOnly = true)
+    public List<ProfesorConPuntajeDTO> buscarPorMateriaOrdenado (String materia){
+        List<ProfesorConPuntajeDTO> profesoresDTO = profesorRepository.profesoresPorMateriaOrdenados(materia.toLowerCase());
+        return cargarDictados(profesoresDTO);
+    }
+
+    public List<ProfesorConPuntajeDTO> cargarDictados(List<ProfesorConPuntajeDTO> profesoresDTO){
+        for (ProfesorConPuntajeDTO pdto : profesoresDTO) {
             List<DictadoClase> dictados = dictadoClaseRepository.findByProfesor(pdto.getId());
             pdto.setDictados(dictados);
         }
-
-        return profesoresOrdDTO;
+        return profesoresDTO;
     }
 
     @Transactional
@@ -139,7 +147,10 @@ public class ProfesorService {
             profesor.setFormaTrabajo(estadoFT);
             profesor.setInfoAcademica(infoAcademica);
             profesor.setPrecioXHs(precioXHs);
-            profesor.setImagen(imagen.getBytes());
+           
+           if (imagen != null && !imagen.isEmpty()) {
+                profesor.setImagen(imagen.getBytes());
+           }
 
             return profesorRepository.save(profesor);
         } else {

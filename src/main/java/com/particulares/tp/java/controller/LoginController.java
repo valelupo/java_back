@@ -1,5 +1,7 @@
 package com.particulares.tp.java.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.particulares.tp.java.dto.ProfesorConPuntajeDTO;
 import com.particulares.tp.java.entities.Persona;
 import com.particulares.tp.java.entities.Profesor;
 import com.particulares.tp.java.service.AlumnoService;
@@ -90,7 +93,8 @@ public class LoginController {
 
     @GetMapping("/inicio")
     public String inicio(@RequestParam(required = false) String orden,
-                        HttpSession session, ModelMap modelo){
+                         @RequestParam(required = false) String materia,
+                         HttpSession session, ModelMap modelo){
         Persona logueado = (Persona) session.getAttribute("personaSession");
         session.setAttribute("personaSession", logueado);
 
@@ -107,12 +111,22 @@ public class LoginController {
             return "admin/home";
         }
 
-        if ("puntaje".equals(orden)) {
-            System.out.println("Ordenando por puntaje...");
-            modelo.put("profesores", profesorService.listarProfesoresPorPuntajeOrdenados());
-        }else{
-            modelo.put("profesores", profesorService.listarProfesoresPorPuntaje());
+        List<ProfesorConPuntajeDTO> profesores;
+        if (materia != null && !materia.isEmpty()) {
+            if ("puntaje".equals(orden)) {
+                profesores = profesorService.buscarPorMateriaOrdenado(materia);
+            } else {
+                profesores = profesorService.buscarPorMateria(materia);
+            } 
+        } else {
+            if ("puntaje".equals(orden)) {
+                profesores = profesorService.listarProfesoresPorPuntajeOrdenados();
+            }else{
+                profesores = profesorService.listarProfesoresPorPuntaje();
+            }
         }
+        modelo.put("profesores", profesores);
+        modelo.put("materia", materia );
 
         return "alumno/home";
     }

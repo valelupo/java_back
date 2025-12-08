@@ -73,6 +73,12 @@ public class Profesor extends Persona{
     }
     public void setImagen(byte[] imagen) {
         this.imagen = imagen;
+    }
+    public List<Resenia> getResenias() {
+        return resenias;
+    }
+    public void setResenias(List<Resenia> resenias) {
+        this.resenias = resenias;
     } 
     
 

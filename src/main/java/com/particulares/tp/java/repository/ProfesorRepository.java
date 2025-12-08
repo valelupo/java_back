@@ -27,4 +27,27 @@ public interface ProfesorRepository extends JpaRepository <Profesor, Integer> {
     ORDER BY AVG(r.puntaje) DESC
     """)
     List<ProfesorConPuntajeDTO> profesoresConPuntajeOrdenados();
+
+    @Query(value = """
+    SELECT new com.particulares.tp.java.dto.ProfesorConPuntajeDTO(p, AVG(r.puntaje))
+    FROM Profesor p
+    JOIN DictadoClase d ON d.profesor = p
+    JOIN Materia m ON d.materia = m
+    LEFT JOIN Resenia r ON p = r.profesor
+    WHERE LOWER(m.nombre) LIKE %?1%
+    GROUP BY p
+    """)
+    List<ProfesorConPuntajeDTO> profesoresPorMateria(String materia);
+
+    @Query(value = """
+    SELECT new com.particulares.tp.java.dto.ProfesorConPuntajeDTO(p, AVG(r.puntaje))
+    FROM Profesor p
+    JOIN DictadoClase d ON d.profesor = p
+    JOIN Materia m ON d.materia = m
+    LEFT JOIN Resenia r ON p = r.profesor
+    WHERE LOWER(m.nombre) LIKE %?1%
+    GROUP BY p
+    ORDER BY AVG(r.puntaje) DESC
+    """)
+    List<ProfesorConPuntajeDTO> profesoresPorMateriaOrdenados(String materia);
 }
