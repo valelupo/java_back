@@ -48,7 +48,6 @@ public class ProfesorController {
 
     @GetMapping("/ver/{id}")
     public String verProfesor(@PathVariable Integer id, ModelMap modelo) {
-        //modelo.put("materiales", materialService.listarMaterialesPorProfesor(id););
         modelo.put("promedio", reseniaService.promedioReseniasPorProfesor(id));
         modelo.put("dictados", dictadoClaseService.obtenerDictadosPorProfesor(id));
         modelo.put("profesor", profesorService.getOne(id));

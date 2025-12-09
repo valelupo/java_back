@@ -38,7 +38,6 @@ public class DictadoClase {
 
 
     // Getters y setters
-    
     public Integer getId() {
         return id;
     }

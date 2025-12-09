@@ -124,22 +124,22 @@
     <div th:replace="~{fragments/footer :: fragment}"></div>
 
     <script>
-    document.querySelectorAll('.star-rating i').forEach(star => {
-        star.addEventListener('click', () => {
-            const value = parseInt(star.getAttribute('data-value'));
-            document.getElementById('puntaje').value = value;
+        document.querySelectorAll('.star-rating i').forEach(star => {
+            star.addEventListener('click', () => {
+                const value = parseInt(star.getAttribute('data-value'));
+                document.getElementById('puntaje').value = value;
 
-            // Reset all stars
-            document.querySelectorAll('.star-rating i').forEach(s => {
-                s.classList.remove('selected');
+                // Resetear estrellas
+                document.querySelectorAll('.star-rating i').forEach(s => {
+                    s.classList.remove('selected');
+                });
+
+                // Marcar las estrellas seleccionadas
+                for (let i = 0; i < value; i++) {
+                    document.querySelectorAll('.star-rating i')[i].classList.add('selected');
+                }
             });
-
-            // Highlight selected stars
-            for (let i = 0; i < value; i++) {
-                document.querySelectorAll('.star-rating i')[i].classList.add('selected');
-            }
         });
-    });
     </script>
 </body>
 </html>

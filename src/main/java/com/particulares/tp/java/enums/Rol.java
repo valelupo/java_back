@@ -5,4 +5,3 @@ public enum Rol {
     ALUMNO,
     ADMIN
 }
-//se cambia class por enum y se pones los tipos separados por coma

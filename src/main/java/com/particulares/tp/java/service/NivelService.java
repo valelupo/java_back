@@ -63,9 +63,6 @@ public class NivelService {
         Optional<Nivel> nivelOpt = nivelRepository.findById(nro);
 
         if (nivelOpt.isPresent()) {
-            // if (!nivelOpt.get().getDictados().isEmpty()){
-            //     throw new Exception("Existen profesores que dictan materias de este nivel");
-            // }
             nivelRepository.delete(nivelOpt.get());
             for (DictadoClase dc : nivelOpt.get().getDictados()) {
                 dictadoClaseRepository.delete(dc);

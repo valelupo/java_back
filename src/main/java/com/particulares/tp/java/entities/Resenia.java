@@ -27,7 +27,6 @@ public class Resenia {
     private Alumno alumno;
 
     //getters y setters 
-
     public Integer getId() {
         return id;
     }

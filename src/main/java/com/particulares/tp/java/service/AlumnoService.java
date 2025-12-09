@@ -52,7 +52,7 @@ public class AlumnoService {
         alumno.setApellido(apellido);
         alumno.setEmail(email);
         alumno.setMiLocalidad(miLocalidad);
-        alumno.setClave(new BCryptPasswordEncoder().encode(clave)); // para guardar la clve encriptada
+        alumno.setClave(new BCryptPasswordEncoder().encode(clave)); 
         alumno.setRol(Rol.ALUMNO);
 
         alumnoRepository.save(alumno);
@@ -122,9 +122,6 @@ public class AlumnoService {
         if (email.isEmpty() || email == null) {
             throw new Exception("el email no puede ser nulo o estar vacío");
         }
-        // if (!email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
-        //     throw new Exception("El email no tiene un formato válido");
-        // }
         if(idLocalidad <= 0) {
             throw new Exception("El idLocalidad debe ser un numero positivo");
         }

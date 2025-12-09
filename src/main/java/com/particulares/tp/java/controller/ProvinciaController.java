@@ -26,7 +26,7 @@ public class ProvinciaController {
     @PostMapping("/crear") 
     public String crear(@RequestParam String nombre, ModelMap modelo){
         try {
-            provinciaServicio.crearProvincia(nombre);   // llamo a mi servicio para persistir  
+            provinciaServicio.crearProvincia(nombre);    
             modelo.put("exito", "La provincia fue cargada correctamente");
         
         } catch (Exception ex) {

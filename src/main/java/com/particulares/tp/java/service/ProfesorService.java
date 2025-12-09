@@ -12,13 +12,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.particulares.tp.java.entities.Profesor;
-import com.particulares.tp.java.entities.Resenia;
 import com.particulares.tp.java.enums.FormaTrabajo;
 import com.particulares.tp.java.enums.Rol;
 import com.particulares.tp.java.dto.ProfesorConPuntajeDTO;
 import com.particulares.tp.java.entities.DictadoClase;
 import com.particulares.tp.java.entities.Localidad;
-import com.particulares.tp.java.entities.Material;
 import com.particulares.tp.java.entities.Persona;
 import com.particulares.tp.java.repository.ProfesorRepository;
 import com.particulares.tp.java.repository.ReseniaRepository;
@@ -165,26 +163,6 @@ public class ProfesorService {
 
         profesorRepository.delete(profesor);
     }
-
-    // @Transactional
-    // public void eliminarProfesor(int id) throws Exception{
-    //     Optional<Profesor> profesorOpt = profesorRepository.findById(id);
-    //     if (profesorOpt.isPresent()) {
-    //         for (Material m : materialRepository.findByProfesorId(id)) {
-    //             materialRepository.delete(m);
-    //         }
-    //         for (DictadoClase dc : profesorOpt.get().getDictados()) {
-    //             dictadoClaseRepository.delete(dc);
-    //         }
-    //         List<Resenia> resenias = reseniaRepository.findReseniasByProfesorId(id);
-    //         for (Resenia r: resenias){
-    //             reseniaRepository.delete(r);
-    //         }
-    //         profesorRepository.delete(profesorOpt.get());
-    //     } else {
-    //         throw new Exception("El profesor con el ID especificado no existe");
-    //     }
-    // }
 
     @Transactional(readOnly = true)
     public Profesor getOne(int id){
