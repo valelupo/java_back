@@ -13,7 +13,7 @@ Se desarrollará un sistema en el que los estudiantes podrán encontrar profesor
 
 
 ### Modelo DER
-![DER](https://github.com/user-attachments/assets/744fdfa9-ba46-4001-9de2-64cbce9fff3f)
+![DER](https://github.com/user-attachments/assets/f996c16a-cb8b-4385-a6e9-cbacd1d0b7d3)
 
 
 
